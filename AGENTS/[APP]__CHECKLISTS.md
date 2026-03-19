@@ -222,18 +222,22 @@ At end of substantial tasks, provide:
 Before marking code complete, verify deployment readiness:
 
 ```markdown
-- [ ] Code runs locally via `run_torusmind.sh`
-- [ ] No hardcoded `http://localhost` in production code paths
-- [ ] Environment variables documented in `.env.example`
-- [ ] Deployment scripts updated if new env vars added
-- [ ] CORS origins include both local and cloud domains
-- [ ] API URLs use env vars with sensible defaults
+- [ ] Application runs locally using the project’s standard run command
+- [ ] No hardcoded local URLs in production code paths
+- [ ] Environment variables are documented in the project’s example/template env file
+- [ ] Deployment configuration is updated for any new environment variables
+- [ ] Allowed CORS origins include required local and deployed domains
+- [ ] Service and API URLs are configured via environment variables or equivalent settings
 ```
 
 ### Environment Variable Addition Protocol
+
 When adding new env vars:
-1. Add to local `.env` file
-2. Add to `.env.example` with description
-3. Update `gcp_deployment/00_env.sh` (non-sensitive)
-4. Update `gcp_deployment/02_secrets_setup.sh` (sensitive/secrets)
-5. Document in PR description: "🚀 Deployment Change: Added [VAR_NAME]"
+
+```markdown
+1. Add to local development configuration
+2. Add to the example/template configuration file with documentation
+3. Update deployment configuration for non-sensitive values
+4. Update secret management configuration for sensitive values
+5. Document the deployment/configuration change in the PR
+```
