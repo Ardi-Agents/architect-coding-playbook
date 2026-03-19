@@ -216,7 +216,7 @@ Before marking any task complete:
 
 - [ ] Follows existing patterns and conventions
 - [ ] All new/modified code has tests
-- [ ] All tests pass (unit + integration + E2E)
+- [ ] All tests pass (unit, integration, and end-to-end)
 - [ ] Only modified necessary components
 - [ ] Schema changes: ORM + migrations + services + tests updated
 - [ ] Technical debt documented
