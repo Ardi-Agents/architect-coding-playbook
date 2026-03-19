@@ -28,12 +28,12 @@
 11. **Use working code** as reference, don't reinvent
 12. **Touch minimal components**
 
-### P3 - Quality (GOOD PRACTICE)
+### P3 - Architecture & Design (GOOD PRACTICE)
 
 13. **Document technical debt** in roadmap
 14. **Suggest rule improvements** after each task
 
-### P4 - Simplicity (PREFER)
+### P4 - Simplicity & Optimization (PREFER)
 
 15. **Prefer simple solutions** over complex ones
 16. **Improve incrementally** rather than big-bang rewrites
@@ -68,7 +68,7 @@
 
 | Document                    | Purpose                                      |
 | --------------------------- | -------------------------------------------- |
-| `ARCHITECTURE_OVERVIEW.md`  | System design, diagrams, data flows          |
+| `ARCHITECTURE_OVERVIEW.md`  | System design, diagrams, data flows          | 
 | `DATABASE_SCHEMA.md`        | Complete SQL schema with indexes, migrations |
 | `API_SPECIFICATION.md`      | REST API contract with examples              |
 | `IMPLEMENTATION_ROADMAP.md` | Week-by-week execution plan                  |
@@ -146,8 +146,8 @@ When renaming terminology across the codebase (e.g., `prompt` → `directive`):
 2. **Database migrations**: Create Alembic migration for table/column renames
 3. **Enum handling**: PostgreSQL enums require text conversion (can't modify in-place)
 4. **Test file updates**: Update imports and all assertions using old terminology
-5. **Clean pycache**: Remove `__pycache__` directories after file renames
-6. **Verify GCP state**: Cloud SQL may already have schema changes from prior deployments
+5. **Clean stale artifacts**: After renames or moves, remove caches or generated outputs that may retain old paths or names.
+6. **Verify Cloud state**: Cloud data store may already have schema changes from prior deployments
 
 ---
 
@@ -160,16 +160,16 @@ This section is intentionally minimal. All project-specific rules, conventions, 
 **When copying this framework to a new project:**
 
 1. Copy `AGENTS.md` and `AGENTS/` folder
-2. Replace the contents of `AGENTS/[APP]__PROJECT_SPECIFIC.md` with your project's specifics (includes Knip false positives)
+2. Replace the contents of `AGENTS/[APP]__PROJECT_SPECIFIC.md` with your project-specific details (including known tool false positives, suppressions, and exceptions).
 
-**Typical project-specific content:**
+**Common project-specific guidance:**
 
-- E2E test scripts and commands
-- Framework-specific conventions (router order, type alignment)
-- Package version lock policies
+- Test scripts and commands
+- Framework and architectural conventions
+- Package and SDK version policies
 - Database migration procedures
 - Technology stack details
-- Knip false positives list
+- Known tooling false positives, suppressions, and exceptions
 
 ---
 
