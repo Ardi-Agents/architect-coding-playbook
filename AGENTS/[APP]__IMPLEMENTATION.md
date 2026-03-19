@@ -94,67 +94,67 @@ git diff HEAD abc123def -- path/to/file.py
 
 ## Step-by-Step Implementation
 
-### Principles
-- Implement step-by-step, iterate, reflect
-- **Accuracy over speed**
-- Sometimes rewriting from scratch > trying to revise
+### Working Principles
+- Implement in small, verifiable steps
+- Prefer accuracy and correctness over speed
+- Rewrite or simplify when patching the current approach would be less clear or less reliable
 
 ### Pre-Implementation Checklist
-- [ ] Parse specification into detailed requirements
-- [ ] Cross-reference against existing rules
-- [ ] Analyze current structure vs requirements
-- [ ] Create validation checklist
-- [ ] Plan cleanup alongside feature work
+- [ ] Derive detailed requirements from the specification
+- [ ] Cross-reference all applicable rules, constraints, and project guidance
+- [ ] Assess the current structure against the required outcome
+- [ ] Define the validation and verification checklist
+- [ ] Plan cleanup, refactoring, and related updates with the implementation
 
-### State Machine Modeling
-When frontend/backend logic has >2 UI/workflow modes:
-- Model state explicitly (discriminated unions, reducers, enum handlers)
-- Document possible states, transitions, side effects
-- Ensure tests cover each state/transition
+### State Modeling Guidance
+When application logic includes more than two significant UI or workflow states:
+- Model state explicitly (for example, typed states, reducers, state handlers, or equivalent patterns)
+- Document allowed states, transitions, invariants, and side effects
+- Verify that tests cover each state and transition
 
 ---
 
 ## Database Updates
 
-### Schema Consistency Validation
+### Data Model Updates
 Validate across:
-- ORM models (`models.py`)
-- Migration scripts
-- Service layer code
-- Test fixtures and mocks
-- API request/response schemas
+- Application models, entity definitions, or mappings
+- Schema/model update scripts or migration procedures
+- Repositories, queries, services, and traversal logic
+- Test fixtures, mocks, seed data, and example payloads
+- API contracts, request/response schemas, and external interfaces
 
-### Migration Verification
-Before relying on column that exists in ORM:
-1. Verify column exists in actual database schema
-2. If missing, add Alembic migration
-3. Note verification command (`alembic current`, `psql \d`)
-4. Document in PR description
+### Consistency Validation
+Before relying on a new field, relationship, or structure in application code:
+1. Verify the change exists in the target data store or update procedure
+2. If missing, create the required migration, transformation, or backfill
+3. Record the verification method or command used
+4. Document the change in the PR description
 
-### Checklist
+### Change Verification
 ```markdown
-Before deploying database changes:
-- [ ] Updated ORM models
-- [ ] Created migration script
-- [ ] Updated all services querying affected tables
-- [ ] Updated test fixtures
-- [ ] Updated API documentation
-- [ ] Ran migration on target environment
-- [ ] Verified all tests pass
+Before deploying data model changes:
+- [ ] Updated application models, mappings, or entity definitions
+- [ ] Created the required migration, transformation, or backfill procedure
+- [ ] Updated all affected queries, repositories, services, and traversals
+- [ ] Updated test fixtures, mocks, seed data, and example payloads
+- [ ] Updated API and data-contract documentation
+- [ ] Applied the change in the target environment as required
+- [ ] Verified all tests and required checks pass
 ```
 
 ---
 
-## Static Analysis
+## Static Analysis and Code Quality Checks
 
 > Full rules: [AGENTS/[APP]__STATIC_ANALYSIS.md]([APP]__STATIC_ANALYSIS.md)
 
 **Quick Reference**:
-- Small edits: Ruff + ESLint + TSC
-- New modules: + Mypy + Bandit
-- Pre-commit: All tools including GitLeaks
-- **Knip false positives**: See `AGENTS/[APP]__PROJECT_SPECIFIC.md` → Knip False Positives section
-- **Passing lint = definition of done**
+- Small edits: run the standard fast checks for the affected code
+- New modules or larger changes: run the full required analysis and type/safety checks
+- Pre-commit: run all required checks
+- Known tool false positives, suppressions, and exceptions: see `AGENTS/[APP]__PROJECT_SPECIFIC.md`
+- Passing required checks is part of the definition of done
 
 ---
 
