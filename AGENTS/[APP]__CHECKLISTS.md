@@ -18,7 +18,7 @@ Before marking any task as complete, verify:
 
 ### Testing
 - [ ] All new/modified code has tests
-- [ ] All tests pass (unit + integration + E2E)
+- [ ] All tests pass (unit, integration, and end-to-end)
 - [ ] Auth functionality tested (if backend changes)
 - [ ] No unrelated tests failing
 
@@ -140,15 +140,17 @@ For DESIGN-FIRST protocol (P1):
   - [ ] Data flow descriptions
   - [ ] Key design decisions with rationale
 
-- [ ] `DATABASE_SCHEMA.md` created
-  - [ ] Complete CREATE TABLE statements
-  - [ ] Index definitions with justification
-  - [ ] JSONB examples (if applicable)
-  - [ ] Foreign key diagram
-  - [ ] Migration strategy
+- [ ] `DATA_MODEL.md` created
+  - [ ] Core entities and relationships
+  - [ ] Relational, document, and/or graph model definitions as applicable
+  - [ ] Indexing and partitioning strategy with justification
+  - [ ] Example data shapes and records
+  - [ ] Relationship or topology diagram
+  - [ ] Data migration and synchronization strategy
+  - [ ] Source-of-truth boundaries and cross-store synchronization rules
 
 - [ ] `API_SPECIFICATION.md` created
-  - [ ] Endpoint table
+  - [ ] Endpoint data set
   - [ ] Request/response schemas
   - [ ] Error formats
   - [ ] Pagination strategy
@@ -170,14 +172,16 @@ For DESIGN-FIRST protocol (P1):
 ## Database Migration Checklist
 
 ```markdown
-Before deploying database changes:
-- [ ] Updated ORM models
-- [ ] Created migration script
-- [ ] Updated all services querying affected tables
-- [ ] Updated test fixtures
-- [ ] Updated API documentation
-- [ ] Ran migration on target environment
-- [ ] Verified all tests pass with new schema
+Before deploying data model changes:
+- [ ] Updated application models, mappings, and validators
+- [ ] Created and reviewed the required migration, transformation, or backfill procedure
+- [ ] Updated all affected queries, repositories, services, and traversals
+- [ ] Updated test fixtures, seed data, and example payloads
+- [ ] Updated API, schema, and data-contract documentation
+- [ ] Applied changes in the target environment as required
+- [ ] Verified all tests pass with the updated data model
+
+Datastore-specific notes are in the project-specific file [APP]__PROJECT_SPECIFIC.md.
 ```
 
 ---
