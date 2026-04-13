@@ -183,7 +183,7 @@ This section is intentionally minimal. All project-specific rules, conventions, 
 | [AGENTS/[APP]__IMPLEMENTATION.md](AGENTS/[APP]__IMPLEMENTATION.md)           | TDD, scope enforcement, error recovery                            |
 | [AGENTS/[APP]__API_DESIGN.md](AGENTS/[APP]__API_DESIGN.md)                   | REST API design rules, HTTP status codes, error formats           |
 | [AGENTS/[APP]__CHECKLISTS.md](AGENTS/[APP]__CHECKLISTS.md)                   | Pre-completion checklist, decision log template, tech debt format |
-| [AGENTS/[APP]__STATIC_ANALYSIS.md](AGENTS/[APP]__STATIC_ANALYSIS.md)         | Linting tools, Knip rules, false positives list                   |
+| [AGENTS/[APP]__STATIC_ANALYSIS.md](AGENTS/[APP]__STATIC_ANALYSIS.md)         | Linting, dead code, test coverage, doc & artifact integrity       |
 | [AGENTS/[APP]__DEPENDENCY_UPGRADES.md](AGENTS/[APP]__DEPENDENCY_UPGRADES.md) | Phased upgrade methodology, conflict resolution, rollback         |
 | [AGENTS/[APP]__TOOL_USAGE.md](AGENTS/[APP]__TOOL_USAGE.md)                   | File exploration, search patterns, command safety, git operations |
 
