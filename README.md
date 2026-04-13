@@ -7,6 +7,21 @@ This repository is a portable starting point for building a high-discipline AI c
 
 The goal is to help teams move from generic prompting to repeatable, auditable, and safer agent behavior.
 
+## Why This Exists
+
+This playbook is the operational artifact of **Architect Coding** — a software 
+development methodology where the engineer acts as orchestrator and AI agents 
+handle all implementation.
+
+The tooling (AGENTS.md, the AGENTS/ directory, the P0-P4 matrix) is 
+intentional. Each piece encodes a specific answer to a specific failure mode 
+in agentic development: slop, context rot, scope creep, and unconstrained 
+autonomy.
+
+> *You design. AI codes. Together you ship.*
+
+→ [Read the full concept and methodology](./CONCEPT.md)
+
 ## What is in this repo
 
 - `AGENTS.md`
