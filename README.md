@@ -1,4 +1,4 @@
-# Farshad's AGENTS.md Prototyping Playbook
+# Architect Coding Playbook
 
 This repository is a portable starting point for building a high-discipline AI coding workflow using:
 
@@ -28,8 +28,8 @@ The goal is to help teams move from generic prompting to repeatable, auditable, 
 ### 1) Clone this playbook
 
 ```bash
-git clone https://github.com/farshadas/agents.md-prototyping-playbook.git
-cd agents.md-prototyping-playbook
+git clone https://github.com/farshadas/architect-coding-playbook.git
+cd architect-coding-playbook
 ```
 
 ### 2) Copy into your target project
@@ -42,8 +42,8 @@ From your target project's root, copy:
 Example:
 
 ```bash
-cp /path/to/agents.md-prototyping-playbook/AGENTS.md /path/to/your-project/AGENTS.md
-cp -R /path/to/agents.md-prototyping-playbook/AGENTS /path/to/your-project/AGENTS
+cp /path/to/architect-coding-playbook/AGENTS.md /path/to/your-project/AGENTS.md
+cp -R /path/to/architect-coding-playbook/AGENTS /path/to/your-project/AGENTS
 ```
 
 ### 3) Customize project-specific rules
