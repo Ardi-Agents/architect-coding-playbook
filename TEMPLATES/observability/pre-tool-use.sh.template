@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# PreToolUse hook — emit a structured pre-event with a deterministic execution ID.
+# Non-blocking: POSTs asynchronously; failures never block the tool call.
+#
+# Expected env (set by the runtime before invoking the hook):
+#   SESSION_ID   — current session identifier
+#   TOOL_NAME    — name of the tool about to run
+#   TOOL_INPUT   — JSON string with tool arguments (canonicalized by the runtime)
+#
+# Alternatively, hooks may receive the event on stdin as JSON. Adapt as needed.
+
+set -uo pipefail
+
+LOG_URL="${INSPECTOR_URL:-http://localhost:9999/hooks}"
+TIMEOUT_SECS=1
+
+session_id="${SESSION_ID:-unknown}"
+tool_name="${TOOL_NAME:-unknown}"
+tool_input="${TOOL_INPUT:-{}}"
+
+# Deterministic execution ID: md5 of the tool_input (canonicalized by the runtime)
+# scoped by session + tool so the same call in two sessions has different IDs.
+tool_input_hash=$(printf '%s' "$tool_input" | md5sum 2>/dev/null | cut -d' ' -f1 | head -c 12)
+if [ -z "$tool_input_hash" ]; then
+  # macOS fallback
+  tool_input_hash=$(printf '%s' "$tool_input" | md5 2>/dev/null | head -c 12)
+fi
+execution_id="${session_id}_${tool_name}_${tool_input_hash}"
+
+ts=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+# Emit the structured event. Fire-and-forget — agent never blocks on this.
+curl --max-time "$TIMEOUT_SECS" --silent --output /dev/null \
+  -X POST "$LOG_URL" \
+  -H 'Content-Type: application/json' \
+  -d "{\"event\":\"PreToolUse\",\"timestamp\":\"$ts\",\"session_id\":\"$session_id\",\"execution_id\":\"$execution_id\",\"tool\":\"$tool_name\"}" &
+
+# Also emit to stderr for local debugging (non-blocking).
+>&2 echo "[hook pre] execution_id=$execution_id"
+
+exit 0

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# PostToolUse hook — emit a structured post-event that joins to PreToolUse via the
+# same deterministic execution ID. Includes exit status and a (redacted) summary.
+#
+# Expected env:
+#   SESSION_ID
+#   TOOL_NAME
+#   TOOL_INPUT   — same value as the PreToolUse invocation (runtime guarantees)
+#   TOOL_STATUS  — "ok" | "error" | "partial"
+#   TOOL_OUTPUT  — optional; may be truncated/redacted by the runtime
+
+set -uo pipefail
+
+LOG_URL="${INSPECTOR_URL:-http://localhost:9999/hooks}"
+TIMEOUT_SECS=1
+
+session_id="${SESSION_ID:-unknown}"
+tool_name="${TOOL_NAME:-unknown}"
+tool_input="${TOOL_INPUT:-{}}"
+tool_status="${TOOL_STATUS:-unknown}"
+tool_output="${TOOL_OUTPUT:-}"
+
+# Recompute the same execution ID the PreToolUse hook computed.
+tool_input_hash=$(printf '%s' "$tool_input" | md5sum 2>/dev/null | cut -d' ' -f1 | head -c 12)
+if [ -z "$tool_input_hash" ]; then
+  tool_input_hash=$(printf '%s' "$tool_input" | md5 2>/dev/null | head -c 12)
+fi
+execution_id="${session_id}_${tool_name}_${tool_input_hash}"
+
+# Minimal redaction: mask patterns that look like tokens, emails, or long digit sequences.
+redacted_output=$(printf '%s' "$tool_output" \
+  | sed -E 's/[A-Za-z0-9_.+-]+@[A-Za-z0-9-]+\.[A-Za-z0-9.-]+/<email>/g' \
+  | sed -E 's/[A-Za-z0-9_-]{32,}/<redacted>/g' \
+  | cut -c1-512)
+
+ts=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+curl --max-time "$TIMEOUT_SECS" --silent --output /dev/null \
+  -X POST "$LOG_URL" \
+  -H 'Content-Type: application/json' \
+  -d "{\"event\":\"PostToolUse\",\"timestamp\":\"$ts\",\"session_id\":\"$session_id\",\"execution_id\":\"$execution_id\",\"tool\":\"$tool_name\",\"status\":\"$tool_status\",\"output_preview\":\"$redacted_output\"}" &
+
+>&2 echo "[hook post] execution_id=$execution_id status=$tool_status"
+
+exit 0
