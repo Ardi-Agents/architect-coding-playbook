@@ -1,0 +1,44 @@
+{
+  "_comment": "Curated hooks block. Copy into your .claude/settings.json (or the equivalent for your runtime). Adjust paths to match your installation.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node .claude/hooks/session-start.mjs",
+        "timeout_ms": 2000
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "node .claude/hooks/user-prompt-submit.mjs",
+        "timeout_ms": 500
+      }
+    ],
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": "node .claude/hooks/pre-compact.mjs",
+        "timeout_ms": 3000
+      }
+    ]
+  },
+  "_optionalHooks": {
+    "_comment": "Add these as your observability + safety needs grow. See AGENT_HOOKS.md and AGENT_OBSERVABILITY.md.",
+    "PreToolUse": [
+      { "type": "command", "command": "node .claude/hooks/pre-tool-use.mjs", "timeout_ms": 100 }
+    ],
+    "PostToolUse": [
+      { "type": "command", "command": "node .claude/hooks/post-tool-use.mjs", "timeout_ms": 100 }
+    ],
+    "SubagentStart": [
+      { "type": "command", "command": "node .claude/hooks/subagent-start.mjs", "timeout_ms": 100 }
+    ],
+    "SubagentStop": [
+      { "type": "command", "command": "node .claude/hooks/subagent-stop.mjs", "timeout_ms": 100 }
+    ],
+    "SessionEnd": [
+      { "type": "command", "command": "node .claude/hooks/session-end.mjs", "timeout_ms": 3000 }
+    ]
+  }
+}
