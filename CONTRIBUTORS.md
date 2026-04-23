@@ -2,18 +2,18 @@
 
 ## Founding Team
 
-| Name | Role | GitHub |
-|------|------|--------|
-| Farshad A. Samimi | Lead Architect / Primary Author | [@farshadas](https://github.com/farshadas) |
-| Brian Boyd | .NET/C# Ecosystem | [@briansboyd](https://github.com/briansboyd) |
+| Name               | Role                            | GitHub                                       |
+| ------------------ | ------------------------------- | -------------------------------------------- |
+| Farshad A. Samimi  | Lead Architect / Primary Author | [@farshadas](https://github.com/farshadas)   |
+| Brian Boyd         | .NET/C# Ecosystem               | [@briansboyd](https://github.com/briansboyd) |
+| Giorgi Giorgobiani | Senior Engineer                 | [@zuzuna54](https://github.com/zuzuna54)     |
 
 ## Community Contributors
 
 | Name | Role | GitHub |
-|------|------|--------|
-| Giorgi Giorgobiani | TypeScript/Next.js sibling template + orchestration, hooks, observability, knowledge-graph, memory/learning, SPARC, routing, project-documentation, and worktree/delegation appendices | [@TBD](https://github.com/TBD) |
+| ---- | ---- | ------ |
 
-*Names added chronologically as the project grows...*
+_Names added chronologically as the project grows..._
 
 ---
 
