@@ -1,0 +1,67 @@
+# Ignore rules for a clean, code-only knowledge graph.
+# Copy to your repo root and adjust to your project's layout.
+# Most extractors (graphify, tree-sitter-based) honor gitignore-style syntax.
+
+# --- Third-party code (noise; clutters god-node analysis) ---
+node_modules/
+.venv/
+venv/
+vendor/
+packages/*/node_modules/
+
+# --- Generated / build artifacts ---
+build/
+dist/
+out/
+target/
+.next/
+.turbo/
+coverage/
+*.min.js
+*.bundle.js
+*.d.ts
+
+# --- Infrastructure / tooling (not part of the application graph) ---
+.github/
+.gitlab/
+.circleci/
+.husky/
+*.tf
+*.tfstate
+*.hcl
+
+# --- Database migrations (generated; not useful for architecture view) ---
+# Uncomment to include them when doing data-layer specific analysis:
+migrations/
+packages/db/migrations/
+
+# --- Tests (exclude by default; include with --with-tests for coverage work) ---
+tests/
+__tests__/
+*.test.ts
+*.test.tsx
+*.test.js
+*.spec.ts
+*.spec.tsx
+*.spec.js
+e2e/
+playbook/
+
+# --- Large data / fixtures ---
+fixtures/
+snapshots/
+__snapshots__/
+*.snap
+*.fixture.json
+
+# --- Docs / non-code (optional — keep enabled if your docs aren't structurally relevant) ---
+docs/
+*.md
+
+# --- Lock files ---
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Cargo.lock
+poetry.lock
+Pipfile.lock

@@ -1,0 +1,38 @@
+{
+  "_comment": "MCP server registration template. Claude Code reads .mcp.local.json; Cursor / Codex / other runtimes use their own paths but accept the same shape. Replace <extractor-binary> and <graph-path> with your extractor's values.",
+  "mcpServers": {
+    "code-graph": {
+      "command": "<extractor-binary>",
+      "args": [
+        "serve",
+        "<graph-path>"
+      ],
+      "env": {}
+    }
+  },
+  "_exampleUsingGraphify": {
+    "mcpServers": {
+      "code-graph": {
+        "command": "/path/to/your/venv/bin/python",
+        "args": [
+          "-m",
+          "graphify.serve",
+          "/path/to/your/repo/graphify-out/graph.json"
+        ],
+        "env": {}
+      }
+    }
+  },
+  "_exposedToolsContract": {
+    "_comment": "Every graph-MCP server should expose these tools (or a superset). Agents in this playbook expect them by name.",
+    "tools": [
+      "query_graph",
+      "get_node",
+      "get_neighbors",
+      "get_community",
+      "god_nodes",
+      "shortest_path",
+      "graph_stats"
+    ]
+  }
+}
