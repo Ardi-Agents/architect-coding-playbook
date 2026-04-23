@@ -36,7 +36,70 @@ autonomy.
   - `[APP]__TOOL_USAGE.md`
   - `[APP]__CHECKLISTS.md`
   - `[APP]__DEPENDENCY_UPGRADES.md`
-  - `[APP]__PROJECT_SPECIFIC.md` (template override; replace for your project)
+  - `[APP]__PROJECT_SPECIFIC.md` (Python / FastAPI template override)
+
+## Extended Appendices
+
+The playbook also ships a set of extension appendices covering
+multi-agent orchestration, hooks, observability, knowledge-graph tooling,
+a TypeScript sibling project-specific template, and runnable
+templates you can drop into your project. These are independent of the
+core kernel — read whichever match the concerns you're solving.
+
+- `AGENTS/[APP]__PROJECT_SPECIFIC__NEXTJS_LAMBDA.md` — sibling to the
+  Python/FastAPI template, for TypeScript / Next.js / AWS Lambda /
+  Supabase stacks.
+- `AGENTS/META_ORCHESTRATION.md` — topology taxonomy (hierarchical,
+  mesh, adaptive, hybrid), coordinator roles, swarm-sizing heuristics,
+  failure modes.
+- `AGENTS/WORKTREE_AND_DELEGATION.md` — how a lead agent splits work
+  across isolated git worktrees (subagents vs agent teams,
+  file-ownership strategies, meta-agent merging protocol, hand-off
+  package shape).
+- `AGENTS/AGENT_HOOKS.md` — the lifecycle events (SessionStart,
+  UserPromptSubmit, PreToolUse, PreCompact, SubagentStart/Stop,
+  SessionEnd) and what belongs in each handler.
+- `AGENTS/SPARC_METHODOLOGY.md` — the five-phase pipeline
+  (Specification → Pseudocode → Architecture → Refinement →
+  Completion) with gate criteria between phases.
+- `AGENTS/TASK_ROUTING.md` — keyword-pattern-to-agent routing with
+  calibrated confidence and ranked alternatives; upgrade path to
+  semantic routing.
+- `AGENTS/KNOWLEDGE_GRAPH.md` — pairing a code knowledge-graph (AST
+  extractor + MCP server) with a human-curated vault for
+  architectural recall.
+- `AGENTS/MEMORY_AND_LEARNING.md` — three-layer memory model,
+  backend priority with graceful degradation, trajectory recording,
+  verdict judgment.
+- `AGENTS/AGENT_OBSERVABILITY.md` — execution-ID correlation across
+  processes, three-tier file-change lifecycle, session state machine,
+  JSON-RPC-over-stdio IPC.
+- `AGENTS/E2E_HARNESS.md` — invariant-driven E2E structure (expect +
+  invariants + report) with happy-path and edge-script discipline.
+- `AGENTS/PRODUCTION_PATTERNS.md` — ten recurring production patterns
+  (error-handler HOF, typed error hierarchy, API client singleton,
+  env validation at boot, worker queue, structured logging, LLM
+  structured output, soft delete, row-level auth, circuit breaker).
+- `AGENTS/PROJECT_DOCUMENTATION.md` — the two-tier CLAUDE.md pattern
+  (root kernel + per-module appendices) and the auto-update rule.
+
+Runnable templates under `TEMPLATES/`:
+
+- `TEMPLATES/e2e-harness/` — drop-in Node harness (expect /
+  invariants / report primitives + example happy-path and edge
+  scripts + orchestrator).
+- `TEMPLATES/hook-orchestration/` — minimal settings.json block plus
+  three reference handlers (SessionStart, UserPromptSubmit,
+  PreCompact).
+- `TEMPLATES/knowledge-graph/` — `.mcp.local.json.template`,
+  `.graphifyignore.template`, and a CLAUDE.md snippet that directs
+  agents to consult the graph before architectural questions.
+- `TEMPLATES/sparc-agents/` — eleven agent-definition markdowns
+  (five SPARC phase agents + six top coordinators) ready to copy
+  into your runtime's agent directory.
+- `TEMPLATES/observability/` — shell hook templates with
+  deterministic execution-ID hashing, a session-idle detector, and a
+  three-tier file-change lifecycle API.
 
 ## Install and use
 

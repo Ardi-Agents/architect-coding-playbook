@@ -175,6 +175,70 @@ Placement matters:
 
 Repetition helps. Agents reading top-to-bottom see the rule three times; it's hard to miss.
 
+### Mechanics (what "update" means concretely)
+
+Listing the rule is cheap; specifying *what triggers an update and what the update actually is* is where the discipline lives. A concrete mechanic:
+
+**Triggers — always update when you do any of these:**
+
+- Add, rename, or delete a module, service, lambda, or package.
+- Change a route, an exported function signature, or a public API shape.
+- Change a DB schema (column added/removed/renamed, index added, RLS policy modified).
+- Change environment variables (add, remove, rename, change required/optional).
+- Change a dependency in a way that affects usage patterns (upgrade majors, swap libraries).
+- Change build, test, or deploy commands.
+- Change a business rule the module enforces.
+- Observe a recurring mistake worth recording under "common mistakes".
+
+**What to update (per trigger):**
+
+| Trigger | File(s) to update |
+|---------|------------------|
+| New module/service | Root CLAUDE.md monorepo tree + feature registry; create `module/CLAUDE.md` |
+| Route change | Module CLAUDE.md route table |
+| Schema change | Root CLAUDE.md env/DB notes; module CLAUDE.md if module-specific |
+| Env var change | Root CLAUDE.md env var table |
+| Dependency major upgrade | Root CLAUDE.md tech stack; any module CLAUDE.md citing the library |
+| Command change | Root CLAUDE.md common commands |
+| Business rule change | Module CLAUDE.md business rules section |
+| Recurring mistake | Module CLAUDE.md common mistakes section (with date) |
+
+**Timing: doc update is the *last* step before marking complete.**
+
+Not first. Not midway. Last. The reasoning:
+
+- Putting it first invites stale docs when scope shifts mid-task.
+- Putting it midway creates "I'll finish it in a bit" debt.
+- Putting it last couples doc freshness to task completion — agents who don't update, can't finish.
+
+**How to enforce it:**
+
+1. The pre-completion checklist (see `[APP]__CHECKLISTS.md`) includes "CLAUDE.md reflects new state" as an explicit, un-skippable line.
+2. Optional (stronger): a pre-commit or CI check diffs the patch against CLAUDE.md files and warns if no corresponding CLAUDE.md touch is present for changes matching any trigger above. Warning, not block — some changes legitimately don't touch docs.
+3. Periodic (monthly) human review: spot-check three random modules; if their CLAUDE.md is more than 60 days older than the latest code change in that module, flag for refresh.
+
+### Failure modes
+
+- **"I updated docs already" without diffing**: the agent *intends* to have updated but didn't actually change the file. Always require a `git diff` of CLAUDE.md as proof before marking complete.
+- **Overwrite by auto-generation**: a tool regenerates CLAUDE.md from code and clobbers hand-curated sections. If auto-generation is in play, it must only touch explicitly-marked regions (`<!-- AUTO-GEN:BEGIN -->` / `<!-- AUTO-GEN:END -->`).
+- **Cargo-cult updates**: every task touches CLAUDE.md to satisfy the rule, but the touches are cosmetic (typo fixes, reordered bullets) while the substantive drift remains. Reviewer checks the update *matches the change*.
+- **Rot in "common mistakes"**: the section lists mistakes that no longer apply because the underlying code has changed. Review quarterly; retire outdated entries.
+- **Contradiction between CLAUDE.md and code**: the doc says "we use Prisma" but the code uses Drizzle. Kernel rule: code is truth; the doc is wrong. Fix the doc or the rule, but never let the lie persist.
+
+### Signals that the auto-update is working
+
+- Humans report onboarding is faster (CLAUDE.md answers their questions).
+- New agents produce better code on day one (fewer "where is X" re-investigations).
+- Reviewers increasingly catch "you forgot to update CLAUDE.md" instead of "your code broke production".
+- Feature-registry status column is trustworthy enough to plan from.
+
+### Signals that it isn't
+
+- CLAUDE.md last modified is weeks older than any given significant change.
+- Common-mistakes section hasn't grown in months despite bug reports.
+- Engineers bypass CLAUDE.md and go directly to the code for truth.
+- Agents are still re-asking questions CLAUDE.md should answer.
+
 ---
 
 ## What Belongs Where
