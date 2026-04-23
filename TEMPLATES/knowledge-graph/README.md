@@ -28,7 +28,7 @@ Drop-in configs for pairing a code knowledge-graph with your agent runtime, impl
 - Nightly scheduled: catches anything that slipped.
 - Before and after large refactors: explicit regeneration with a diff against baseline.
 
-See `KNOWLEDGE_GRAPH.md` for the full discipline.
+See `[APP]__KNOWLEDGE_GRAPH.md` for the full discipline.
 
 ## Vault pairing (optional)
 

@@ -167,9 +167,9 @@ Agents that consult both before acting write materially better code. Agents that
 
 ## Integration with Other Appendices
 
-- `AGENT_HOOKS.md` — `SessionStart` can warm the graph (load it into memory or seed the MCP server cache)
-- `META_ORCHESTRATION.md` — shared-working-memory pattern can use the MCP graph as the backend
-- `TASK_ROUTING.md` — graph communities can inform routing (prompts mentioning a community's top node route to that module's specialist)
+- `[APP]__AGENT_HOOKS.md` — `SessionStart` can warm the graph (load it into memory or seed the MCP server cache)
+- `[APP]__META_ORCHESTRATION.md` — shared-working-memory pattern can use the MCP graph as the backend
+- `[APP]__TASK_ROUTING.md` — graph communities can inform routing (prompts mentioning a community's top node route to that module's specialist)
 
 ---
 

@@ -120,7 +120,7 @@ All workers → queen. Used for result collection, status reporting. Cost: O(n) 
 Any worker → any worker. Used for disagreement resolution, clarification. Cost: O(n²) worst case — budget accordingly and rate-limit.
 
 ### Shared working memory
-Instead of broadcasting every update, writers publish to a shared store (sqlite, redis, an MCP-exposed KV) and consumers pull. Bounded cost; eventually-consistent. See `MEMORY_AND_LEARNING.md` for backend choices.
+Instead of broadcasting every update, writers publish to a shared store (sqlite, redis, an MCP-exposed KV) and consumers pull. Bounded cost; eventually-consistent. See `[APP]__MEMORY_AND_LEARNING.md` for backend choices.
 
 ---
 

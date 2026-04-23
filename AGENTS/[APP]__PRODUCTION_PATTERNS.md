@@ -234,7 +234,7 @@ For non-Postgres stacks: similar discipline via an access-control layer in the r
 - `[APP]__PROJECT_SPECIFIC__*.md` — stack-specific implementations (which library, which imports).
 - `[APP]__API_DESIGN.md` — the error-handler HOF and typed errors are the wire-level contract.
 - `[APP]__STATIC_ANALYSIS.md` — lint rules enforce "no raw fetch", "no console.log", "no bare throw" where applicable.
-- `AGENT_OBSERVABILITY.md` — structured logs + metrics flow into the same substrate agents observe.
+- `[APP]__AGENT_OBSERVABILITY.md` — structured logs + metrics flow into the same substrate agents observe.
 
 ---
 

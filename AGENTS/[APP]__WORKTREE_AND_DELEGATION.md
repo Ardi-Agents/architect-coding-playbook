@@ -7,7 +7,7 @@
 
 ## Why This Appendix Exists
 
-`META_ORCHESTRATION.md` describes *what shape* a swarm takes. This appendix describes *where each agent lives* — the concrete mechanics of giving each agent its own filesystem, its own branch, its own context, so two agents never overwrite each other's edits. It also describes the inverse: how a meta-agent (lead) integrates work from isolated spaces back into a single coherent change.
+`[APP]__META_ORCHESTRATION.md` describes *what shape* a swarm takes. This appendix describes *where each agent lives* — the concrete mechanics of giving each agent its own filesystem, its own branch, its own context, so two agents never overwrite each other's edits. It also describes the inverse: how a meta-agent (lead) integrates work from isolated spaces back into a single coherent change.
 
 Most multi-agent disasters are avoidable with one rule: **every file has exactly one owner at any given moment**. Enforcing that rule by policy is fragile; enforcing it by *topology* — each agent working in its own git worktree, with its own branch, and an explicit merge step run by the lead — is durable. This is the pattern this appendix describes.
 
@@ -197,11 +197,11 @@ Use worktree isolation when:
 
 ## Integration with Other Appendices
 
-- `META_ORCHESTRATION.md` — names the topology; this appendix names the *container* each agent runs in.
-- `SPARC_METHODOLOGY.md` — phase-based delegation is a natural fit for SPARC (Phase 4 Refinement = coder; Phase 5 Completion = reviewer, sequenced).
-- `AGENT_HOOKS.md` — `SubagentStart` and `SubagentStop` hooks are the natural places to auto-create and auto-cleanup worktrees.
-- `AGENT_OBSERVABILITY.md` — tag every tool-use log with the agent's worktree name so multi-agent logs remain attributable.
-- `PROJECT_DOCUMENTATION.md` — per-module CLAUDE.md files define ownership lines the dispatcher can respect.
+- `[APP]__META_ORCHESTRATION.md` — names the topology; this appendix names the *container* each agent runs in.
+- `[APP]__SPARC_METHODOLOGY.md` — phase-based delegation is a natural fit for SPARC (Phase 4 Refinement = coder; Phase 5 Completion = reviewer, sequenced).
+- `[APP]__AGENT_HOOKS.md` — `SubagentStart` and `SubagentStop` hooks are the natural places to auto-create and auto-cleanup worktrees.
+- `[APP]__AGENT_OBSERVABILITY.md` — tag every tool-use log with the agent's worktree name so multi-agent logs remain attributable.
+- `[APP]__PROJECT_DOCUMENTATION.md` — per-module CLAUDE.md files define ownership lines the dispatcher can respect.
 
 ---
 

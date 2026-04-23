@@ -146,7 +146,7 @@ If a gate fails, the correct move is to **return to the prior phase**, not to pa
 
 ## Integration with Learning / ReasoningBank
 
-If your setup has a pattern store (see `MEMORY_AND_LEARNING.md`), SPARC integrates naturally:
+If your setup has a pattern store (see `[APP]__MEMORY_AND_LEARNING.md`), SPARC integrates naturally:
 
 - **Entering a phase**: search the store for similar past SPARC patterns (same phase, similar domain, similar complexity). Top-K results go into the agent's context.
 - **Exiting a phase**: record the outcome (success / fail / partial), duration, and a digest of the artifact. The next similar feature gets smarter suggestions.

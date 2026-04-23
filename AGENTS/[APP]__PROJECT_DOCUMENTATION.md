@@ -160,7 +160,7 @@ Every secret or config var that the app reads lives in a single table (root CLAU
 - **Required / optional** — plus default if optional
 - **Rotation policy** — if any
 
-This table, combined with pattern 4 (env validation at boot) from `PRODUCTION_PATTERNS.md`, makes deployment changes traceable. Every PR that adds a secret touches the table; code review catches drift.
+This table, combined with pattern 4 (env validation at boot) from `[APP]__PRODUCTION_PATTERNS.md`, makes deployment changes traceable. Every PR that adds a secret touches the table; code review catches drift.
 
 ---
 
@@ -276,10 +276,10 @@ The pattern: CLAUDE.md is the *index* and the *policy*. Prose and details live i
 
 ## Integration with Other Appendices
 
-- `AGENTS.md` / `AGENT_HOOKS.md` — the SessionStart hook should load root CLAUDE.md and per-module docs relevant to the current task into the agent's context.
-- `KNOWLEDGE_GRAPH.md` — root CLAUDE.md links to the graph and the vault.
-- `SPARC_METHODOLOGY.md` — Phase 1 (Specification) references the module CLAUDE.md to ground requirements in existing rules.
-- `PRODUCTION_PATTERNS.md` — root CLAUDE.md references this appendix for error handling, logging, etc., rather than restating.
+- `AGENTS.md` / `[APP]__AGENT_HOOKS.md` — the SessionStart hook should load root CLAUDE.md and per-module docs relevant to the current task into the agent's context.
+- `[APP]__KNOWLEDGE_GRAPH.md` — root CLAUDE.md links to the graph and the vault.
+- `[APP]__SPARC_METHODOLOGY.md` — Phase 1 (Specification) references the module CLAUDE.md to ground requirements in existing rules.
+- `[APP]__PRODUCTION_PATTERNS.md` — root CLAUDE.md references this appendix for error handling, logging, etc., rather than restating.
 - `[APP]__IMPLEMENTATION.md` — root CLAUDE.md documents test/build/lint commands; per-module CLAUDE.md lists testing expectations specific to the module.
 
 ---

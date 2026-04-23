@@ -31,7 +31,7 @@ Embed the ID in:
 - Pre-use log record
 - Post-use log record
 - Diff record (if the tool modified files)
-- Trajectory step (see `MEMORY_AND_LEARNING.md`)
+- Trajectory step (see `[APP]__MEMORY_AND_LEARNING.md`)
 
 Now join across tables by `execution_id` and you have a complete per-call record regardless of which process wrote which row.
 
@@ -107,7 +107,7 @@ A single table (or JSONL file) with columns: `execution_id`, `file_path`, `snaps
 ```
 
 ### Implementation
-A background task — often the same daemon that runs consolidation (see `MEMORY_AND_LEARNING.md`) — scans every N seconds:
+A background task — often the same daemon that runs consolidation (see `[APP]__MEMORY_AND_LEARNING.md`) — scans every N seconds:
 
 ```
 for each active session:
@@ -232,10 +232,10 @@ Alert on: sudden drop in tool success rate, unbounded growth in `file_change.pen
 
 ## Integration with Other Appendices
 
-- `AGENT_HOOKS.md` — the hooks emit the events; this appendix defines how they're structured and correlated.
-- `MEMORY_AND_LEARNING.md` — trajectory records use the same `execution_id` scheme; observability and learning share a substrate.
-- `META_ORCHESTRATION.md` — swarm runs emit per-agent observability; aggregate into a swarm-level session report.
-- `KNOWLEDGE_GRAPH.md` — agents that edit files feed the file-change lifecycle; a graph-backed dashboard can visualize which communities an agent touched.
+- `[APP]__AGENT_HOOKS.md` — the hooks emit the events; this appendix defines how they're structured and correlated.
+- `[APP]__MEMORY_AND_LEARNING.md` — trajectory records use the same `execution_id` scheme; observability and learning share a substrate.
+- `[APP]__META_ORCHESTRATION.md` — swarm runs emit per-agent observability; aggregate into a swarm-level session report.
+- `[APP]__KNOWLEDGE_GRAPH.md` — agents that edit files feed the file-change lifecycle; a graph-backed dashboard can visualize which communities an agent touched.
 
 ---
 

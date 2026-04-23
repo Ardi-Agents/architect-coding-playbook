@@ -118,13 +118,13 @@ A router that doesn't learn from failure is a lookup table with opinions. Instru
 - A periodic job joins these and computes per-agent accuracy / cost metrics
 - Patterns that misroute >20% of the time are flagged for review; human decides whether to retrain, adjust weights, or accept
 
-Store this in the same memory/pattern backend you use for agent learning (see `MEMORY_AND_LEARNING.md`). The router and the agents share a learning substrate.
+Store this in the same memory/pattern backend you use for agent learning (see `[APP]__MEMORY_AND_LEARNING.md`). The router and the agents share a learning substrate.
 
 ---
 
 ## Integration with Hooks
 
-The router is typically invoked from the `UserPromptSubmit` hook (see `AGENT_HOOKS.md`). The hook:
+The router is typically invoked from the `UserPromptSubmit` hook (see `[APP]__AGENT_HOOKS.md`). The hook:
 
 1. Receives the user prompt
 2. Calls the router

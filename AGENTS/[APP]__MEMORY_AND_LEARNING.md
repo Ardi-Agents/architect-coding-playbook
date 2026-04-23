@@ -223,10 +223,10 @@ Teams often ask: one shared memory or per-agent silos?
 
 ## Integration with Other Appendices
 
-- `AGENT_HOOKS.md` — the hooks (`SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `SessionEnd`) drive the recording and retrieval cycle.
-- `SPARC_METHODOLOGY.md` — each SPARC phase entry searches patterns; each exit stores outcomes tagged by phase.
-- `KNOWLEDGE_GRAPH.md` — the graph is structural memory; this appendix covers episodic + procedural memory. Both are consulted during `UserPromptSubmit`.
-- `TASK_ROUTING.md` — the router learns from outcomes stored here (which agent succeeded on which prompt).
+- `[APP]__AGENT_HOOKS.md` — the hooks (`SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `SessionEnd`) drive the recording and retrieval cycle.
+- `[APP]__SPARC_METHODOLOGY.md` — each SPARC phase entry searches patterns; each exit stores outcomes tagged by phase.
+- `[APP]__KNOWLEDGE_GRAPH.md` — the graph is structural memory; this appendix covers episodic + procedural memory. Both are consulted during `UserPromptSubmit`.
+- `[APP]__TASK_ROUTING.md` — the router learns from outcomes stored here (which agent succeeded on which prompt).
 
 ---
 

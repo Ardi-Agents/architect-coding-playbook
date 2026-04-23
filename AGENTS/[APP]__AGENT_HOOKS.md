@@ -69,14 +69,14 @@ What each event should *usually* do. Adapt to your stack; skip what doesn't appl
 - Report loaded pattern count and any corruption warnings to the user
 
 ### UserPromptSubmit — route and enrich
-- **Routing**: keyword-match the prompt to candidate agents, emit a recommendation with confidence score and alternatives (see `TASK_ROUTING.md`)
+- **Routing**: keyword-match the prompt to candidate agents, emit a recommendation with confidence score and alternatives (see `[APP]__TASK_ROUTING.md`)
 - **Context injection**: append the top-K semantically-matched patterns from memory
 - **Trajectory start**: record this prompt as the start of a new trajectory record (for later verdict judgment)
 - **Archival tick**: every Nth prompt, write an incremental archive so a crash or forced compaction doesn't lose hours of work
 
 ### PreToolUse — validate and record
 - **Denylist check**: refuse dangerous shell commands unless user already approved (per kernel P0)
-- **Unsaved-work snapshot**: if the tool will modify a file, snapshot the current version (enables tracked-pending-resolved lifecycle — see `AGENT_OBSERVABILITY.md`)
+- **Unsaved-work snapshot**: if the tool will modify a file, snapshot the current version (enables tracked-pending-resolved lifecycle — see `[APP]__AGENT_OBSERVABILITY.md`)
 - **Execution-ID assignment**: hash the tool_input (md5 of serialized input is a good default) so PreToolUse + PostToolUse can be correlated even across process boundaries
 - **Rate-limit check**: some tools (API calls, MCP servers) benefit from a per-session quota
 
