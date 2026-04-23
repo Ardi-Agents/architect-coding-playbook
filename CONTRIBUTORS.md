@@ -9,6 +9,10 @@
 
 ## Community Contributors
 
+| Name | Role | GitHub |
+|------|------|--------|
+| Giorgi Giorgobiani | TypeScript/Next.js sibling template + orchestration, hooks, observability, knowledge-graph, memory/learning, SPARC, routing, project-documentation, and worktree/delegation appendices | [@TBD](https://github.com/TBD) |
+
 *Names added chronologically as the project grows...*
 
 ---

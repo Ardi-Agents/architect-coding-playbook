@@ -280,7 +280,7 @@ The pattern: CLAUDE.md is the *index* and the *policy*. Prose and details live i
 - `KNOWLEDGE_GRAPH.md` — root CLAUDE.md links to the graph and the vault.
 - `SPARC_METHODOLOGY.md` — Phase 1 (Specification) references the module CLAUDE.md to ground requirements in existing rules.
 - `PRODUCTION_PATTERNS.md` — root CLAUDE.md references this appendix for error handling, logging, etc., rather than restating.
-- `E2E_HARNESS.md` — per-module CLAUDE.md lists testing expectations; root CLAUDE.md documents harness invocation commands.
+- `[APP]__IMPLEMENTATION.md` — root CLAUDE.md documents test/build/lint commands; per-module CLAUDE.md lists testing expectations specific to the module.
 
 ---
 

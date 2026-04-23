@@ -170,7 +170,6 @@ Agents that consult both before acting write materially better code. Agents that
 - `AGENT_HOOKS.md` — `SessionStart` can warm the graph (load it into memory or seed the MCP server cache)
 - `META_ORCHESTRATION.md` — shared-working-memory pattern can use the MCP graph as the backend
 - `TASK_ROUTING.md` — graph communities can inform routing (prompts mentioning a community's top node route to that module's specialist)
-- `E2E_HARNESS.md` — invariants can be seeded from god-node and bridge-node analysis ("these are the things most callers depend on; they need the most tests")
 
 ---
 

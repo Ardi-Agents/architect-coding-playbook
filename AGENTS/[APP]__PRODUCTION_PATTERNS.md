@@ -225,7 +225,7 @@ For non-Postgres stacks: similar discipline via an access-control layer in the r
 - Open circuit returns a typed error (your `ServiceUnavailableError` or similar) that the error-handler HOF (pattern 1) maps to 503.
 - Metric: circuit state per dependency. Alert when something is open for >5 minutes.
 - Never silently swallow open-circuit errors. The user should see a graceful "try again in a moment", and logs should record every open/close transition.
-- Paired with the **degraded-dependency** edge script (see `E2E_HARNESS.md`) — the harness exercises the circuit directly so you know it works before an incident.
+- Pair with an integration test that exercises the degraded-dependency path directly so you know the breaker works before an incident hits.
 
 ---
 
@@ -234,7 +234,6 @@ For non-Postgres stacks: similar discipline via an access-control layer in the r
 - `[APP]__PROJECT_SPECIFIC__*.md` — stack-specific implementations (which library, which imports).
 - `[APP]__API_DESIGN.md` — the error-handler HOF and typed errors are the wire-level contract.
 - `[APP]__STATIC_ANALYSIS.md` — lint rules enforce "no raw fetch", "no console.log", "no bare throw" where applicable.
-- `E2E_HARNESS.md` — the edge-script catalog (auth, boundaries, idempotency, degraded-dependency) tests these patterns under stress.
 - `AGENT_OBSERVABILITY.md` — structured logs + metrics flow into the same substrate agents observe.
 
 ---
