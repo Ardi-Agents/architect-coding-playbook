@@ -38,75 +38,74 @@ autonomy.
   - `[APP]__DEPENDENCY_UPGRADES.md`
   - `[APP]__PROJECT_SPECIFIC.md` (template override; replace for your project)
 
-## Install and use
+## Install
 
-### 1) Clone this playbook
+This playbook installs itself. Point a coding agent at this repo and paste **one** of the prompts below — the agent does the rest, preserving anything you already have.
 
-```bash
-git clone https://github.com/farshadas/architect-coding-playbook.git
-cd architect-coding-playbook
+### One-paste install (recommended)
+
+Open your coding agent in any directory and paste:
+
+```
+Install the Architect Coding Playbook from https://github.com/farshadas/architect-coding-playbook
+
+1. Clone or fetch the repo to a local cache if not already present.
+2. Read CLAUDE_CODE/SETUP.md and execute it as an interactive setup.
+3. Enforce its safety rules — never overwrite existing files without showing
+   me a diff and getting my explicit approval. Default to preserving what
+   I already have.
+4. When done, summarize what was created, what was skipped, and what I
+   should verify.
 ```
 
-### 2) Copy into your target project
+### Safety guarantees
 
-From your target project's root, copy:
+The setup flow will:
 
-- `AGENTS.md`
-- the entire `AGENTS/` folder
+- **Detect** any existing `~/.claude/`, `.claude/`, `AGENTS.md`, or `AGENTS/` files before writing anything.
+- **Preserve by default** — if a file already exists, you get three choices: `keep existing` (default), `merge` selectively, or `replace fully`.
+- **Show diffs** for every proposed write. No silent mutations.
+- **Warn on foreign files** — if a detected file looks hand-written or authored by another framework, setup pauses and asks before touching it.
+- **Abort-safe** at any step. Rollback removes only what this setup created.
 
-Example:
+Full safety rules live in [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md).
+
+### Agent compatibility
+
+| Agent | How it reads this repo |
+|---|---|
+| **Claude Code** | Paste the prompt above. Agent reads `CLAUDE_CODE/SETUP.md` and runs it interactively. |
+| **Cursor** | Paste the prompt above. Agent reads `AGENTS.md` + `AGENTS/` and sets up `.cursor/rules/`. |
+| **Windsurf** | Paste the prompt above. Agent reads `AGENTS.md` + `AGENTS/` and sets up `.windsurfrules`. |
+| **Codex CLI** | Agent reads `AGENTS.md` natively — copy `AGENTS.md` + `AGENTS/` into your project. |
+
+### Manual path (for humans who prefer it)
+
+If you want to install without an agent:
 
 ```bash
-cp /path/to/architect-coding-playbook/AGENTS.md /path/to/your-project/AGENTS.md
-cp -R /path/to/architect-coding-playbook/AGENTS /path/to/your-project/AGENTS
+git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+cp ~/architect-coding-playbook/AGENTS.md ./AGENTS.md
+cp -R ~/architect-coding-playbook/AGENTS ./AGENTS
+# Edit AGENTS/[APP]__PROJECT_SPECIFIC.md with your project's specifics.
 ```
 
-### 3) Customize project-specific rules
+For the full Claude Code setup (skills, subagents, memory, per-project `.claude/`), follow [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md) step by step.
 
-Edit:
+---
 
-- `AGENTS/[APP]__PROJECT_SPECIFIC.md`
+## Rollout sequence
 
-Replace template content with your own:
-
-- stack-specific commands
-- test/build/checks scripts
-- migration procedures
-- known tooling false positives
-- environment and deployment conventions
-
-### 4) Keep kernel and appendices modular
-
-- Keep `AGENTS.md` broadly reusable across projects
-- Keep project-specific details in `[APP]__PROJECT_SPECIFIC.md`
-- Update appendices when your engineering standards evolve
-
-## Claude Code setup notes
-
-If you use Claude Code, the practical approach is:
-
-1. Use Claude Code to convert/adapt this playbook into your Claude-oriented rules format (for many teams this means curating a `CLAUDE.md` entrypoint).
-2. In `CLAUDE.md`, point explicitly to:
-   - `AGENTS.md`
-   - relevant files in `AGENTS/`
-3. Keep references stable so Claude can reliably load:
-   - the core kernel every session
-   - appendices on-demand by task type (API, testing, static analysis, etc.)
-
-In short: use Claude Code to "massage" this framework into a `CLAUDE.md` that points to these associated files, while preserving the same separation of concerns (kernel vs appendices vs project-specific override).
-
-## Suggested rollout sequence
-
-1. Start with `AGENTS.md` + `[APP]__PROJECT_SPECIFIC.md`
-2. Add API/implementation/static-analysis appendices next
-3. Add checklist and dependency-upgrade appendices after week 1
-4. Review and tighten rules from real task outcomes
+1. Start with `AGENTS.md` + `[APP]__PROJECT_SPECIFIC.md`.
+2. Add API / implementation / static-analysis appendices next.
+3. Add checklist and dependency-upgrade appendices after week 1.
+4. Review and tighten rules from real task outcomes.
 
 ## Maintenance model
 
-- Treat rules like code: version, review, and iterate
-- Add post-task rule improvement proposals
-- Keep a changelog of significant behavior changes to your agent rules
+- Treat rules like code: version, review, and iterate.
+- Add post-task rule improvement proposals.
+- Keep a changelog of significant behavior changes to your agent rules.
 
 ---
 

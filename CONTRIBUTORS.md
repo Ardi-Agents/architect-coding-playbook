@@ -6,12 +6,11 @@
 |------|------|--------|
 | Farshad A. Samimi | Lead Architect / Primary Author | [@farshadas](https://github.com/farshadas) |
 | Brian Boyd | .NET/C# Ecosystem | [@briansboyd](https://github.com/briansboyd) |
+| Nirnay Patel | Claude Code Ecosystem | [@NirnayPatel](https://github.com/NirnayPatel) |
 
 ## Community Contributors
 
-| Name | Role | GitHub |
-|------|------|--------|
-| Nirnay Patel | Claude Code Ecosystem | [@NirnayPatel](https://github.com/NirnayPatel) |
+*Names added chronologically as the project grows...*
 
 ---
 

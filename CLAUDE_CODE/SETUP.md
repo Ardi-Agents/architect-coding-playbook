@@ -15,12 +15,14 @@ Run the architect-coding-playbook Claude Code setup:
 
 You are setting up the Architect Coding Playbook for Claude Code. Execute these steps interactively. Do not summarize or skip steps.
 
-**Safety rules — enforce throughout:**
+**Safety rules — enforce throughout (non-negotiable):**
 
-- Never overwrite an existing file without showing the full proposed content and getting explicit confirmation.
-- If a file already exists, read it first, show a diff of what would change, and ask: "Keep existing, merge, or replace?"
-- Create directories only if they don't already exist.
-- For each file generated, prompt the user to review and confirm before writing.
+- **Preservation is the default.** Existing files are never overwritten automatically. If a file exists, it stays exactly as-is unless the user explicitly approves a replacement or merge.
+- **Detect before acting.** Before any write, read the existing file (if any), show a unified diff of proposed changes, and present three options: `(k) keep existing` / `(m) merge — I choose which sections to add` / `(r) replace fully`. Default choice is `keep existing`.
+- **No silent mutations.** Never modify content without showing it to the user first. Never touch a file the user didn't approve in this session.
+- **Directories are additive.** Create directories only if they don't exist. Never delete, rename, or reorganize existing directories.
+- **Warn on conflict.** If any detected file appears to have been authored by a different setup (different playbook, different framework), stop and ask: "This file looks hand-written or from another tool. Do you want to proceed? (yes/no/skip this file)".
+- **Abort-safe.** At any step, `abort` ends setup cleanly without partial writes. Track every file written so a follow-up `rollback` can remove just what this setup created.
 
 ---
 
