@@ -122,7 +122,10 @@ a more experienced orchestrator with a refined rulebook. A compounding flywheel.
 
 ---
 
-## Further Reading
+## Going Deeper
 
-- [AGENTS.md as a Development Operating System](https://www.linkedin.com/in/farshadas/) — LinkedIn article, Feb 2026
-- [architect-coding-playbook](https://github.com/farshadas/architect-coding-playbook) — this repo
+For the operational details — how the agent actually loads `AGENTS.md`, the 
+P0-P4 conflict resolver in practice, tiered QA gates (Tier 1/2/3), and the 
+policy-vs-capability layer split — see:
+
+→ [AGENTS.md as a Development Operating System](./docs/AGENTS_AS_DEV_OS.md)

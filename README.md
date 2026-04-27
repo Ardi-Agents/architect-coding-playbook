@@ -20,7 +20,8 @@ autonomy.
 
 > *You design. AI codes. Together you ship.*
 
-→ [Read the full concept and methodology](./CONCEPT.md)
+→ [Read the methodology overview](./CONCEPT.md)
+→ [Deep dive: AGENTS.md as a Development Operating System](./docs/AGENTS_AS_DEV_OS.md)
 
 ## What is in this repo
 

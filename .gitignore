@@ -1,1 +1,4 @@
 .claude/settings.local.json
+
+# Local-only reference materials (source articles, drafts, research) — never commit
+ref articles/
