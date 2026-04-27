@@ -1,0 +1,67 @@
+{
+  "_comment": "Project-level Claude Code settings. Committed to the repo and shared with the team. For local-only overrides, use settings.local.json (gitignored). Refer to Claude Code documentation for the canonical schema.",
+
+  "permissions": {
+    "_comment": "Tool access permissions for this project. Tighten or expand based on project sensitivity.",
+    "allow_read": ["**/*"],
+    "allow_edit": ["**/*"],
+    "deny_edit": [
+      ".env",
+      ".env.*",
+      "**/secrets/**",
+      "**/*.pem",
+      "**/*.key"
+    ],
+    "allow_bash": [
+      "git status",
+      "git diff",
+      "git log",
+      "npm test",
+      "npm run lint",
+      "npm run typecheck",
+      "pytest",
+      "ruff check",
+      "mypy"
+    ],
+    "deny_bash": [
+      "rm -rf",
+      "git push",
+      "git push --force",
+      "npm publish",
+      "kubectl apply",
+      "terraform apply",
+      "gcloud deploy"
+    ]
+  },
+
+  "auto_load": {
+    "_comment": "Files that auto-load at session start. Order matters — earlier files take precedence.",
+    "files": [
+      "CLAUDE.md",
+      ".claude/CLAUDE.md"
+    ]
+  },
+
+  "rules": {
+    "_comment": "Rule files that load contextually based on the current task or path.",
+    "global": [
+      ".claude/rules/code-style.md",
+      ".claude/rules/testing.md",
+      ".claude/rules/api-design.md"
+    ],
+    "path_scoped": {
+      "frontend/**": [".claude/rules/frontend/components.md"],
+      "backend/**": [".claude/rules/backend/services.md"]
+    }
+  },
+
+  "skills": {
+    "_comment": "Slash-commands available in this project.",
+    "directory": ".claude/skills/"
+  },
+
+  "agents": {
+    "_comment": "Subagents available for delegated tasks.",
+    "directory": ".claude/agents/"
+  }
+}

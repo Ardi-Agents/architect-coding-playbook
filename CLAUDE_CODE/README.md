@@ -1,60 +1,146 @@
 # Claude Code Integration
 
-This directory adapts the Architect Coding Playbook for Claude Code. It maps the AGENTS.md three-layer architecture to Claude Code's `CLAUDE.md` hierarchy — so the same methodology that governs your agent behavior in Windsurf or Cursor works natively in Claude Code.
+This directory adapts the Architect Coding Playbook for **Claude Code**. It maps the AGENTS.md three-layer architecture to Claude Code's `CLAUDE.md` hierarchy — so the same methodology that governs your agent behavior in Windsurf or Cursor works natively in Claude Code.
 
 ---
 
-## Install — one paste
+## Install — One Paste
 
-Open Claude Code in any project directory and paste:
+Open Claude Code in any directory and paste:
 
 ```
 Run the architect-coding-playbook Claude Code setup:
 @CLAUDE_CODE/SETUP.md
 ```
 
-Claude will read your existing setup, ask a few questions, and generate your `CLAUDE.md` files from the templates in this directory. It will not overwrite anything without showing you a diff first.
+Claude Code will:
+
+1. Detect any existing `~/.claude/` or `.claude/` setup.
+2. Ask a few onboarding questions (identity, projects, org policies).
+3. Generate global and per-project files from the templates below.
+4. Never overwrite anything without showing a diff and getting confirmation.
 
 ---
 
-## How AGENTS.md maps to Claude Code
+## How AGENTS.md Maps to Claude Code
 
-| Architect Coding layer | Claude Code equivalent | Scope |
+The Architect Coding Playbook uses a three-layer model. Claude Code mirrors this structure:
+
+| Architect Coding Layer | Claude Code Equivalent | Scope |
 |---|---|---|
-| `AGENTS.md` — global kernel | `~/.claude/CLAUDE.md` + `~/.claude/rules/` | All projects on this machine |
-| `AGENTS/[APP]__PROJECT_SPECIFIC.md` | `<project>/.claude/CLAUDE.md` | One project, shared with team |
-| `AGENTS/[APP]__IMPLEMENTATION.md` etc. | `<project>/.claude/rules/*.md` | Loaded per task type |
+| `AGENTS.md` (kernel) + `~/.claude/CLAUDE.md` + `~/.claude/rules/` | Personal identity, preferences, org policies | All projects on this machine |
+| `<project>/CLAUDE.md` + `<project>/.claude/` | Project-shared rules, skills, subagents | One project, shared with team |
+| `AGENTS/[APP]__*.md` appendices | Loaded via `@` imports from project CLAUDE.md | Per-task domain methodology |
 
-The global layer holds identity and org-level policies. The project layer holds stack commands, team context, and `@` imports pointing back to the AGENTS/ appendices. Nothing is duplicated — the appendices stay as the source of truth.
-
----
-
-## Other agents
-
-`AGENTS.md` is agent-agnostic. The same content applies:
-
-- **Windsurf**: use `.windsurfrules` at the project root. Populate it the same way as the project `CLAUDE.md` template.
-- **Cursor**: use `.cursor/rules/` for project-level rules. Point to `AGENTS/` appendices with `@` imports.
-- **Codex CLI**: use `AGENTS.md` directly — it reads the file natively.
+The kernel rules in `AGENTS.md` and `AGENTS/` stay as the **source of truth**. The Claude Code layer surfaces and operationalizes them in Claude Code's native format.
 
 ---
 
-## What's in this directory
+## Directory Structure
+
+This directory installs into your filesystem in two layers:
+
+### Layer 1 — Global (`~/.claude/`)
+
+```
+~/.claude/
+├── CLAUDE.md                       # Personal identity (all projects)
+├── rules/
+│   ├── preferences.md              # Code style, formatting, tone
+│   ├── workflows.md                # Preferred ways of working
+│   ├── org-policies.md             # Org-wide tooling, security, autonomy limits
+│   └── consistency-checks.md       # Brian's 10-check catalog
+├── skills/
+│   └── _README.md                  # How to author global skills (journal, todo, etc.)
+└── projects/
+    └── <project-name>/memory/
+        ├── MEMORY.md               # Auto-loaded project memory index
+        ├── debugging.md            # Patterns Claude discovered debugging
+        └── conventions.md          # Project-specific learnings
+```
+
+### Layer 2 — Project (`<project>/.claude/`)
+
+```
+my-project/
+├── CLAUDE.md                       # Main project instructions
+└── .claude/
+    ├── settings.json               # Permissions, tool access (committed)
+    ├── settings.local.json         # Local overrides (gitignored)
+    ├── rules/
+    │   ├── code-style.md           # Coding standards for this stack
+    │   ├── testing.md              # Testing conventions
+    │   ├── api-design.md           # API patterns
+    │   └── frontend/
+    │       └── components.md       # Path-scoped: loads for frontend/ only
+    ├── skills/
+    │   ├── _README.md              # How to author project skills
+    │   ├── deploy/SKILL.md         # /deploy slash-command (example)
+    │   ├── review-pr/SKILL.md      # /review-pr slash-command (example)
+    │   └── prd-writer/             # Multi-file skill with templates
+    │       ├── SKILL.md
+    │       ├── template.md
+    │       └── examples/sample.md
+    └── agents/
+        ├── researcher.md           # Read-only codebase exploration subagent
+        └── reviewer.md             # Code review specialist subagent
+```
+
+> The `settings.local.json` file is gitignored via the repo-level `.gitignore`.
+
+---
+
+## Templates Provided
+
+This repo ships templates for both layers in `CLAUDE_CODE/templates/`:
+
+### Global Templates (`templates/global/`)
 
 | File | Purpose |
 |---|---|
-| `SETUP.md` | Interactive setup prompt — paste into Claude Code to scaffold your `CLAUDE.md` files |
-| `templates/global-CLAUDE.md` | Template for `~/.claude/CLAUDE.md` |
-| `templates/project-CLAUDE.md` | Template for `<project>/.claude/CLAUDE.md` |
-| `templates/rules/org-policies.md` | Example always-loaded org rule file |
-| `tooling/direnv-guide.md` | Multi-project environment management with direnv |
+| `CLAUDE.md` | Personal identity entry point |
+| `rules/preferences.md` | Communication & code style |
+| `rules/workflows.md` | Plan mode, execution cadence, memory discipline |
+| `rules/org-policies.md` | Open source policies, security, autonomy limits |
+| `rules/consistency-checks.md` | 10-check catalog for cross-repo consistency |
+| `skills/_README.md` | How to author global skills |
+| `projects/_README.md` | Per-project memory pattern documentation |
+
+### Project Templates (`templates/project/`)
+
+| File | Purpose |
+|---|---|
+| `CLAUDE.md` | Project identity, stack commands, AGENTS imports |
+| `settings.json` | Tool permissions, rule paths, skills/agents directories |
+| `rules/code-style.md` | Project-specific coding standards |
+| `rules/testing.md` | Testing conventions and coverage targets |
+| `rules/api-design.md` | API conventions (status codes, errors, pagination) |
+| `skills/_README.md` | How to author project slash-commands |
+| `agents/researcher.md` | Read-only codebase exploration subagent |
+| `agents/reviewer.md` | Code review specialist subagent |
 
 ---
 
-## Golden rules
+## Other Agents (CLI-Agnostic)
 
-1. **Global `CLAUDE.md` under 200 lines.** Use `@imports` and `rules/` for anything longer — context beyond 200 lines gets unreliable adherence.
-2. **Rules = always follow this. Skills = do this when I ask.** Terminology, coding policies, output format → rules. Writing a PRD, running a security audit → skills.
-3. **Path-scope rules that only apply to certain files.** Add `paths:` frontmatter so spec-writing rules don't load during debugging.
-4. **Project `CLAUDE.md` points to AGENTS/ appendices — don't duplicate them.** Keep `AGENTS.md` as the policy kernel and import the relevant appendices per project.
-5. **`settings.local.json` for machine-local overrides.** Tool permissions that shouldn't be committed (e.g., allowed bash commands for your local dev scripts) go here, gitignored.
+`AGENTS.md` is agent-agnostic. The same content applies:
+
+- **Windsurf:** use `.windsurfrules` at the project root. Populate it the same way as the project `CLAUDE.md` template.
+- **Cursor:** use `.cursor/rules/` for project-level rules. Point to `AGENTS/` appendices with `@` imports.
+- **Codex CLI:** use `AGENTS.md` directly — it reads the file natively.
+
+The Claude-Code-specific files (`CLAUDE.md`, `.claude/settings.json`, etc.) only matter when running Claude Code. Other agents read `AGENTS.md` and the `AGENTS/` appendices directly.
+
+---
+
+## Tooling
+
+- **`tooling/direnv-guide.md`** — Walkthrough for using `direnv` to manage per-project environment variables. Recommended when working across multiple projects with different stacks.
+
+---
+
+## Credits
+
+- Three-layer structure inspired by Nirnay Patel's Claude Code organization (see `CONTRIBUTORS.md`).
+- Consistency checks catalog by Brian Boyd (see `templates/global/rules/consistency-checks.md`).
+- Architect Coding methodology by Farshad A. Samimi (see `CONCEPT.md`).

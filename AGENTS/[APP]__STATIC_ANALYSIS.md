@@ -204,6 +204,37 @@ When adding to false positives list in `[APP]__PROJECT_SPECIFIC.md`, include:
 
 ---
 
+## Import & Reference Health
+
+Beyond dead code detection, verify that all references — imports, names, and identifiers —
+resolve correctly across the codebase. Stale references break silently and erode trust.
+
+### Cross-Repo / Cross-Package Import Health
+
+All files that import from sibling packages, monorepo workspaces, or related repos
+must resolve to existing modules and named exports.
+
+**Checks**:
+- All imports resolve to existing modules (no `ModuleNotFoundError` on cold start)
+- Imported symbols (functions, classes, constants) exist with expected signatures
+- No imports pointing at deleted, renamed, or relocated symbols
+- Type-only imports resolve in type-check mode (e.g., `npm run typecheck`, `mypy`)
+- Circular imports flagged and resolved
+
+### Stale Comments and References
+
+Comments, docstrings, and string literals frequently reference deleted or renamed code.
+Grep for these systematically after refactors.
+
+**Checks**:
+- No comments referencing deleted modules, functions, or CLIs by name
+- No outdated terminology (e.g., old phase numbering, renamed concepts)
+- No references to deprecated APIs in inline documentation
+- TODO/FIXME comments tied to completed or abandoned work are removed
+- Docstring examples use current API signatures, not legacy ones
+
+---
+
 ## Documentation & Artifact Integrity
 
 Static analysis applies to prose and project artifacts, not just source code.
