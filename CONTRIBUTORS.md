@@ -9,7 +9,9 @@
 
 ## Community Contributors
 
-*Names added chronologically as the project grows...*
+| Name | Role | GitHub |
+|------|------|--------|
+| Nirnay Patel | Claude Code Ecosystem | [@NirnayPatel](https://github.com/NirnayPatel) |
 
 ---
 
