@@ -70,7 +70,7 @@ Edit:
 Replace template content with your own:
 
 - stack-specific commands
-- test/build/lint scripts
+- test/build/checks scripts
 - migration procedures
 - known tooling false positives
 - environment and deployment conventions

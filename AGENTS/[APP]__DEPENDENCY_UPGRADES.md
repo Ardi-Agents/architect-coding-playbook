@@ -19,7 +19,7 @@ Tooling → Patches → Minor (Backend) → Minor (Frontend) → Major (Last)
 ```
 
 **Why this order:**
-- **Tooling first** (linters, test runners): Better diagnostics for later phases
+- **Tooling first** (linters, code analyzers, test runners): Better diagnostics for later phases
 - **Patches together**: Minimal behavioral changes, one test run
 - **Backend before frontend**: API stability before UI changes
 - **Major upgrades last**: Isolates breaking changes for clean attribution
@@ -49,7 +49,7 @@ Always check the package registry for actual latest versions before updating. Us
 - [ ] Document current coverage percentage
 
 ### Phase 1: Tooling & Dev-Only Updates
-**Packages**: Linters, formatters, test runners (dev dependencies only)
+**Packages**: Linters, code analyzers, formatters, test runners (dev dependencies only)
 
 **Risk**: Very Low — no runtime behavior changes
 
@@ -80,7 +80,7 @@ Always check the package registry for actual latest versions before updating. Us
 ### Phase 4: Frontend Infrastructure Validation
 **Purpose**: Ensure build tooling stable before major UI framework upgrades
 
-**Rule**: Clean install, run all tests, lint, and production build before proceeding to major upgrades.
+**Rule**: Clean install, run all tests, lint, code analyzers, and production build before proceeding to major upgrades.
 
 ### Phase 5: Major Upgrades
 **Risk**: HIGH — semantic and lifecycle changes
@@ -93,7 +93,7 @@ Always check the package registry for actual latest versions before updating. Us
 **Post-upgrade**:
 1. Type checking / compilation
 2. Unit tests
-3. E2E tests
+3. End-to-end tests
 4. Manual smoke test of key flows
 
 ---
@@ -127,7 +127,7 @@ Add to project's tech debt log using this format:
 Use your package manager's commands to:
 1. Check current installed version
 2. Check available versions in registry
-3. Check peer/transitive dependencies
+3. Check direct/transitive dependencies and dependency reasons
 4. Update specific packages
 
 > **Examples** by ecosystem:
@@ -135,7 +135,14 @@ Use your package manager's commands to:
 > - **Node (npm/yarn/pnpm)**: `npm view <pkg> versions`, `npm ls <pkg>`
 > - **Rust (cargo)**: `cargo search <pkg>`, `cargo update -p <pkg>`
 > - **Go**: `go list -m -versions <module>`
-
+> - **.NET / NuGet**:
+>   - Check installed packages: `dotnet package list`
+>   - Check transitive dependencies: `dotnet package list --include-transitive`
+>   - Check why a package is present: `dotnet nuget why <pkg>`
+>   - Check newer available versions: `dotnet package list --outdated`
+>   - Search registry / list package versions: `dotnet package search <pkg> --exact-match --source https://api.nuget.org/v3/index.json`
+>   - Update a specific package: `dotnet package update <pkg>`
+>   - Pin a specific version: `dotnet package add <pkg> --version <ver>`
 ---
 
 ## Poetry Commands Reference (Python)
@@ -233,16 +240,14 @@ Packages from the same ecosystem that are designed to work together (e.g., a fra
 
 ---
 
-## Common Gotchas
+When upgrading dependencies, verify as applicable:
 
-**General patterns to watch for:**
-- Validation library major versions (breaking schema changes)
-- Web framework minors (may change generated API specs)
-- ORM major versions (session/connection handling differences)
-- UI framework majors (lifecycle and rendering changes)
-- Linter major versions (config format changes)
-- Type definition updates (may surface new type errors)
-
+- [ ] Validation and serialization behavior
+- [ ] Web/API framework behavior and generated output
+- [ ] ORM/data access behavior and migrations
+- [ ] UI framework or component behavior
+- [ ] Linter/analyzer/formatter configuration changes
+- [ ] Type-system, SDK, and code-generation changes
 ---
 
 ## Dependency Constraints
@@ -255,10 +260,10 @@ Packages from the same ecosystem that are designed to work together (e.g., a fra
 After completing upgrade work:
 ```
 ⏱️ Upgrade Session Report
-- Phases Completed: [0-5]
-- Packages Updated: [count]
-- Packages Skipped: [count] (with reasons)
-- Test Results: [X backend passed, Y frontend passed]
-- Coverage: [before]% → [after]%
-- Duration: [X] minutes
+- Phases Completed: [list or range]
+- Dependencies Updated: [count]
+- Dependencies Deferred/Skipped: [count] (with reasons)
+- Verification Results: [build/tests/checks status]
+- Coverage Impact: [before → after, if applicable]
+- Known Issues / Follow-up Work: [summary]
 ```

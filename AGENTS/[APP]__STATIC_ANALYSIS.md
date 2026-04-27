@@ -44,7 +44,21 @@
 
 ---
 
-## Knip (Dead Code Detection)
+## Dead Code Detection
+
+Beyond language-specific tooling (Knip, etc.), apply dead code principles broadly:
+zero-caller modules, functions, entry points, CLI commands, and build artifacts.
+If nothing imports, invokes, or references it, delete it — dead code wastes context
+and misleads agents.
+
+### General Checks
+
+- **Zero-caller modules**: Source files with no inbound imports or entry-point registration
+- **Unused exports**: Functions, classes, or constants exported but never consumed
+- **Orphaned artifacts**: Build outputs, generated files, or config entries referencing removed code
+- **Stale entry points**: CLI commands, API routes, or scheduled tasks pointing to deleted handlers
+
+### Knip (JavaScript/TypeScript)
 
 **Knip is advisory, not authoritative.** Do NOT auto-remove flagged items.
 
@@ -155,6 +169,14 @@ open htmlcov/index.html
 | API endpoints | 90% |
 | Overall | 80% |
 
+### Structural Coverage Checks
+
+Beyond percentage targets, verify structural test health:
+
+- **File pairing**: Every source module has a corresponding test file. New modules get tests before merge.
+- **No stale imports**: Test files don't import deleted or renamed functions. A test that imports a phantom is worse than no test.
+- **New code = new tests**: PRs adding modules without test files are incomplete.
+
 ### Improving Coverage
 1. **Identify gaps**: Review `--cov-report=term-missing` output
 2. **Prioritize**: Focus on critical paths (auth, data mutations)
@@ -179,3 +201,67 @@ When adding to false positives list in `[APP]__PROJECT_SPECIFIC.md`, include:
 2. **Why it's a false positive** (API contract, roadmap feature, etc.)
 3. **Date added**
 4. **Review date** (3 months out) - periodically verify still needed
+
+---
+
+## Documentation & Artifact Integrity
+
+Static analysis applies to prose and project artifacts, not just source code.
+Run these checks when documentation or project structure changes.
+
+### Documentation Separation of Concerns
+
+Each concept, rule, or schema definition must live in exactly one file. No content
+duplicated across documentation files — reference the authoritative source instead.
+
+**Checks**:
+- No two files define the same rule, schema, or procedure
+- When content appears similar in multiple files, one file owns it and others link to it
+- Merge or deduplicate any violations found during review
+
+### Documentation Referential Integrity
+
+Every file, function, CLI command, or configuration key mentioned in docs must exist
+in the code. Every module in the code must appear in the correct documentation domain.
+
+**Checks**:
+- File paths referenced in docs resolve to actual files
+- Function and class names cited in docs exist in the codebase
+- CLI commands documented actually run without error
+- New modules are mentioned in the appropriate documentation section
+- Removed code is scrubbed from all docs (not just the source file)
+
+### Runbook & Pipeline Accuracy
+
+Walk through any runbook, setup guide, or pipeline documentation mentally (or literally).
+Do the commands, file paths, and sequencing match what the code actually does?
+
+**Checks**:
+- Shell commands in docs execute successfully in a clean environment
+- File paths in step-by-step instructions point to real locations
+- Step ordering matches actual dependency order (e.g., migrate before seed)
+- Environment variable names match what the code reads
+- Tool versions and flags match current project configuration
+
+### Plan File Staleness
+
+Plan files (`ACTIVE_PLAN.md`, roadmap documents, implementation plans) go stale quickly.
+Completed or obsolete plans waste context and mislead agents.
+
+**Checks**:
+- No plan files with all tasks marked complete — archive or delete them
+- No plan files referencing features already shipped or abandoned
+- `agent_sessions_tmp/` contains only active session plans
+- Roadmap items that shipped are moved to a changelog or removed
+
+### README Accuracy
+
+The README is often the first file an agent or developer reads. Inaccurate READMEs
+erode trust and cause wrong assumptions.
+
+**Checks**:
+- Repo structure trees match actual files and directories
+- Feature descriptions match implemented (not aspirational) behavior
+- Unimplemented features are explicitly marked as planned or removed
+- Setup instructions produce a working environment
+- Badge URLs and links resolve correctly

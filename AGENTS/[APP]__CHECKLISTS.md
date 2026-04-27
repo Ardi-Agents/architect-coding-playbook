@@ -18,7 +18,7 @@ Before marking any task as complete, verify:
 
 ### Testing
 - [ ] All new/modified code has tests
-- [ ] All tests pass (unit + integration + E2E)
+- [ ] All tests pass (unit, integration, and end-to-end)
 - [ ] Auth functionality tested (if backend changes)
 - [ ] No unrelated tests failing
 
@@ -140,15 +140,17 @@ For DESIGN-FIRST protocol (P1):
   - [ ] Data flow descriptions
   - [ ] Key design decisions with rationale
 
-- [ ] `DATABASE_SCHEMA.md` created
-  - [ ] Complete CREATE TABLE statements
-  - [ ] Index definitions with justification
-  - [ ] JSONB examples (if applicable)
-  - [ ] Foreign key diagram
-  - [ ] Migration strategy
+- [ ] `DATA_MODEL.md` created
+  - [ ] Core entities and relationships
+  - [ ] Relational, document, and/or graph model definitions as applicable
+  - [ ] Indexing and partitioning strategy with justification
+  - [ ] Example data shapes and records
+  - [ ] Relationship or topology diagram
+  - [ ] Data migration and synchronization strategy
+  - [ ] Source-of-truth boundaries and cross-store synchronization rules
 
 - [ ] `API_SPECIFICATION.md` created
-  - [ ] Endpoint table
+  - [ ] Endpoint data set
   - [ ] Request/response schemas
   - [ ] Error formats
   - [ ] Pagination strategy
@@ -170,14 +172,16 @@ For DESIGN-FIRST protocol (P1):
 ## Database Migration Checklist
 
 ```markdown
-Before deploying database changes:
-- [ ] Updated ORM models
-- [ ] Created migration script
-- [ ] Updated all services querying affected tables
-- [ ] Updated test fixtures
-- [ ] Updated API documentation
-- [ ] Ran migration on target environment
-- [ ] Verified all tests pass with new schema
+Before deploying data model changes:
+- [ ] Updated application models, mappings, and validators
+- [ ] Created and reviewed the required migration, transformation, or backfill procedure
+- [ ] Updated all affected queries, repositories, services, and traversals
+- [ ] Updated test fixtures, seed data, and example payloads
+- [ ] Updated API, schema, and data-contract documentation
+- [ ] Applied changes in the target environment as required
+- [ ] Verified all tests pass with the updated data model
+
+Datastore-specific notes are in the project-specific file [APP]__PROJECT_SPECIFIC.md.
 ```
 
 ---
@@ -218,18 +222,22 @@ At end of substantial tasks, provide:
 Before marking code complete, verify deployment readiness:
 
 ```markdown
-- [ ] Code runs locally via `run_torusmind.sh`
-- [ ] No hardcoded `http://localhost` in production code paths
-- [ ] Environment variables documented in `.env.example`
-- [ ] Deployment scripts updated if new env vars added
-- [ ] CORS origins include both local and cloud domains
-- [ ] API URLs use env vars with sensible defaults
+- [ ] Application runs locally using the project’s standard run command
+- [ ] No hardcoded local URLs in production code paths
+- [ ] Environment variables are documented in the project’s example/template env file
+- [ ] Deployment configuration is updated for any new environment variables
+- [ ] Allowed CORS origins include required local and deployed domains
+- [ ] Service and API URLs are configured via environment variables or equivalent settings
 ```
 
 ### Environment Variable Addition Protocol
+
 When adding new env vars:
-1. Add to local `.env` file
-2. Add to `.env.example` with description
-3. Update `gcp_deployment/00_env.sh` (non-sensitive)
-4. Update `gcp_deployment/02_secrets_setup.sh` (sensitive/secrets)
-5. Document in PR description: "🚀 Deployment Change: Added [VAR_NAME]"
+
+```markdown
+1. Add to local development configuration
+2. Add to the example/template configuration file with documentation
+3. Update deployment configuration for non-sensitive values
+4. Update secret management configuration for sensitive values
+5. Document the deployment/configuration change in the PR
+```
