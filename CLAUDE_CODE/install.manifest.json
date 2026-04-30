@@ -239,8 +239,8 @@
     "kernelFile": {
       "source": "AGENTS.md",
       "dest": "<PROJECT>/AGENTS.md",
-      "tokenSubstitution": false,
-      "rationale": "AGENTS.md is the cross-tool kernel; project CLAUDE.md imports it via `@AGENTS.md` as the first line. Without this copy, the bridge resolves to a missing file and the kernel never loads."
+      "tokenSubstitution": { "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" },
+      "rationale": "AGENTS.md is the cross-tool kernel; project CLAUDE.md imports it via `@AGENTS.md` as the first line. Without this copy, the bridge resolves to a missing file and the kernel never loads. The kernel contains markdown cross-links to the [APP]__*.md appendices — these MUST be substituted to the user's chosen prefix so the links resolve to the renamed appendix files. Both plain `[APP]` and URL-encoded `%5BAPP%5D` forms are substituted."
     },
     "appendicesDir": {
       "sourceDir": "AGENTS/",
@@ -254,7 +254,7 @@
         "[APP]__DEPENDENCY_UPGRADES.md",
         "[APP]__PROJECT_SPECIFIC.md"
       ],
-      "tokenSubstitution": { "[APP]": "<USER_PREFIX>" }
+      "tokenSubstitution": { "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" }
     }
   },
   "projectMemory": {

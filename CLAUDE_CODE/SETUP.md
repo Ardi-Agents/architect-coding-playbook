@@ -181,7 +181,7 @@ This step actively copies — do **not** delegate to the user. It writes TWO thi
 **(i) The kernel file `AGENTS.md` at project root.** Per `manifest.agentsCopy.kernelFile`:
 - Source: `<playbook>/AGENTS.md`
 - Dest: `<project>/AGENTS.md`
-- No substitution.
+- **Substitute `[APP]` → `<USER_PREFIX>` in content** (both plain and URL-encoded `%5BAPP%5D` forms). The kernel contains markdown cross-links to the appendices like `[AGENTS/[APP]__IMPLEMENTATION.md](AGENTS/[APP]__IMPLEMENTATION.md)`; these resolve to a real file only after `[APP]` is substituted to the user's chosen prefix.
 - This is what the project `CLAUDE.md`'s first-line `@AGENTS.md` import resolves to. **Skipping this step breaks the bridge** — `@AGENTS.md` would point at a missing file and the kernel would never load.
 - If `<project>/AGENTS.md` already exists, diff and ask `(k)/(m)/(r)`.
 
