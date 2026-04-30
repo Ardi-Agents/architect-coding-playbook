@@ -174,13 +174,22 @@ Manifest id: `project.skills.README`. Confirm before writing. Project-level skil
 
 These have proper YAML frontmatter (`name`, `description`, `tools`, `model: inherit`) — required for Claude Code to recognize them as subagents.
 
-### 4f. Auto-copy AGENTS/ into `<project>/AGENTS/`
+### 4f. Auto-copy AGENTS kernel + appendices
 
-This step actively copies and substitutes — do **not** delegate to the user.
+This step actively copies — do **not** delegate to the user. It writes TWO things:
+
+**(i) The kernel file `AGENTS.md` at project root.** Per `manifest.agentsCopy.kernelFile`:
+- Source: `<playbook>/AGENTS.md`
+- Dest: `<project>/AGENTS.md`
+- No substitution.
+- This is what the project `CLAUDE.md`'s first-line `@AGENTS.md` import resolves to. **Skipping this step breaks the bridge** — `@AGENTS.md` would point at a missing file and the kernel would never load.
+- If `<project>/AGENTS.md` already exists, diff and ask `(k)/(m)/(r)`.
+
+**(ii) The appendices under `<project>/AGENTS/`.** Per `manifest.agentsCopy.appendicesDir`:
 
 1. Check if `<project>/AGENTS/` exists. If yes, for each shipped file diff against the playbook source and ask `(k)/(m)/(r)`.
 2. Use the `[APP]__` prefix from Question 2 (e.g. `MYAPP`).
-3. For each file in `manifest.agentsCopy.files`:
+3. For each file in `manifest.agentsCopy.appendicesDir.files`:
    - Source: `<playbook>/AGENTS/<file>`
    - Dest: `<project>/AGENTS/<file_with_[APP]_replaced>`
    - Substitute every `[APP]` → `<USER_PREFIX>` in **filename and content**.
@@ -189,6 +198,8 @@ This step actively copies and substitutes — do **not** delegate to the user.
    > TODO: Replace this template with project-specific content. See [`AGENTS/[APP]__PROJECT_SPECIFIC.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__PROJECT_SPECIFIC.md) for the original template.
    ```
 5. Confirm each write.
+
+**Verify after copy:** `<project>/AGENTS.md` exists at project root AND `<project>/AGENTS/<USER_PREFIX>__*.md` files exist with all `[APP]` tokens substituted. The first-line `@AGENTS.md` import in `<project>/CLAUDE.md` must resolve to a real file.
 
 ### 4g. Bridge AGENTS.md ↔ Claude Code
 

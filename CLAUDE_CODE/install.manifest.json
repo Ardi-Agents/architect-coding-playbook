@@ -118,7 +118,7 @@
       "templatePath": "CLAUDE_CODE/templates/project/CLAUDE.md",
       "installScope": "project",
       "installPath": "<PROJECT>/CLAUDE.md",
-      "sha256": "cc0d0eab110ee432a280a3043eb1455c59c01936970cc741b05c4dfadc49a480",
+      "sha256": "be8a7b2f33effedd96c566249c29a0c4bb012687b77da75529c3601d51d0b656",
       "tokenSubstitution": true,
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
@@ -214,7 +214,7 @@
       "templatePath": "CLAUDE_CODE/templates/project/agents/researcher.md",
       "installScope": "project",
       "installPath": "<PROJECT>/.claude/agents/researcher.md",
-      "sha256": "174530773d3cf6ada90f16e7745008542087c4d5031c69e5bb5e169d765b62f1",
+      "sha256": "b30af4d8c082feb0ac972fe70ac88e739ea2696ba58ec45add7244cce1913987",
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt",
@@ -226,7 +226,7 @@
       "templatePath": "CLAUDE_CODE/templates/project/agents/reviewer.md",
       "installScope": "project",
       "installPath": "<PROJECT>/.claude/agents/reviewer.md",
-      "sha256": "790b08769bbe3268ec4aed5414f452a29bc38accad720824a3c848fa1a59bd18",
+      "sha256": "2ad4c93acf9f561946b745f16648e5781ecc88740a579c669d21ff1e54e36c26",
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt",
@@ -235,20 +235,26 @@
     }
   ],
   "agentsCopy": {
-    "description": "Active copy of AGENTS/ from playbook clone into <PROJECT>/AGENTS/, with [APP]__ prefix substituted to user-chosen prefix.",
-    "sourceDir": "AGENTS/",
-    "destDir": "<PROJECT>/AGENTS/",
-    "files": [
-      "[APP]__IMPLEMENTATION.md",
-      "[APP]__API_DESIGN.md",
-      "[APP]__STATIC_ANALYSIS.md",
-      "[APP]__CHECKLISTS.md",
-      "[APP]__TOOL_USAGE.md",
-      "[APP]__DEPENDENCY_UPGRADES.md",
-      "[APP]__PROJECT_SPECIFIC.md"
-    ],
-    "tokenSubstitution": {
-      "[APP]": "<USER_PREFIX>"
+    "description": "Active copy of the AGENTS kernel from playbook clone into the target project. Includes the kernel file (AGENTS.md) at project root AND the [APP]__*.md appendices in <PROJECT>/AGENTS/. The kernel file is what the project's CLAUDE.md @-imports first to bridge the AGENTS.md ↔ Claude Code gap; the appendices provide the modular methodology.",
+    "kernelFile": {
+      "source": "AGENTS.md",
+      "dest": "<PROJECT>/AGENTS.md",
+      "tokenSubstitution": false,
+      "rationale": "AGENTS.md is the cross-tool kernel; project CLAUDE.md imports it via `@AGENTS.md` as the first line. Without this copy, the bridge resolves to a missing file and the kernel never loads."
+    },
+    "appendicesDir": {
+      "sourceDir": "AGENTS/",
+      "destDir": "<PROJECT>/AGENTS/",
+      "files": [
+        "[APP]__IMPLEMENTATION.md",
+        "[APP]__API_DESIGN.md",
+        "[APP]__STATIC_ANALYSIS.md",
+        "[APP]__CHECKLISTS.md",
+        "[APP]__TOOL_USAGE.md",
+        "[APP]__DEPENDENCY_UPGRADES.md",
+        "[APP]__PROJECT_SPECIFIC.md"
+      ],
+      "tokenSubstitution": { "[APP]": "<USER_PREFIX>" }
     }
   },
   "projectMemory": {

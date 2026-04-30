@@ -41,7 +41,7 @@
 - **Sprint cadence:** [e.g., "2-week sprints"]
 - **Code review:** [e.g., "PR required before merging to main"]
 - **Deploys:** [e.g., "User manages all deploys — agent never pushes or deploys"]
-- **Key documents:** `@docs/[ROADMAP_OR_STRATEGY_FILE].md`
+- **Key documents:** _(replace with `@docs/your-roadmap.md` or remove this line if you have no project doc)_
 
 ---
 
@@ -55,12 +55,14 @@ These rule files live in `.claude/rules/` and load when Claude Code opens this p
 @.claude/rules/api-design.md      # API patterns (if applicable)
 ```
 
-Path-scoped rules (loaded only when working in matching paths):
+Path-scoped rules (uncomment any whose subdirectory exists in your project):
 
 ```
-@.claude/rules/frontend/components.md   # Loads for frontend/ files only
-@.claude/rules/backend/services.md      # Loads for backend/ files only
+# @.claude/rules/frontend/components.md   # Uncomment if frontend/ exists
+# @.claude/rules/backend/services.md      # Uncomment if backend/ exists
 ```
+
+> SETUP.md only ships `frontend/components.md` if your project has a `frontend/` directory (and similarly for `backend/`). Uncomment the import line whose target was actually installed.
 
 ## Loaded Project Skills
 
