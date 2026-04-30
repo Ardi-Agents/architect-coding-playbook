@@ -1,13 +1,15 @@
 # Architect Coding Playbook — Claude Code Setup
 
-This is an interactive setup. When Claude Code reads this file, it runs the steps below — it does not just display them.
+This is an interactive, machine-checkable setup. When Claude Code reads this file, it executes the steps below — it does not just display them. The shipped contract is encoded in [`CLAUDE_CODE/install.manifest.json`](./install.manifest.json); this document is the human-readable narrative.
 
-**To run:** open Claude Code in any directory and paste:
+**To run:** open Claude Code **inside a clone of `architect-coding-playbook`** and paste:
 
 ```
 Run the architect-coding-playbook Claude Code setup:
 @CLAUDE_CODE/SETUP.md
 ```
+
+> If you're running Claude Code from a different cwd, paste the absolute path instead, e.g. `@/Users/you/Desktop/architect-coding-playbook/CLAUDE_CODE/SETUP.md`. The `@` import is resolved relative to your current working directory.
 
 ---
 
@@ -15,26 +17,31 @@ Run the architect-coding-playbook Claude Code setup:
 
 You are setting up the Architect Coding Playbook for Claude Code. Execute these steps interactively. Do not summarize or skip steps.
 
-**Safety rules — enforce throughout (non-negotiable):**
+### Safety rules — non-negotiable
 
 - **Preservation is the default.** Existing files are never overwritten automatically. If a file exists, it stays exactly as-is unless the user explicitly approves a replacement or merge.
-- **Detect before acting.** Before any write, read the existing file (if any), show a unified diff of proposed changes, and present three options: `(k) keep existing` / `(m) merge — I choose which sections to add` / `(r) replace fully`. Default choice is `keep existing`.
+- **Detect before acting.** Before any write, read the existing file (if any), show a unified diff, and present three options: `(k) keep existing` / `(m) merge — choose which sections to add` / `(r) replace fully`. Default is `keep existing`.
+- **Backup-before-modify.** Any time setup modifies an existing file (replace OR merge), it first copies the original to `~/.claude/.architect-playbook-backups/<filename>.<ISO-timestamp>` and records the path in the install receipt. Pure creation (new file) does not need backup.
 - **No silent mutations.** Never modify content without showing it to the user first. Never touch a file the user didn't approve in this session.
 - **Directories are additive.** Create directories only if they don't exist. Never delete, rename, or reorganize existing directories.
-- **Warn on conflict.** If any detected file appears to have been authored by a different setup (different playbook, different framework), stop and ask: "This file looks hand-written or from another tool. Do you want to proceed? (yes/no/skip this file)".
-- **Abort-safe.** At any step, `abort` ends setup cleanly without partial writes. Track every file written so a follow-up `rollback` can remove just what this setup created.
+- **Reserved tree warning.** `~/.claude/projects/<encoded-cwd>/` is Claude Code's transcript + auto-memory area. Only write to the `memory/` subdirectory — never elsewhere in `projects/`.
+- **Warn on conflict.** If any detected file appears to have been authored by a different setup, stop and ask: "This file looks hand-written or from another tool. Proceed? (yes/no/skip this file)".
+- **Abort-safe.** At any step, `abort` ends setup cleanly without partial writes. Track every file written so the install receipt enables a future rollback.
+- **Manifest integrity.** Every write must correspond to a `shippedFiles[]` entry or a `settingsMerges[]` entry in `install.manifest.json`. If a step would write something not in the manifest, stop and ask the user.
 
 ---
 
 ## Step 1: Detect Existing Setup
 
-Run these checks silently and report a summary:
+Run silently and report a summary:
 
-1. Does `~/.claude/CLAUDE.md` exist? If yes, read it and note which sections it has.
-2. Does `~/.claude/rules/` exist? List any files inside.
-3. Does `~/.claude/skills/` exist? List any skill directories.
-4. Does `~/.claude/projects/` exist? List any project subdirectories.
-5. In the current working directory: does `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/settings.json`, `.claude/rules/`, `.claude/skills/`, or `.claude/agents/` exist?
+1. Does `~/.claude/CLAUDE.md` exist? Read it; note sections.
+2. Does `~/.claude/settings.json` exist? Parse it; note any keys that overlap with the shipped settings patch.
+3. Does `~/.claude/rules/` exist? List files inside.
+4. Does `~/.claude/skills/` exist? List skill directories. Note any name collisions with `journal/`, `todo/`, `explain-code/`, `verify-install/`.
+5. Does `~/.claude/projects/` exist? List immediate children (these are Claude Code's per-project memory + transcript dirs — DO NOT modify; only the `memory/` subdir of a chosen project gets written).
+6. In the current working directory: does `CLAUDE.md`, `.claude/CLAUDE.md`, `.claude/settings.json`, `.claude/rules/`, `.claude/skills/`, `.claude/agents/`, or `AGENTS/` exist?
+7. Read `~/.architect-playbook-manifest.json` if present (prior install receipt) and note version.
 
 Report: "Found: [list what exists]. Will not touch any of these without your approval."
 
@@ -45,132 +52,201 @@ Report: "Found: [list what exists]. Will not touch any of these without your app
 Ask these one at a time. Wait for an answer before asking the next.
 
 **Question 1 — Identity:**
-> What's your name, role, and background? This goes into `~/.claude/CLAUDE.md` and `~/.claude/rules/preferences.md`.
+> What's your name, role, and background? Goes into `~/.claude/CLAUDE.md` and `~/.claude/rules/preferences.md`.
 
 **Question 2 — Projects:**
-> What projects are you currently running on this machine? For each, give: (a) project name, (b) absolute path, (c) tech stack. Example: "ardi-paralegal — `~/CascadeProjects/ardi-paralegal` — Python/FastAPI + React + GCP".
+> What projects are you currently running on this machine? For each, give: (a) project name, (b) absolute path, (c) tech stack, (d) `[APP]__` prefix (short uppercase, e.g. `ARDI`, `MYAPP` — used to rename `[APP]__*.md` AGENTS files).
 
 **Question 3 — Org Policies:**
-> Any organization-wide tooling or library policies? Examples: "only open source, commercially licensable tools", "always TypeScript strict mode", "no proprietary AI providers without approval". Skip if none.
+> Any organization-wide tooling or library policies? Examples: "only open source, commercially licensable tools", "always TypeScript strict mode". Skip if none.
 
 **Question 4 — Direnv:**
-> Are you using `direnv` to manage environment variables across projects? (y/n — if yes, we'll walk through `CLAUDE_CODE/tooling/direnv-guide.md` at the end.)
+> Are you using `direnv` to manage env vars across projects? (y/n — if yes, we'll walk through `CLAUDE_CODE/tooling/direnv-guide.md` at the end. The shipped project `settings.json` includes a `SessionStart` hook that surfaces `$CLAUDE_PROJECT`.)
 
 **Question 5 — Subagents:**
-> Want to install the example subagents (`researcher.md`, `reviewer.md`) into each project's `.claude/agents/` directory? (y/n)
+> Want to install the example subagents (`researcher.md`, `reviewer.md`) into each project's `.claude/agents/`? (y/n)
 
 ---
 
 ## Step 3: Install Global Layer (`~/.claude/`)
 
-This is **Layer 1** — personal identity across all projects on this machine.
-
-Build the global layer using the templates in `CLAUDE_CODE/templates/global/`:
+Layer 1 — personal identity across all projects on this machine. All template files referenced here are in `CLAUDE_CODE/templates/global/` and have `sha256` recorded in `install.manifest.json` under `shippedFiles[].sha256`.
 
 ### 3a. `~/.claude/CLAUDE.md`
 
-- Source template: `CLAUDE_CODE/templates/global/CLAUDE.md`
-- Fill in identity from Question 1.
-- Show full proposed content. Ask: "Write to `~/.claude/CLAUDE.md`? (yes/no/edit)"
-- Wait for explicit confirmation.
+- Source: `CLAUDE_CODE/templates/global/CLAUDE.md`. Manifest id: `global.CLAUDE`.
+- Substitute tokens from Question 1 (`YOUR_NAME`, `CITY, STATE`, `YOUR_ROLE`, etc.).
+- If `~/.claude/CLAUDE.md` exists: backup → show diff → ask `(k) keep / (m) merge / (r) replace`. Default `keep`.
+- For `merge`: append the playbook section under a clear delimiter `<!-- architect-coding-playbook v0.4.0 -->` so a future uninstall can find and remove it.
 
-### 3b. `~/.claude/rules/`
+### 3b. `~/.claude/settings.json`
 
-Install all four rule files. For each, show diff against existing file (if any), ask before writing:
+- Apply the `settingsMerges[0]` entry from `install.manifest.json` (RFC 7396 JSON Merge Patch).
+- The patch is:
+  ```json
+  {
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "includeCoAuthoredBy": false
+  }
+  ```
+- Steps:
+  1. Read existing `~/.claude/settings.json` (parse JSON; if invalid, halt and report).
+  2. Compute the merge result.
+  3. Backup to `~/.claude/.architect-playbook-backups/settings.json.<ISO-timestamp>`.
+  4. Show unified diff. Confirm.
+  5. Write merged content.
+  6. Record in install receipt: `addedKeys`, `backupPath`.
 
-- `~/.claude/rules/preferences.md` (from `templates/global/rules/preferences.md`) — communication & code style
-- `~/.claude/rules/workflows.md` (from `templates/global/rules/workflows.md`) — preferred workflows
-- `~/.claude/rules/org-policies.md` (from `templates/global/rules/org-policies.md`) — fill in answers from Question 3
-- `~/.claude/rules/consistency-checks.md` (from `templates/global/rules/consistency-checks.md`) — Brian's 10-check catalog
+### 3c. `~/.claude/rules/`
 
-### 3c. `~/.claude/skills/_README.md`
+Install all four rule files (manifest ids `global.rules.preferences`, `workflows`, `org-policies`, `consistency-checks`). For each: detect → diff → confirm → write. Substitute Question 3 answers into `org-policies.md`.
 
-- Source template: `CLAUDE_CODE/templates/global/skills/_README.md`
-- Install only the README — do not auto-create example skills (user authors these organically).
-- Confirm before writing.
+### 3d. `~/.claude/skills/`
 
-### 3d. `~/.claude/projects/<project>/memory/`
+Install:
 
-For each project from Question 2, create the memory scaffold:
+- `_README.md` (id `global.skills.README`)
+- `journal/SKILL.md` (id `global.skills.journal`)
+- `todo/SKILL.md` (id `global.skills.todo`)
+- `explain-code/SKILL.md` (id `global.skills.explain-code`)
+- `verify-install/SKILL.md` (id `global.skills.verify-install`)
 
-- `~/.claude/projects/<project-name>/memory/MEMORY.md` — empty index with project name as header
-- `~/.claude/projects/<project-name>/memory/debugging.md` — empty file with header
-- `~/.claude/projects/<project-name>/memory/conventions.md` — empty file with header
+Confirm each before writing. Skill directories auto-discover; no settings entry needed.
 
-Reference: `CLAUDE_CODE/templates/global/projects/_README.md` for the pattern.
-Confirm before creating each project's memory directory.
+### 3e. `~/.claude/projects/<encoded-cwd>/memory/`
+
+For each project from Question 2:
+
+1. Compute the **encoded-cwd**: take the project's absolute path and replace every non-alphanumeric character with `-`. Example: `/Users/you/dev/myapp` → `-Users-you-dev-myapp`.
+2. Confirm the encoded path with the user.
+3. Create `~/.claude/projects/<encoded-cwd>/memory/{MEMORY.md,debugging.md,conventions.md}` if absent.
+4. Each file gets only a header line; populate organically over time.
+5. **Do not write outside the `memory/` subdir.** The parent `<encoded-cwd>/` belongs to Claude Code's transcript storage.
 
 ---
 
 ## Step 4: Install Project Layer (`<project>/.claude/`)
 
-This is **Layer 2** — per-project rules shared with the team. Run this for **each project** from Question 2.
+Layer 2 — per-project rules shared with the team. Run for **each project** from Question 2.
 
-For each project, install:
+### 4a. `<project>/CLAUDE.md`
 
-### 4a. `<project>/CLAUDE.md` (or `<project>/.claude/CLAUDE.md`)
-
-- Source template: `CLAUDE_CODE/templates/project/CLAUDE.md`
-- Fill in project name, path, stack from Question 2.
-- Ask the user which location they prefer (root or `.claude/`). Default: root.
-- Show proposed content. Confirm before writing.
+- Source: `CLAUDE_CODE/templates/project/CLAUDE.md`. Manifest id: `project.CLAUDE`.
+- Substitute Question 2 tokens (`PROJECT_NAME`, `PATH_TO_REPO`, `APP`, stack commands).
+- **First import line** must be `@AGENTS.md` so Claude Code transitively loads the kernel (Claude Code does not read AGENTS.md natively — this import bridges the gap).
+- Ask the user: root or `.claude/CLAUDE.md`? Default: root.
+- If file exists: backup → diff → confirm.
 
 ### 4b. `<project>/.claude/settings.json`
 
-- Source template: `CLAUDE_CODE/templates/project/settings.json`
-- Tighten `allow_bash` / `deny_bash` to match the project's stack commands.
+- Source: `CLAUDE_CODE/templates/project/settings.json`. Manifest id: `project.settings`.
+- This is the **real Claude Code schema**: top-level `permissions.{allow,deny,ask,defaultMode}` flat arrays of `"Tool(args:*)"` strings, `hooks`, `includeCoAuthoredBy`. Do not invent keys.
+- Tighten `permissions.allow` / `deny` to match the project's stack (e.g., add `"Bash(go test:*)"` for Go projects; remove unused ones).
 - Confirm before writing.
 
 ### 4c. `<project>/.claude/rules/`
 
-Install three rule files. Confirm each:
+Install (each with detect/diff/confirm):
 
-- `code-style.md` (from `templates/project/rules/code-style.md`)
-- `testing.md` (from `templates/project/rules/testing.md`)
-- `api-design.md` (from `templates/project/rules/api-design.md`) — skip if project has no API
+- `code-style.md` (id `project.rules.code-style`) — substitute project tokens.
+- `testing.md` (id `project.rules.testing`)
+- `api-design.md` (id `project.rules.api-design`) — skip if project has no API.
+- `frontend/components.md` (id `project.rules.frontend.components`) — skip if no `frontend/` dir.
+- `backend/services.md` (id `project.rules.backend.services`) — skip if no `backend/` dir.
+
+The path-scoped rules are referenced in `<project>/CLAUDE.md` via `@.claude/rules/frontend/components.md` etc.; install only the ones that match the project's structure.
 
 ### 4d. `<project>/.claude/skills/_README.md`
 
-- Source template: `CLAUDE_CODE/templates/project/skills/_README.md`
-- Confirm before writing.
+Manifest id: `project.skills.README`. Confirm before writing. Project-level skills are added by the user organically.
 
 ### 4e. `<project>/.claude/agents/` (if Question 5 = yes)
 
-Install the example subagents:
+- `researcher.md` (id `project.agents.researcher`)
+- `reviewer.md` (id `project.agents.reviewer`)
 
-- `researcher.md` (from `templates/project/agents/researcher.md`)
-- `reviewer.md` (from `templates/project/agents/reviewer.md`)
+These have proper YAML frontmatter (`name`, `description`, `tools`, `model: inherit`) — required for Claude Code to recognize them as subagents.
 
-Confirm each before writing.
+### 4f. Auto-copy AGENTS/ into `<project>/AGENTS/`
 
-### 4f. AGENTS/ directory
+This step actively copies and substitutes — do **not** delegate to the user.
 
-Remind the user (don't auto-copy):
+1. Check if `<project>/AGENTS/` exists. If yes, for each shipped file diff against the playbook source and ask `(k)/(m)/(r)`.
+2. Use the `[APP]__` prefix from Question 2 (e.g. `MYAPP`).
+3. For each file in `manifest.agentsCopy.files`:
+   - Source: `<playbook>/AGENTS/<file>`
+   - Dest: `<project>/AGENTS/<file_with_[APP]_replaced>`
+   - Substitute every `[APP]` → `<USER_PREFIX>` in **filename and content**.
+4. Add a TODO banner to `<USER_PREFIX>__PROJECT_SPECIFIC.md`:
+   ```markdown
+   > TODO: Replace this template with project-specific content. See [`AGENTS/[APP]__PROJECT_SPECIFIC.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__PROJECT_SPECIFIC.md) for the original template.
+   ```
+5. Confirm each write.
 
-> "Copy `AGENTS/` from `architect-coding-playbook` into each project root. Replace `[APP]__PROJECT_SPECIFIC.md` with project-specific content. See main README for the canonical workflow."
+### 4g. Bridge AGENTS.md ↔ Claude Code
+
+Claude Code does **not** read `AGENTS.md` natively. Two bridge options — ask the user which:
+
+- **Option A (default):** `<project>/CLAUDE.md` (already written in 4a) imports `@AGENTS.md` as its first line. ✅ Cross-platform, no symlink magic.
+- **Option B:** `ln -s AGENTS.md CLAUDE.md`. ✅ One file, but breaks on Windows and confuses some editors.
+
+If 4a already wrote `CLAUDE.md` with the `@AGENTS.md` import (Option A), you're done. If the user prefers Option B, remove `<project>/CLAUDE.md` and create the symlink.
 
 ---
 
 ## Step 5: Direnv (if Question 4 = yes)
 
-Walk the user through `CLAUDE_CODE/tooling/direnv-guide.md` step by step.
+Walk the user through `CLAUDE_CODE/tooling/direnv-guide.md` step by step. Confirm `CLAUDE_PROJECT` consumer hook is enabled in the project `settings.json` (4b).
 
 ---
 
-## Step 6: Summary
+## Step 6: Write Install Receipt
+
+Write `~/.architect-playbook-manifest.json` recording everything this run did:
+
+```json
+{
+  "schemaVersion": 1,
+  "tool": "architect-coding-playbook",
+  "toolVersion": "0.4.0",
+  "installedAt": "<ISO timestamp>",
+  "scope": "user+project",
+  "writes": [
+    {
+      "manifestId": "global.CLAUDE",
+      "path": "/Users/you/.claude/CLAUDE.md",
+      "action": "created" /* or "merged" or "replaced" */,
+      "shippedSha256": "<hex>",
+      "userModified": false,
+      "preMergeBackupPath": null /* or "~/.claude/.architect-playbook-backups/CLAUDE.md.2026-04-30T12-00-00Z" */
+    }
+    /* ...one entry per file written, plus settingsMerges entries with addedKeys */
+  ],
+  "uninstall": {
+    "removePaths": ["..."],
+    "revertMerges": [{"path": "...", "removeKeys": [...]}]
+  }
+}
+```
+
+This receipt enables a future `/uninstall-architect` skill to roll back cleanly. Each entry must reference a `manifestId` from `install.manifest.json` for traceability.
+
+---
+
+## Step 7: Summary
 
 Report:
 
-1. **What was created** — list of files written and directories created.
-2. **What was skipped** — files that already existed and the user chose to keep.
-3. **Next steps for the user:**
-   - Open each new `CLAUDE.md` and fill in any remaining `[PLACEHOLDER]` tokens.
-   - Copy `AGENTS/` folder into each project (see main README).
-   - Replace `AGENTS/[APP]__PROJECT_SPECIFIC.md` with project specifics.
-   - Open Claude Code in each project to verify rules and skills load correctly.
-   - Optionally promote project-level skills to global by copying `<project>/.claude/skills/<name>/` to `~/.claude/skills/`.
-4. **Verification command** — suggest the user test the setup by asking Claude Code:
-   > "What rules are loaded for this session?"
+1. **Files created** — paths, by section.
+2. **Files merged** — paths, with backup paths, with the keys/sections added.
+3. **Files skipped** — files the user chose to keep.
+4. **AGENTS/ copied** — count, the chosen `[APP]__` prefix.
+5. **Memory dirs created** — encoded paths.
+6. **Verify command:** suggest the user test the setup with `/verify-install` (the global skill installed in Step 3d). It re-hashes everything against `install.manifest.json` and reports drift.
+7. **Next steps:**
+   - Open each new `CLAUDE.md` and fill remaining `[PLACEHOLDER]` tokens.
+   - Replace `<USER_PREFIX>__PROJECT_SPECIFIC.md` content per project.
+   - Open Claude Code in each project to verify rules and skills load (use `/verify-install`).
 
 End with:
-> "Setup complete. The Architect Coding Playbook now governs your Claude Code sessions across all projects."
+> "Setup complete. The Architect Coding Playbook now governs your Claude Code sessions across all projects. Run `/verify-install` any time to drift-check."

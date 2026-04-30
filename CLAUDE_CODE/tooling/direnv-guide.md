@@ -89,7 +89,25 @@ If you want to share a template with your team, commit `.envrc.example` instead 
 Claude Code sessions inherit environment variables from your shell. With direnv active:
 
 - Each project's env vars are automatically available in Claude Code sessions started from that directory.
-- `CLAUDE_PROJECT` lets Claude identify which project it's working in.
+- `CLAUDE_PROJECT` is surfaced into the session via the **`SessionStart` hook** shipped in `CLAUDE_CODE/templates/project/settings.json`:
+
+  ```json
+  {
+    "hooks": {
+      "SessionStart": [
+        {
+          "matcher": "startup",
+          "hooks": [
+            { "type": "command", "command": "echo \"[architect-coding-playbook] CLAUDE_PROJECT=${CLAUDE_PROJECT:-(unset)}\"" }
+          ]
+        }
+      ]
+    }
+  }
+  ```
+
+  The hook prints the active `CLAUDE_PROJECT` value to the session, so it appears in the conversation context. Claude can then reference it in summaries, memory writes, and project routing.
+
 - Combine with `settings.local.json` (gitignored) for per-project tool permissions:
 
 ```json

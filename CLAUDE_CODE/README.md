@@ -6,19 +6,30 @@ This directory adapts the Architect Coding Playbook for **Claude Code**. It maps
 
 ## Install — One Paste
 
-Open Claude Code in any directory and paste:
+Open Claude Code **inside a clone of `architect-coding-playbook`** and paste:
 
 ```
 Run the architect-coding-playbook Claude Code setup:
 @CLAUDE_CODE/SETUP.md
 ```
 
+> If you're running Claude Code from elsewhere, paste the absolute path: `@/path/to/architect-coding-playbook/CLAUDE_CODE/SETUP.md`. The `@` import is resolved relative to your current working directory.
+
 Claude Code will:
 
 1. Detect any existing `~/.claude/` or `.claude/` setup.
-2. Ask a few onboarding questions (identity, projects, org policies).
-3. Generate global and per-project files from the templates below.
-4. Never overwrite anything without showing a diff and getting confirmation.
+2. Ask a few onboarding questions (identity, projects, org policies, `[APP]__` prefix).
+3. Generate global and per-project files from the templates below — every write traceable to a `manifestId` in [`install.manifest.json`](./install.manifest.json).
+4. Backup before any modification to `~/.claude/.architect-playbook-backups/`.
+5. Auto-copy `AGENTS/[APP]__*.md` into each project with the `[APP]__` prefix substituted.
+6. Write an install receipt at `~/.architect-playbook-manifest.json` for clean uninstall + drift detection.
+7. Never overwrite anything without showing a diff and getting confirmation.
+
+After install, run `/verify-install` to drift-check.
+
+### Alternative: install via plugin
+
+If you only want the skills + subagents (and you'll author your `AGENTS.md` and `CLAUDE.md` by hand), install the Claude Code plugin variant — see [`claude-code-plugin/README.md`](../claude-code-plugin/README.md).
 
 ---
 
@@ -123,13 +134,15 @@ This repo ships templates for both layers in `CLAUDE_CODE/templates/`:
 
 ## Other Agents (CLI-Agnostic)
 
-`AGENTS.md` is agent-agnostic. The same content applies:
+`AGENTS.md` + `AGENTS/[APP]__*.md` is the cross-tool kernel. Per-CLI bootstraps live in sibling directories with their own quickstarts:
 
-- **Windsurf:** use `.windsurfrules` at the project root. Populate it the same way as the project `CLAUDE.md` template.
-- **Cursor:** use `.cursor/rules/` for project-level rules. Point to `AGENTS/` appendices with `@` imports.
-- **Codex CLI:** use `AGENTS.md` directly — it reads the file natively.
+- **Cursor:** [`CURSOR/README.md`](../CURSOR/README.md) — Cursor reads `AGENTS.md` natively; this shim covers `.cursor/rules/*.mdc` for path scoping.
+- **Codex CLI:** [`CODEX/README.md`](../CODEX/README.md) — two `cp` commands; Codex reads `AGENTS.md` natively.
+- **Windsurf / Cline / Aider / Copilot:** read `AGENTS.md` natively at the repo root. Copy `AGENTS.md` + `AGENTS/` and you're done.
 
-The Claude-Code-specific files (`CLAUDE.md`, `.claude/settings.json`, etc.) only matter when running Claude Code. Other agents read `AGENTS.md` and the `AGENTS/` appendices directly.
+The Claude-Code-specific files (`CLAUDE.md`, `.claude/settings.json`, etc.) only matter when running Claude Code. Other agents consume `AGENTS.md` and the `AGENTS/` appendices directly.
+
+> **Important:** Claude Code does **not** read `AGENTS.md` natively — it reads `CLAUDE.md`. The setup flow generates a thin project `CLAUDE.md` whose first line is `@AGENTS.md`, bridging the gap. Alternatively, `ln -s AGENTS.md CLAUDE.md`.
 
 ---
 

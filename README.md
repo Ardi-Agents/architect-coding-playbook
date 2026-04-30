@@ -45,19 +45,28 @@ This playbook installs itself. Point a coding agent at this repo and paste **one
 
 ### One-paste install (recommended)
 
-Open your coding agent in any directory and paste:
+**Step 1.** Clone the repo:
+
+```bash
+git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+cd ~/architect-coding-playbook
+```
+
+**Step 2.** Open Claude Code (or your AI CLI) **inside the clone** and paste:
 
 ```
-Install the Architect Coding Playbook from https://github.com/farshadas/architect-coding-playbook
+Install the Architect Coding Playbook on this machine.
 
-1. Clone or fetch the repo to a local cache if not already present.
-2. Read CLAUDE_CODE/SETUP.md and execute it as an interactive setup.
-3. Enforce its safety rules — never overwrite existing files without showing
+1. Read CLAUDE_CODE/SETUP.md and execute it as an interactive setup.
+2. Enforce its safety rules — never overwrite existing files without showing
    me a diff and getting my explicit approval. Default to preserving what
-   I already have.
-4. When done, summarize what was created, what was skipped, and what I
-   should verify.
+   I already have. Backup before any merge or replace.
+3. After install, run /verify-install to confirm everything matches the
+   shipped manifest at CLAUDE_CODE/install.manifest.json.
+4. Summarize what was created, what was skipped, and what I should verify.
 ```
+
+> **Why "inside the clone"?** Claude Code's `@CLAUDE_CODE/SETUP.md` import resolves relative to your current working directory. From outside the clone, use the absolute path: `@/path/to/architect-coding-playbook/CLAUDE_CODE/SETUP.md`.
 
 ### Safety guarantees
 
@@ -73,12 +82,16 @@ Full safety rules live in [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md).
 
 ### Agent compatibility
 
-| Agent | How it reads this repo |
-|---|---|
-| **Claude Code** | Paste the prompt above. Agent reads `CLAUDE_CODE/SETUP.md` and runs it interactively. |
-| **Cursor** | Paste the prompt above. Agent reads `AGENTS.md` + `AGENTS/` and sets up `.cursor/rules/`. |
-| **Windsurf** | Paste the prompt above. Agent reads `AGENTS.md` + `AGENTS/` and sets up `.windsurfrules`. |
-| **Codex CLI** | Agent reads `AGENTS.md` natively — copy `AGENTS.md` + `AGENTS/` into your project. |
+`AGENTS.md` + `AGENTS/[APP]__*.md` is the cross-tool kernel; per-CLI bootstraps live in their own sibling directories with quickstarts.
+
+| Agent | Reads | Bootstrap |
+|---|---|---|
+| **Claude Code** | `CLAUDE.md` (NOT `AGENTS.md` natively) | [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md) — full interactive install. Optionally: [`claude-code-plugin/`](./claude-code-plugin/README.md) for `/plugin install`. |
+| **Cursor** | `AGENTS.md` natively + `.cursor/rules/*.mdc` | [`CURSOR/README.md`](./CURSOR/README.md) — `cp` quickstart. |
+| **Codex CLI** | `AGENTS.md` natively | [`CODEX/README.md`](./CODEX/README.md) — two `cp` commands. |
+| **Windsurf / Cline / Aider / Copilot** | `AGENTS.md` natively | Just copy `AGENTS.md` + `AGENTS/` into the repo root. |
+
+> **Cross-tool note.** Claude Code is the lone holdout on native AGENTS.md adoption — it reads `CLAUDE.md`. The setup flow generates a thin `CLAUDE.md` that opens with `@AGENTS.md`, so the same kernel reaches Claude Code transitively. Alternatively, symlink: `ln -s AGENTS.md CLAUDE.md` (works on macOS/Linux; Windows users should prefer the import). See [agents.md](https://agents.md/) for the cross-tool standard.
 
 ### Manual path (for humans who prefer it)
 
@@ -86,12 +99,32 @@ If you want to install without an agent:
 
 ```bash
 git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+cd <your-target-project>
 cp ~/architect-coding-playbook/AGENTS.md ./AGENTS.md
 cp -R ~/architect-coding-playbook/AGENTS ./AGENTS
-# Edit AGENTS/[APP]__PROJECT_SPECIFIC.md with your project's specifics.
+
+# Replace [APP]__ with your project's prefix (example uses MYAPP)
+cd AGENTS && for f in '[APP]__'*.md; do mv "$f" "${f//\[APP\]/MYAPP}"; done && cd ..
+
+# For Claude Code: bridge AGENTS.md so Claude reads it
+echo '@AGENTS.md' > CLAUDE.md
+# (or, if you prefer a symlink)
+# ln -s AGENTS.md CLAUDE.md
 ```
 
+Then edit `AGENTS/MYAPP__PROJECT_SPECIFIC.md` with your project's specifics.
+
 For the full Claude Code setup (skills, subagents, memory, per-project `.claude/`), follow [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md) step by step.
+
+### Verify the install
+
+After running the agent-driven or manual install, drift-check it:
+
+```
+/verify-install
+```
+
+This re-hashes every shipped file against [`CLAUDE_CODE/install.manifest.json`](./CLAUDE_CODE/install.manifest.json) and reports `OK / drifted / missing / foreign` per file.
 
 ---
 

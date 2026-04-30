@@ -31,29 +31,32 @@ These rule files are loaded for every Claude Code session. They live in `~/.clau
 
 ## Loaded Skills
 
-Skills are loaded on-demand when their pattern matches the task. They live in `~/.claude/skills/`.
+Skills are loaded on-demand when their pattern matches the task. They live in `~/.claude/skills/<name>/SKILL.md`.
 
-```
-~/.claude/skills/
-├── journal/SKILL.md           # Daily journal entries
-├── todo/SKILL.md              # Task management across projects
-└── explain-code/SKILL.md      # Code explanation utility
-```
+The Architect Coding Playbook ships these as starter examples:
+
+- `journal/` — append dated entries to `~/.claude/journal/YYYY-MM-DD.md`
+- `todo/` — manage a personal cross-project todo list at `~/.claude/todo.md`
+- `explain-code/` — layered, audience-aware explanations of a function or module
+- `verify-install/` — verify the playbook install matches the shipped manifest
 
 > See `~/.claude/skills/_README.md` for how to author new skills.
+> Skills auto-discover from `~/.claude/skills/<name>/SKILL.md` — no settings entry required.
 
 ---
 
 ## Per-Project Memory
 
-Claude Code maintains durable memory per project at `~/.claude/projects/<project>/memory/`:
+Claude Code's auto-memory lives at `~/.claude/projects/<encoded-path>/memory/`, where `<encoded-path>` is the absolute project path with every non-alphanumeric character replaced by `-`:
 
 ```
-~/.claude/projects/<project-name>/memory/
-├── MEMORY.md                  # Auto-memory index (first 200 lines auto-loaded)
+~/.claude/projects/-Users-you-CascadeProjects-myproject/memory/
+├── MEMORY.md                  # Auto-memory index (first 200 lines / 25 KB auto-loaded)
 ├── debugging.md               # Patterns Claude discovered during sessions
 └── conventions.md             # Project-specific learnings
 ```
+
+For a project at `/Users/you/CascadeProjects/myproject`, the encoded directory is `-Users-you-CascadeProjects-myproject`. All worktrees of one repo share the same memory dir.
 
 These accumulate across sessions and survive context resets.
 

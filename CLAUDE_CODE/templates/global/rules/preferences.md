@@ -24,7 +24,7 @@
 ## Working Rules
 
 - Default to showing your work — reasoning, not just conclusions.
-- When I give feedback like "that's not right," remember the correction (note in `~/.claude/projects/<project>/memory/`).
+- When I give feedback like "that's not right," remember the correction (note in `~/.claude/projects/<encoded-cwd>/memory/`).
 - Code: comment the why, not the what. Prefer simple over clever.
 
 ## Output Preferences

@@ -16,7 +16,7 @@
 
 - Never commit secrets, API keys, tokens, or credentials to version control. Use environment variables, `.env` files (gitignored), or a secrets manager.
 - Never include sensitive values in URLs, query parameters, or log output.
-- Full security rules: see [`@AGENTS.md`](../../../AGENTS.md) — P0 Security & Data Integrity.
+- Full security rules: see [`AGENTS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS.md) — P0 Security & Data Integrity.
 
 ## Agent Autonomy Limits
 
@@ -24,13 +24,13 @@
 - **Never deploy** or run migration scripts on production environments.
 - **Never modify authentication or authorization** code unless explicitly requested.
 - **Never delete files** without confirming they are unreferenced (grep, tests).
-- Full autonomy rules: see [`@AGENTS.md`](../../../AGENTS.md) — P0 and Tool & File Discipline sections.
+- Full autonomy rules: see [`AGENTS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS.md) — P0 and Tool & File Discipline sections.
 
 ## Code Quality
 
 - All new or modified code must have tests before a task is marked complete.
 - Passing lint is the definition of done — do not leave a file in a broken lint state.
-- Full quality rules: see [`@AGENTS.md`](../../../AGENTS.md) — P1 Correctness & Planning.
+- Full quality rules: see [`AGENTS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS.md) — P1 Correctness & Planning.
 
 ## Licensing of Created Work
 
@@ -39,4 +39,4 @@
 
 ---
 
-> Edit to match your actual organizational policies. The `@AGENTS.md` references are the source of truth — this file supplements, not replaces them.
+> Edit to match your actual organizational policies. The `AGENTS.md` references are the source of truth — this file supplements, not replaces them.
