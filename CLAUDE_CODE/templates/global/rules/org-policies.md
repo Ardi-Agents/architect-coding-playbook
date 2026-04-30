@@ -39,4 +39,17 @@
 
 ---
 
+## Organization-specific additions
+
+<!-- BEGIN Q3_ORG_POLICIES -->
+<!-- The Architect Coding Playbook setup flow inserts the user's Question 3 answer here.
+     If you're editing this file by hand, replace the comment block with your org's specific tooling/library/process policies.
+     Each policy: one bullet per rule, written in imperative form. -->
+
+- _(none — Q3 answer not provided)_
+
+<!-- END Q3_ORG_POLICIES -->
+
+---
+
 > Edit to match your actual organizational policies. The `AGENTS.md` references are the source of truth — this file supplements, not replaces them.

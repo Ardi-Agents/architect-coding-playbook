@@ -99,7 +99,14 @@ Layer 1 — personal identity across all projects on this machine. All template 
 
 ### 3c. `~/.claude/rules/`
 
-Install all four rule files (manifest ids `global.rules.preferences`, `workflows`, `org-policies`, `consistency-checks`). For each: detect → diff → confirm → write. Substitute Question 3 answers into `org-policies.md`.
+Install all four rule files (manifest ids `global.rules.preferences`, `workflows`, `org-policies`, `consistency-checks`). For each: detect → diff → confirm → write.
+
+**Q3 substitution into `org-policies.md`:** The template has a `<!-- BEGIN Q3_ORG_POLICIES -->` … `<!-- END Q3_ORG_POLICIES -->` block at the bottom. If Q3 was answered:
+1. Parse the answer into one bullet per distinct policy (e.g., "open source only" → `- All third-party tools must be open source and commercially licensable.`).
+2. Replace the placeholder bullet (`- _(none — Q3 answer not provided)_`) with the parsed bullets.
+3. Leave the `<!-- BEGIN/END Q3_ORG_POLICIES -->` markers in place so a future re-run can find and update them idempotently.
+
+If Q3 was skipped, leave the placeholder bullet untouched. The file's shipped sha is for the placeholder state; any Q3 substitution intentionally drifts the file (record `userModified: true` with reason `"Q3 substitution"` in the receipt).
 
 ### 3d. `~/.claude/skills/`
 
@@ -141,7 +148,7 @@ Layer 2 — per-project rules shared with the team. Run for **each project** fro
 
 - Source: `CLAUDE_CODE/templates/project/settings.json`. Manifest id: `project.settings`.
 - This is the **real Claude Code schema**: top-level `permissions.{allow,deny,ask,defaultMode}` flat arrays of `"Tool(args:*)"` strings, `hooks`, `includeCoAuthoredBy`. Do not invent keys.
-- Tighten `permissions.allow` / `deny` to match the project's stack (e.g., add `"Bash(go test:*)"` for Go projects; remove unused ones).
+- The shipped allow list is intentionally **broad** (covers npm/pnpm/yarn/pytest/ruff/mypy/go/cargo) so most stacks work verbatim. Tightening is **optional**; if you tighten, mark `project.settings.userModified: true` in the receipt with reason `"stack-tighten"` so `/verify-install` reports the drift as expected.
 - Confirm before writing.
 
 ### 4c. `<project>/.claude/rules/`
@@ -177,7 +184,7 @@ This step actively copies and substitutes — do **not** delegate to the user.
    - Source: `<playbook>/AGENTS/<file>`
    - Dest: `<project>/AGENTS/<file_with_[APP]_replaced>`
    - Substitute every `[APP]` → `<USER_PREFIX>` in **filename and content**.
-4. Add a TODO banner to `<USER_PREFIX>__PROJECT_SPECIFIC.md`:
+4. **After substitution**, prepend a TODO banner to `<USER_PREFIX>__PROJECT_SPECIFIC.md` (verbatim — do **not** run the banner through `[APP]` substitution; the banner contains a literal upstream-template link with `[APP]` that must remain unchanged):
    ```markdown
    > TODO: Replace this template with project-specific content. See [`AGENTS/[APP]__PROJECT_SPECIFIC.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__PROJECT_SPECIFIC.md) for the original template.
    ```
@@ -202,7 +209,7 @@ Walk the user through `CLAUDE_CODE/tooling/direnv-guide.md` step by step. Confir
 
 ## Step 6: Write Install Receipt
 
-Write `~/.architect-playbook-manifest.json` recording everything this run did:
+Write `~/.architect-playbook-manifest.json` (at **HOME root**, NOT inside `~/.claude/`) recording everything this run did:
 
 ```json
 {

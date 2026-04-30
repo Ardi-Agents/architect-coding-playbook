@@ -41,10 +41,17 @@
       "templatePath": "CLAUDE_CODE/templates/global/rules/org-policies.md",
       "installScope": "user",
       "installPath": "~/.claude/rules/org-policies.md",
-      "sha256": "fbd364cf4ed7a85b1cc1cf6862de7336603b2fbaa735c76a4b4847c4ff0a5fd0",
+      "sha256": "e379a6dee101ab6ab79c2b31bd24d45c4af4de4f49bd105194733a656150956f",
+      "tokenSubstitution": true,
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
-      "onForeign": "prompt"
+      "onForeign": "prompt",
+      "tokens": ["Q3_ORG_POLICIES"],
+      "substitutionBlock": {
+        "begin": "<!-- BEGIN Q3_ORG_POLICIES -->",
+        "end": "<!-- END Q3_ORG_POLICIES -->",
+        "placeholder": "- _(none — Q3 answer not provided)_"
+      }
     },
     {
       "id": "global.rules.consistency-checks",
@@ -127,7 +134,9 @@
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt",
-      "schemaUrl": "https://json.schemastore.org/claude-code-settings.json"
+      "schemaUrl": "https://json.schemastore.org/claude-code-settings.json",
+      "tighteningOptional": true,
+      "expectedDriftReason": "Users may tighten permissions.allow/deny to their stack; record userModified: true with reason 'stack-tighten' in the install receipt. /verify-install treats this drift as expected, not a failure."
     },
     {
       "id": "project.rules.code-style",
