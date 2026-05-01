@@ -30,7 +30,7 @@ Before marking any task as complete, verify:
 ### Database & Dependencies
 - [ ] Schema changes in ORM, migrations, services, tests
 - [ ] Database migrations run successfully
-- [ ] New dependencies added via `poetry add` with versions locked
+- [ ] New dependencies added via your project's package manager (e.g., `npm install`, `poetry add`, `cargo add`) with versions locked
 - [ ] No version pins changed without approval
 
 ### Documentation

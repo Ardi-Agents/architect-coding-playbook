@@ -21,7 +21,7 @@
       "templatePath": "CLAUDE_CODE/templates/global/rules/preferences.md",
       "installScope": "user",
       "installPath": "~/.claude/rules/preferences.md",
-      "sha256": "7582958cb240660e85b1a7810f2342bef79f220d36309dcac5d560ccac2ca512",
+      "sha256": "49e2bf33cd6a2ec25daacd35090785fa3324364d3a96b92db1d533c4f5bec864",
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt"
@@ -118,12 +118,11 @@
       "templatePath": "CLAUDE_CODE/templates/project/CLAUDE.md",
       "installScope": "project",
       "installPath": "<PROJECT>/CLAUDE.md",
-      "sha256": "be8a7b2f33effedd96c566249c29a0c4bb012687b77da75529c3601d51d0b656",
-      "tokenSubstitution": true,
+      "sha256": "9cfb6eab03adf64e2ad749a8cc81b49d746ec865d4849e067a14ad496cc79808",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[PATH_TO_REPO]": "<ABS_PATH>", "[APP]": "<USER_PREFIX>", "[YOUR_START_COMMAND]": "<from Q2(c) stack defaults>", "[YOUR_TEST_COMMAND]": "<from Q2(c) stack defaults>", "[YOUR_LINT_COMMAND]": "<from Q2(c) stack defaults>", "[YOUR_BUILD_COMMAND]": "<from Q2(c) stack defaults>", "$STACK_LINE_FROM_Q2C": true },
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
-      "onForeign": "prompt",
-      "tokens": ["PROJECT_NAME", "PATH_TO_REPO", "APP", "YOUR_START_COMMAND", "YOUR_TEST_COMMAND", "YOUR_LINT_COMMAND", "YOUR_BUILD_COMMAND"]
+      "onForeign": "prompt"
     },
     {
       "id": "project.settings",
@@ -144,7 +143,7 @@
       "installScope": "project",
       "installPath": "<PROJECT>/.claude/rules/code-style.md",
       "sha256": "d9b9f3db75b909dc6753d7f08cc096b00d4db41c31bbf6fc235d6616c0bb0351",
-      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>" },
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "$STACK_DEFAULTS_FROM_Q2C": true },
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt"
@@ -155,7 +154,7 @@
       "installScope": "project",
       "installPath": "<PROJECT>/.claude/rules/testing.md",
       "sha256": "f2fca6e7bea16645f1d04d2e05bac18401ba75a119fbf69167e75e14da92189c",
-      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" },
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>", "$STACK_DEFAULTS_FROM_Q2C": true },
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt"

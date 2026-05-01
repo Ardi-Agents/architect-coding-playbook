@@ -75,7 +75,11 @@ Layer 1 — personal identity across all projects on this machine. All template 
 ### 3a. `~/.claude/CLAUDE.md`
 
 - Source: `CLAUDE_CODE/templates/global/CLAUDE.md`. Manifest id: `global.CLAUDE`.
-- Substitute tokens from Question 1 (`YOUR_NAME`, `CITY, STATE`, `YOUR_ROLE`, etc.).
+- Substitute tokens from Question 1 (`YOUR_NAME`, `CITY, STATE`, `YOUR_ROLE`, `COMPANY_OR_CONTEXT`, `RELEVANT INTERESTS`).
+- **Graceful Q1 substitution** (handle free-form Q1 answers cleanly):
+  - If Q1 didn't include an "at <company>" portion: drop the literal ` at [COMPANY_OR_CONTEXT]` segment from the Role line entirely. Result: `Role: Software Engineer` instead of an awkward `Role: Software Engineer at <empty>`.
+  - If Q1 didn't supply `[CITY, STATE]` or `[RELEVANT INTERESTS]`: leave the bracketed placeholders in the file. They aren't load-bearing — the user can fill them in later or delete the lines. **Do not invent values to fill them.**
+  - If Q1 did supply a clear free-form `Background:` paragraph, place it on the Background line; otherwise leave the bracketed placeholder.
 - If `~/.claude/CLAUDE.md` exists: backup → show diff → ask `(k) keep / (m) merge / (r) replace`. Default `keep`.
 - For `merge`: append the playbook section under a clear delimiter `<!-- architect-coding-playbook v0.4.0 -->` so a future uninstall can find and remove it.
 
@@ -140,6 +144,7 @@ Layer 2 — per-project rules shared with the team. Run for **each project** fro
 
 - Source: `CLAUDE_CODE/templates/project/CLAUDE.md`. Manifest id: `project.CLAUDE`.
 - Substitute Question 2 tokens (`PROJECT_NAME`, `PATH_TO_REPO`, `APP`, stack commands).
+- **Substitute Q2(c) stack answer** into the `Stack:` line: replace the `[e.g., "Python/FastAPI + React/TypeScript + PostgreSQL + GCP Cloud Run"]` placeholder with the user's actual stack from Q2(c). If Q2(c) is empty, leave the placeholder.
 - **First import line** must be `@AGENTS.md` so Claude Code transitively loads the kernel (Claude Code does not read AGENTS.md natively — this import bridges the gap).
 - Ask the user: root or `.claude/CLAUDE.md`? Default: root.
 - If file exists: backup → diff → confirm.
@@ -154,6 +159,47 @@ Layer 2 — per-project rules shared with the team. Run for **each project** fro
 ### 4c. `<project>/.claude/rules/`
 
 Install (each with detect/diff/confirm). **Token substitution: substitute BOTH `[APP]` AND its URL-encoded form `%5BAPP%5D` to `<USER_PREFIX>` (the URL-encoded form appears inside markdown link targets like `[label](../../AGENTS/%5BAPP%5D__X.md)` — without substituting both, half the links break).** Also substitute `[PROJECT_NAME]` to the project name.
+
+**Stack-derived defaults (when manifest entry has `$STACK_DEFAULTS_FROM_Q2C: true`).** Parse Q2(c) stack answer; if it matches a known family, fill the bracketed choice-placeholders in `code-style.md` and `testing.md` with sensible defaults. Detection is keyword-based (case-insensitive substring match):
+
+| Q2(c) keyword | Stack family |
+|---|---|
+| `node`, `typescript`, `javascript`, `react`, `vue`, `next`, `express`, `nest` | **node-ts** |
+| `python`, `fastapi`, `django`, `flask`, `pyramid` | **python** |
+| `go`, `golang` | **go** |
+| `rust`, `cargo`, `actix`, `rocket` | **rust** |
+
+Stack-defaults table (apply only those matching the detected family; if multiple match, prefer the most-mentioned; if none match, leave brackets):
+
+| code-style.md placeholder | node-ts | python | go | rust |
+|---|---|---|---|---|
+| `[e.g., Python 3.11, TypeScript 5.x]` (Primary language) | `TypeScript 5.x` | `Python 3.12` | `Go 1.22` | `Rust 1.78` |
+| `[e.g., FastAPI, React 18 with Vite]` (Framework) | `<derive from Q2(c) — e.g., "React 18 + Vite" if "React" matches>` | `<derive from Q2(c)>` | `<derive>` | `<derive>` |
+| `[e.g., PEP 8 + Ruff defaults, Airbnb JS Style Guide]` (Style guide) | `ESLint + Prettier defaults` | `PEP 8 + Ruff defaults` | `gofmt + go vet` | `rustfmt + clippy` |
+| `[100]` (Line length) | `100` | `100` | `120` | `100` |
+| `[4 spaces / 2 spaces]` (Indentation) | `2 spaces` | `4 spaces` | `tabs` | `4 spaces` |
+| `[single / double]` (Quotes) | `single` | `double` | `(N/A — Go uses double for strings)` | `double` |
+| `[required / not required]` (Trailing commas) | `required` | `required` | `(N/A)` | `required` |
+| `[snake_case / camelCase]` Variables | `camelCase` | `snake_case` | `camelCase` (exported) / `lowercase` | `snake_case` |
+| `[snake_case / camelCase]` Functions | `camelCase` | `snake_case` | `camelCase` (exported) | `snake_case` |
+| `[kebab-case / snake_case]` Files | `kebab-case` | `snake_case` | `snake_case` | `snake_case` |
+| `[match source + .test / _test]` Test files | `match source + .test` | `test_<module>` | `_test.go suffix` | `tests/<module>.rs` |
+
+| testing.md placeholder | node-ts | python | go | rust |
+|---|---|---|---|---|
+| `[pytest / unittest / jest]` (Backend test framework) | `vitest` (or `jest`) | `pytest` | `go test` (built-in) | `cargo test` (built-in) |
+| `[vitest / jest / playwright]` (Frontend test framework) | `vitest` | `(if applicable)` | `(N/A — frontend?)` | `(N/A)` |
+| `[playwright / cypress]` (E2E) | `playwright` | `playwright` (Python bindings) | `playwright` | `playwright` |
+| `[YOUR_BACKEND_TEST_CMD]` | `npm test` | `pytest tests/` | `go test ./...` | `cargo test` |
+| `[YOUR_FRONTEND_TEST_CMD]` | `npm test` (or `vitest run`) | `(N/A or `vitest run`)` | `(N/A)` | `(N/A)` |
+| `[YOUR_E2E_TEST_CMD]` | `npx playwright test` | `pytest tests/e2e/` | `go test ./e2e/...` | `cargo test --test e2e` |
+| `[YOUR_COVERAGE_CMD]` | `vitest run --coverage` | `pytest --cov` | `go test -cover ./...` | `cargo tarpaulin` |
+
+**`api-design.md`:** the API style placeholders (`[REST / GraphQL / gRPC]`, `[JSON / Protocol Buffers]`, `[URI versioning /v1/ ...]`, `[OAuth 2.0 / JWT / Session cookies / API key]`) are architecture-decision placeholders — leave them as-is; the user fills them in based on actual project decisions.
+
+If Q2(c) doesn't match any known family, install templates as-is with all bracketed placeholders intact and document this in the receipt: `userModifiedReason: "no stack family detected; placeholders preserved"`.
+
+Files to install (each with detect/diff/confirm):
 
 - `code-style.md` (id `project.rules.code-style`)
 - `testing.md` (id `project.rules.testing`)

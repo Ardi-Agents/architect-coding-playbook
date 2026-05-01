@@ -24,18 +24,18 @@
 ### Code Search Strategy
 1. **Tests first**: When searching for code, check tests first to see how it's supposed to work
 2. **Use code_search tool**: For complex searches across the codebase
-3. **Grep with filters**: Use `grep -r "function_name" --include="*.py"` with file type filters
+3. **Grep with filters**: Narrow searches with file-type filters (`--include="*.<ext>"`) to reduce noise.
 
 ### Finding Usages
 ```bash
-# Find all references to a function
-grep -r "function_name" --include="*.py" backend/
+# Find all references to a function (substitute your file extension)
+grep -r "function_name" --include="*.<ext>" <source-dir>/
 
 # Find all imports of a module
-grep -r "from module import" --include="*.py" .
+grep -r "<import-keyword> module" --include="*.<ext>" .
 
 # Find test coverage for a feature
-grep -r "test.*feature" --include="*.py" tests/
+grep -r "test.*feature" --include="*.<ext>" tests/
 ```
 
 ---
@@ -48,17 +48,14 @@ grep -r "test.*feature" --include="*.py" tests/
 - **Passing lint = definition of done**
 
 ### Quick Lint Commands
-```bash
-# Python (backend)
-ruff check backend/app/path/to/file.py
-ruff format backend/app/path/to/file.py
+Run your project's configured linter / formatter / type-checker on the file you just edited. Examples by ecosystem:
 
-# TypeScript (frontend)
-cd frontend && npm run lint -- --fix
+- **Python:** `ruff check <path>` + `ruff format <path>` + `mypy <path>`
+- **Node/TypeScript:** `npm run lint -- --fix <path>` + `tsc --noEmit`
+- **Go:** `go vet ./...` + `gofmt -l <path>`
+- **Rust:** `cargo clippy` + `cargo fmt -- --check`
 
-# Type checking
-cd frontend && npm run typecheck
-```
+See `[APP]__PROJECT_SPECIFIC.md` for this project's exact commands.
 
 ---
 
@@ -121,16 +118,15 @@ git checkout -b  # (creates branch)
 ## Test Execution
 
 ### Running Tests Safely
-```bash
-# Backend tests (safe to auto-run)
-poetry run pytest tests/backend/test_specific.py -v
+Run your project's test runner with `-v`/`--verbose` for clear output. Examples by ecosystem:
 
-# Frontend tests (safe to auto-run)
-cd frontend && npm test
+- **Python:** `pytest <path/to/test> -v` (or `poetry run pytest …` if using Poetry)
+- **Node/TypeScript:** `npm test`, `vitest run <path>`, or `jest <path>`
+- **Go:** `go test -v ./...`
+- **Rust:** `cargo test`
+- **E2E** (may take time — inform user): `npx playwright test`, `cypress run`
 
-# E2E tests (may take time, inform user)
-npx playwright test --project=chromium
-```
+See `[APP]__PROJECT_SPECIFIC.md` for this project's exact test commands.
 
 ### Test Data Management
 - Use deterministic test data (no random UUIDs)

@@ -245,7 +245,5 @@ B. [Approach 2 - pros/cons]
 - Document auth changes with justification
 
 ### Testing Requirement
-```bash
-pytest tests/test_auth_flow.py -v
-curl -X POST /api/auth/login -d '{"username":"test","password":"test"}'
-```
+- Run your project's auth-flow test suite (e.g., `pytest tests/test_auth_flow.py -v`, `npm test -- auth`, `go test ./auth/...`).
+- Smoke-test the login endpoint with `curl` or a request runner if applicable.

@@ -66,17 +66,9 @@ Path-scoped rules (uncomment any whose subdirectory exists in your project):
 
 ## Loaded Project Skills
 
-Skills available as slash-commands or context triggers. Live in `.claude/skills/`.
+Skills available as slash-commands. Live in `.claude/skills/<name>/SKILL.md`.
 
-```
-.claude/skills/
-├── deploy/SKILL.md           # /deploy command
-├── review-pr/SKILL.md        # /review-pr command
-└── prd-writer/
-    ├── SKILL.md              # /prd-writer command
-    ├── template.md
-    └── examples/sample.md
-```
+This install ships only `.claude/skills/_README.md` (skill-authoring guide). Add your own project skills as new directories — Claude Code auto-discovers them on next session start. See `_README.md` for the SKILL.md frontmatter format.
 
 ## Loaded Project Subagents
 

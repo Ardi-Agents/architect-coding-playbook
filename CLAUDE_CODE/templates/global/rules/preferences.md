@@ -12,7 +12,6 @@
 - Write with clear opinions backed by reasoning. No hedge words ("might", "perhaps", "it seems").
 - Ask 1–2 clarifying questions before starting complex tasks, not more.
 - If information is missing, flag it with `[NEED: description]` instead of guessing.
-- Match my voice: [YOUR PREFERRED TONE — e.g., "confident, specific, conversational"]
 
 ## Plan Output
 
