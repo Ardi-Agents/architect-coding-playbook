@@ -153,9 +153,9 @@ Layer 2 — per-project rules shared with the team. Run for **each project** fro
 
 ### 4c. `<project>/.claude/rules/`
 
-Install (each with detect/diff/confirm):
+Install (each with detect/diff/confirm). **Token substitution: substitute BOTH `[APP]` AND its URL-encoded form `%5BAPP%5D` to `<USER_PREFIX>` (the URL-encoded form appears inside markdown link targets like `[label](../../AGENTS/%5BAPP%5D__X.md)` — without substituting both, half the links break).** Also substitute `[PROJECT_NAME]` to the project name.
 
-- `code-style.md` (id `project.rules.code-style`) — substitute project tokens.
+- `code-style.md` (id `project.rules.code-style`)
 - `testing.md` (id `project.rules.testing`)
 - `api-design.md` (id `project.rules.api-design`) — skip if project has no API.
 - `frontend/components.md` (id `project.rules.frontend.components`) — skip if no `frontend/` dir.
