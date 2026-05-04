@@ -7,18 +7,16 @@
 
 ## What Are Project Skills?
 
-Project skills are reusable Claude Code capabilities scoped to one project. They are committed to the repo so the whole team has access. Each skill becomes available as a slash-command (e.g., `/deploy`, `/review-pr`, `/prd-writer`).
+Project skills are reusable Claude Code capabilities scoped to one project. They are committed to the repo so the whole team has access. Each skill becomes available as a slash-command (e.g., a `/deploy` skill is invoked by typing `/deploy`).
+
+> **Note:** The playbook ships only this `_README.md` — no actual skills are bundled. Author your own per the format below; Claude Code auto-discovers any `.claude/skills/<name>/SKILL.md` on next session start.
 
 ## Directory Pattern
 
 ```
 <project-root>/.claude/skills/
-├── deploy/
-│   └── SKILL.md             # Required — the skill definition
-├── review-pr/
-│   └── SKILL.md
-└── prd-writer/
-    ├── SKILL.md             # Required
+└── <your-skill>/
+    ├── SKILL.md             # Required — the skill definition
     ├── template.md          # Optional — reusable template
     └── examples/            # Optional — example outputs
         └── sample.md
@@ -58,13 +56,15 @@ Project skills are reusable Claude Code capabilities scoped to one project. They
 [Link to `examples/` directory or inline samples]
 ```
 
-## Common Project Skills
+## Skill Ideas
 
-- **`deploy/`** — Wrap deploy commands with checks (tests pass, lint clean, no uncommitted changes).
-- **`review-pr/`** — Structured PR review against AGENTS.md rules.
-- **`prd-writer/`** — Generate product requirement docs from a brief.
-- **`migrate-db/`** — Generate and run database migrations safely.
-- **`hotfix/`** — Branch off main, apply fix, prepare PR with rollback plan.
+Patterns teams have found useful (none ship by default — author your own):
+
+- **`deploy`** — wrap deploy commands with pre-flight checks (tests pass, lint clean, no uncommitted changes).
+- **`review-pr`** — structured PR review against `AGENTS.md` rules.
+- **`prd-writer`** — generate product requirement docs from a brief, using a `template.md`.
+- **`migrate-db`** — generate and run database migrations safely.
+- **`hotfix`** — branch off main, apply fix, prepare PR with rollback plan.
 
 ## Authoring Workflow
 

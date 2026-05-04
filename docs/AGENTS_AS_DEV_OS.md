@@ -154,7 +154,9 @@ If a command fails twice with the same or closely related error: **stop**, read 
 
 ### Active State Management
 
-In long, multi-step sessions, "agent amnesia" — drift away from the original plan — is the silent killer. The mitigation is **active state management**: a small persistent plan file (`agent_sessions_tmp/ACTIVE_PLAN.md` in this repo) the agent re-reads when it gets lost. Think of it as memory swap.
+In long, multi-step sessions, "agent amnesia" — drift away from the original plan — is the silent killer. The mitigation is **active state management**: a small persistent plan + memory file the agent re-reads when it gets lost. Think of it as memory swap.
+
+For Claude Code, the kernel points the agent at the auto-loaded per-project memory at `~/.claude/projects/<encoded-cwd>/memory/MEMORY.md` — the first 200 lines load automatically at session start, so any plan or constraint written there survives context resets. For other agents, a similarly persistent file at the project root works.
 
 When the agent gets confused, it re-loads the plan, re-loads constraints, and resumes with intent.
 

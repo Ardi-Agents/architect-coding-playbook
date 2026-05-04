@@ -203,7 +203,7 @@
       "templatePath": "CLAUDE_CODE/templates/project/skills/_README.md",
       "installScope": "project",
       "installPath": "<PROJECT>/.claude/skills/_README.md",
-      "sha256": "ceec7682a466a95a9216bb771be658ef1b4358e0d48b072fb6dcf3f6e8c098e2",
+      "sha256": "271c9e27d046c3a643593ad9b6e3f245f3d32e87aee9fcd57fafce389bf5efcd",
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt"

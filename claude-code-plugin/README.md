@@ -78,6 +78,6 @@ Per Anthropic's docs, plugin subagents do **not** support the `hooks`, `mcpServe
 /plugin uninstall architect-coding-playbook
 ```
 
-Plugin uninstall removes the plugin's skills and subagents but leaves project files (`AGENTS.md`, project `CLAUDE.md`, etc.) intact — those are managed by the SETUP.md flow and the install manifest at `~/.claude/.architect-playbook-manifest.json`.
+Plugin uninstall removes the plugin's skills and subagents but leaves project files (`AGENTS.md`, project `CLAUDE.md`, etc.) intact — those are managed by the SETUP.md flow and the install receipt at `~/.architect-playbook-manifest.json` (HOME root, not inside `~/.claude/`).
 
 → Plugin docs: https://code.claude.com/docs/en/plugins

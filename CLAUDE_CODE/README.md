@@ -85,13 +85,7 @@ my-project/
     │   └── frontend/
     │       └── components.md       # Path-scoped: loads for frontend/ only
     ├── skills/
-    │   ├── _README.md              # How to author project skills
-    │   ├── deploy/SKILL.md         # /deploy slash-command (example)
-    │   ├── review-pr/SKILL.md      # /review-pr slash-command (example)
-    │   └── prd-writer/             # Multi-file skill with templates
-    │       ├── SKILL.md
-    │       ├── template.md
-    │       └── examples/sample.md
+    │   └── _README.md              # Skill-authoring guide (only file shipped; team adds skills here)
     └── agents/
         ├── researcher.md           # Read-only codebase exploration subagent
         └── reviewer.md             # Code review specialist subagent
