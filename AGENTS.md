@@ -191,7 +191,7 @@ This section is intentionally minimal. All project-specific rules, conventions, 
 
 ## Session Reporting
 
-At the end of each prompt/task, report (all timestamps in the USER'S local time, currently **UTC-08:00**):
+At the end of each prompt/task, report (all timestamps in the user's local time — read from system clock; do not hardcode):
 
 - **Start time**: When work began (use the user-request timestamp in local time)
 - **End time**: When task completed (local time)
@@ -202,8 +202,8 @@ Format:
 
 ```
 ⏱️ Session Report
-- Start: [HH:MM AM/PM] (UTC-08:00)
-- End: [HH:MM AM/PM] (UTC-08:00)
+- Start: [HH:MM AM/PM] (your local time)
+- End: [HH:MM AM/PM] (your local time)
 - Duration: [X] minutes
 - Tokens: [Y]
 ```
@@ -244,42 +244,9 @@ After completing each task:
 
 ## Context Preservation
 
-For non-trivial tasks (>3 tool calls OR >10 message turns), maintain working state in:
+For non-trivial tasks (>3 tool calls OR >10 message turns), maintain working state in `~/.claude/projects/<encoded-cwd>/memory/MEMORY.md` — Claude Code's auto-memory dir for the current project (auto-loaded at session start; first 200 lines read into context). The encoded path is the absolute project path with every non-alphanumeric char replaced by `-` (e.g. `/Users/you/myproj` → `-Users-you-myproj`).
 
-```
-agent_sessions_tmp/ACTIVE_PLAN.md
-```
-
-**Note**: `agent_sessions_tmp/` lives at the repo root and is gitignored. Session files are temporary and not committed.
-
-**Trigger Conditions**:
-
-- More than 3 sequential tool calls
-- More than 10 message turns
-- Complex multi-phase task
-- Resuming a previously interrupted task
-
-**Format**:
-
-```markdown
-# ACTIVE PLAN for [Task ID]
-## Current Objective: [User request]
-## Completed Steps
-- [x] Step 1: [Description]
-## Next Immediate Step
-- [ ] **Current Focus**: [Clear, executable action]
-## Blockers & Questions
-- [Known issues or questions for user]
-## Decision Log
-- Decision #1: [What and why]
-```
-
-**Archival**: On task completion:
-
-```bash
-mkdir -p agent_sessions_tmp/archive
-mv agent_sessions_tmp/ACTIVE_PLAN.md agent_sessions_tmp/archive/PLAN_<TaskID>_$(date +%Y%m%d).md
-```
+Do NOT create per-project session directories at the project root — the auto-memory tree already serves this purpose and survives context resets. See "Per-Project Memory" in `~/.claude/CLAUDE.md`.
 
 ---
 

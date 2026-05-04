@@ -16,8 +16,8 @@
 ### Automated Security Review Trigger
 
 **When to Run**: Automatically triggered when:
-- Full test suite executed (`pytest tests/` or `npm run test`)
-- Major static analysis run (`scripts/security_suite.sh`)
+- Full test suite executed
+- Major static analysis run
 - Pre-deployment validation
 - Weekly scheduled CI runs
 
@@ -64,9 +64,9 @@ and misleads agents.
 
 ### Before Removing Any Flagged Item
 
-1. **Check API contracts** → `backend/app/schemas/`
+1. **Check API contracts** → wherever your project defines them (e.g., schema files, OpenAPI specs)
 2. **Check test usage** → `grep -r "ItemName" tests/`
-3. **Check design specs** → `Documentation/Solution Design & Planning/`
+3. **Check design specs** → your project's design / planning docs
 4. **Verify build passes** → `npm run build`
 
 ### False Positives List
@@ -97,36 +97,19 @@ Fix lint errors in files you're modifying within same change. **Passing lint = d
 
 ## Tool-Specific Configuration
 
-### Ruff (Python)
-```bash
-ruff check backend/
-ruff format backend/ --check
-```
+Run your project's configured linter, formatter, type-checker, and security scanner. Examples by ecosystem:
 
-### ESLint (TypeScript/React)
-```bash
-cd frontend && npm run lint
-```
+| Tool category | Python | Node/TypeScript | Go | Rust |
+|---|---|---|---|---|
+| Linter | `ruff check`, `flake8` | `eslint` | `go vet`, `staticcheck` | `cargo clippy` |
+| Formatter | `ruff format`, `black` | `prettier` | `gofmt` | `cargo fmt` |
+| Type checker | `mypy` | `tsc --noEmit` | (built-in) | (built-in) |
+| Security scanner | `bandit`, `safety` | `npm audit`, `socket` | `govulncheck` | `cargo audit` |
+| Secrets | `gitleaks detect` | `gitleaks detect` | `gitleaks detect` | `gitleaks detect` |
 
-### Type Checking
-```bash
-# Backend
-mypy backend/app --ignore-missing-imports
+Substitute the actual commands and target paths for your project (see `[APP]__PROJECT_SPECIFIC.md` for project-specific overrides).
 
-# Frontend
-cd frontend && npm run typecheck
-```
-
-### Security Scanning
-```bash
-# Secrets detection
-gitleaks detect --source . --verbose
-
-# Python security
-bandit -r backend/app -ll
-```
-
-> Full security workflow, triggers, and license guidance live in [Documentation/QA & Testing Methodology/free_security_tooling_stack.md](../Documentation/QA%20%26%20Testing%20Methodology/free_security_tooling_stack.md). Run the tools required for your change scope before completion.
+> Full security workflow, triggers, and license guidance: see your project's security tooling docs.
 
 #### Trivy Fix vs Ignore Matrix
 
@@ -141,23 +124,24 @@ bandit -r backend/app -ll
 ## Integration with CI
 
 Ensure these checks pass before marking work complete:
-- [ ] `ruff check` passes
-- [ ] `npm run lint` passes
-- [ ] `npm run typecheck` passes
-- [ ] No new security warnings from Bandit/GitLeaks
+- [ ] Linter passes (your project's configured tool)
+- [ ] Type checker passes (where applicable)
+- [ ] Test suite passes
+- [ ] No new security warnings from secrets-scanning + dependency-vuln tooling
 
 ---
 
 ## Test Coverage Requirements
 
 ### Measurement
-```bash
-# Backend with coverage report
-poetry run pytest tests/backend/ --cov=backend/app --cov-report=term-missing --cov-report=html
+Run your project's test runner with coverage flags. Examples:
 
-# View HTML report
-open htmlcov/index.html
-```
+- **Python:** `pytest --cov=<your-package> --cov-report=term-missing --cov-report=html`
+- **Node:** `vitest run --coverage` or `jest --coverage`
+- **Go:** `go test -cover ./...`
+- **Rust:** `cargo tarpaulin` or `cargo llvm-cov`
+
+Open the HTML report in your browser to inspect uncovered lines.
 
 ### Targets
 | Component | Minimum Coverage |
@@ -282,7 +266,7 @@ Completed or obsolete plans waste context and mislead agents.
 **Checks**:
 - No plan files with all tasks marked complete — archive or delete them
 - No plan files referencing features already shipped or abandoned
-- `agent_sessions_tmp/` contains only active session plans
+- Active session plans live in `~/.claude/projects/<encoded-cwd>/memory/` (auto-loaded), not in per-project session dirs at the repo root
 - Roadmap items that shipped are moved to a changelog or removed
 
 ### README Accuracy

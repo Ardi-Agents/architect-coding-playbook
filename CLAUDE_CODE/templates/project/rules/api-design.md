@@ -2,7 +2,7 @@
 
 > **Location:** `.claude/rules/api-design.md`
 > **Scope:** API patterns for this project
-> **Source of truth:** [`@AGENTS/[APP]__API_DESIGN.md`](../../../AGENTS/%5BAPP%5D__API_DESIGN.md)
+> **Source of truth:** [`@AGENTS/[APP]__API_DESIGN.md`](../../AGENTS/%5BAPP%5D__API_DESIGN.md)
 
 ---
 
@@ -46,7 +46,7 @@
 | `422 Unprocessable Entity` | Validation passed but business rule failed |
 | `500 Internal Server Error` | Unhandled server error (alert + log) |
 
-> Full status code rules: see [`@AGENTS/[APP]__API_DESIGN.md`](../../../AGENTS/%5BAPP%5D__API_DESIGN.md).
+> Full status code rules: see [`@AGENTS/[APP]__API_DESIGN.md`](../../AGENTS/%5BAPP%5D__API_DESIGN.md).
 
 ## Error Format
 

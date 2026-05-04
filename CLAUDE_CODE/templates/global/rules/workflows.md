@@ -32,10 +32,12 @@ For trivial tasks: skip plan mode, proceed directly.
 
 ## Memory Discipline
 
-When the user corrects me or shares a project-specific learning, write it to:
-- `~/.claude/projects/<current-project>/memory/conventions.md` for conventions
-- `~/.claude/projects/<current-project>/memory/debugging.md` for debugging patterns
-- Never silently lose corrections — they should survive context resets.
+When the user corrects me or shares a project-specific learning, write it to the auto-memory dir for the current project — `~/.claude/projects/<encoded-cwd>/memory/`, where `<encoded-cwd>` is the absolute project path with every non-alphanumeric character replaced by `-`:
+
+- `conventions.md` for conventions
+- `debugging.md` for debugging patterns
+
+Never silently lose corrections — they should survive context resets.
 
 ## When Stuck
 
@@ -44,6 +46,6 @@ If I'm blocked for >30 minutes despite trying alternatives:
 2. Re-read the relevant docs or source.
 3. Propose a radically different approach before retrying.
 
-> See [`@AGENTS.md`](../../../AGENTS.md) — Error Loop Prevention (P2).
+> See [`AGENTS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS.md) — Error Loop Prevention (P2).
 
 > Adjust to match your actual workflow.

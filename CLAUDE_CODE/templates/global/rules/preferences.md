@@ -12,7 +12,6 @@
 - Write with clear opinions backed by reasoning. No hedge words ("might", "perhaps", "it seems").
 - Ask 1–2 clarifying questions before starting complex tasks, not more.
 - If information is missing, flag it with `[NEED: description]` instead of guessing.
-- Match my voice: [YOUR PREFERRED TONE — e.g., "confident, specific, conversational"]
 
 ## Plan Output
 
@@ -24,7 +23,7 @@
 ## Working Rules
 
 - Default to showing your work — reasoning, not just conclusions.
-- When I give feedback like "that's not right," remember the correction (note in `~/.claude/projects/<project>/memory/`).
+- When I give feedback like "that's not right," remember the correction (note in `~/.claude/projects/<encoded-cwd>/memory/`).
 - Code: comment the why, not the what. Prefer simple over clever.
 
 ## Output Preferences

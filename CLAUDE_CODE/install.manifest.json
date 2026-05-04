@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "tool": "architect-coding-playbook",
+  "toolVersion": "0.4.0",
+  "description": "Machine-readable manifest of every file the CLAUDE_CODE/SETUP.md flow writes. SETUP.md is the human-readable narrative; this manifest is the contract. Used by /verify-install to drift-check installs and (future) /uninstall-architect to roll back cleanly.",
+  "shippedFiles": [
+    {
+      "id": "global.CLAUDE",
+      "templatePath": "CLAUDE_CODE/templates/global/CLAUDE.md",
+      "installScope": "user",
+      "installPath": "~/.claude/CLAUDE.md",
+      "sha256": "ecfdf1b383042882a7e46510f49e3ba10bc7f2cd9bd95585514d867287c74e34",
+      "tokenSubstitution": true,
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "tokens": ["YOUR_NAME", "CITY, STATE", "YOUR_ROLE", "COMPANY_OR_CONTEXT"]
+    },
+    {
+      "id": "global.rules.preferences",
+      "templatePath": "CLAUDE_CODE/templates/global/rules/preferences.md",
+      "installScope": "user",
+      "installPath": "~/.claude/rules/preferences.md",
+      "sha256": "49e2bf33cd6a2ec25daacd35090785fa3324364d3a96b92db1d533c4f5bec864",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.rules.workflows",
+      "templatePath": "CLAUDE_CODE/templates/global/rules/workflows.md",
+      "installScope": "user",
+      "installPath": "~/.claude/rules/workflows.md",
+      "sha256": "71cf3a0e5357e455676707db0990a6ed220dd8e16cd3b6a2e8f8a298896a5bdd",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.rules.org-policies",
+      "templatePath": "CLAUDE_CODE/templates/global/rules/org-policies.md",
+      "installScope": "user",
+      "installPath": "~/.claude/rules/org-policies.md",
+      "sha256": "e379a6dee101ab6ab79c2b31bd24d45c4af4de4f49bd105194733a656150956f",
+      "tokenSubstitution": true,
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "tokens": ["Q3_ORG_POLICIES"],
+      "substitutionBlock": {
+        "begin": "<!-- BEGIN Q3_ORG_POLICIES -->",
+        "end": "<!-- END Q3_ORG_POLICIES -->",
+        "placeholder": "- _(none — Q3 answer not provided)_"
+      }
+    },
+    {
+      "id": "global.rules.consistency-checks",
+      "templatePath": "CLAUDE_CODE/templates/global/rules/consistency-checks.md",
+      "installScope": "user",
+      "installPath": "~/.claude/rules/consistency-checks.md",
+      "sha256": "96ad69756d946643b51106fae1ec87226faa77c3f10b74588f8d2ec93ecdb836",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.skills.README",
+      "templatePath": "CLAUDE_CODE/templates/global/skills/_README.md",
+      "installScope": "user",
+      "installPath": "~/.claude/skills/_README.md",
+      "sha256": "b74ac9cf39b286d0f21fa94715d6bf428a882999f0b104a62aa4b4b2d03f72fe",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.skills.journal",
+      "templatePath": "CLAUDE_CODE/templates/global/skills/journal/SKILL.md",
+      "installScope": "user",
+      "installPath": "~/.claude/skills/journal/SKILL.md",
+      "sha256": "24802d056081b770cd052316f956fdc84e2a1038e3561fdcb7f2d8590bba3971",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.skills.todo",
+      "templatePath": "CLAUDE_CODE/templates/global/skills/todo/SKILL.md",
+      "installScope": "user",
+      "installPath": "~/.claude/skills/todo/SKILL.md",
+      "sha256": "aa1bd97ac7ba93c0e0058170b3aed05c41d0a39bafca9b2006d71088f876f992",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.skills.explain-code",
+      "templatePath": "CLAUDE_CODE/templates/global/skills/explain-code/SKILL.md",
+      "installScope": "user",
+      "installPath": "~/.claude/skills/explain-code/SKILL.md",
+      "sha256": "405e1fb7d56342e4f0010d635cf9cfbdca784c5f50dbd45b9a9db7fb0be45b1a",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "global.skills.verify-install",
+      "templatePath": "CLAUDE_CODE/templates/global/skills/verify-install/SKILL.md",
+      "installScope": "user",
+      "installPath": "~/.claude/skills/verify-install/SKILL.md",
+      "sha256": "b944014a4384fffc2e2705982140ffa89abdc988199f304a13ceeec725b88947",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "project.CLAUDE",
+      "templatePath": "CLAUDE_CODE/templates/project/CLAUDE.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/CLAUDE.md",
+      "sha256": "9cfb6eab03adf64e2ad749a8cc81b49d746ec865d4849e067a14ad496cc79808",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[PATH_TO_REPO]": "<ABS_PATH>", "[APP]": "<USER_PREFIX>", "[YOUR_START_COMMAND]": "<from Q2(c) stack defaults>", "[YOUR_TEST_COMMAND]": "<from Q2(c) stack defaults>", "[YOUR_LINT_COMMAND]": "<from Q2(c) stack defaults>", "[YOUR_BUILD_COMMAND]": "<from Q2(c) stack defaults>", "$STACK_LINE_FROM_Q2C": true },
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "project.settings",
+      "templatePath": "CLAUDE_CODE/templates/project/settings.json",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/settings.json",
+      "sha256": "8c3b7d78eeacd9fdf90731055e6823a595ff9d0e2da055779bffb0e0d429d996",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "schemaUrl": "https://json.schemastore.org/claude-code-settings.json",
+      "tighteningOptional": true,
+      "expectedDriftReason": "Users may tighten permissions.allow/deny to their stack; record userModified: true with reason 'stack-tighten' in the install receipt. /verify-install treats this drift as expected, not a failure."
+    },
+    {
+      "id": "project.rules.code-style",
+      "templatePath": "CLAUDE_CODE/templates/project/rules/code-style.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/rules/code-style.md",
+      "sha256": "d9b9f3db75b909dc6753d7f08cc096b00d4db41c31bbf6fc235d6616c0bb0351",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "$STACK_DEFAULTS_FROM_Q2C": true },
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "project.rules.testing",
+      "templatePath": "CLAUDE_CODE/templates/project/rules/testing.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/rules/testing.md",
+      "sha256": "f2fca6e7bea16645f1d04d2e05bac18401ba75a119fbf69167e75e14da92189c",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>", "$STACK_DEFAULTS_FROM_Q2C": true },
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "project.rules.api-design",
+      "templatePath": "CLAUDE_CODE/templates/project/rules/api-design.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/rules/api-design.md",
+      "sha256": "d4f63e240128d843764ef7fed39c6f7103816dbac1133465179cebbbba3d4b74",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" },
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "optional": true,
+      "skipWhen": "project has no API"
+    },
+    {
+      "id": "project.rules.frontend.components",
+      "templatePath": "CLAUDE_CODE/templates/project/rules/frontend/components.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/rules/frontend/components.md",
+      "sha256": "d3bd80a733d1631689228fda85b689672e8ddd737dc6031b8300ac33b93e7d91",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" },
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "optional": true,
+      "skipWhen": "project has no frontend/ directory"
+    },
+    {
+      "id": "project.rules.backend.services",
+      "templatePath": "CLAUDE_CODE/templates/project/rules/backend/services.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/rules/backend/services.md",
+      "sha256": "0fdbcee3e430d0b75a17cf01094686ac34c7883fae78cac33e03b608c47156d9",
+      "tokenSubstitution": { "[PROJECT_NAME]": "<PROJECT_NAME>", "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" },
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "optional": true,
+      "skipWhen": "project has no backend/ directory"
+    },
+    {
+      "id": "project.skills.README",
+      "templatePath": "CLAUDE_CODE/templates/project/skills/_README.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/skills/_README.md",
+      "sha256": "ceec7682a466a95a9216bb771be658ef1b4358e0d48b072fb6dcf3f6e8c098e2",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt"
+    },
+    {
+      "id": "project.agents.researcher",
+      "templatePath": "CLAUDE_CODE/templates/project/agents/researcher.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/agents/researcher.md",
+      "sha256": "b30af4d8c082feb0ac972fe70ac88e739ea2696ba58ec45add7244cce1913987",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "optional": true,
+      "skipWhen": "user opts out at Question 5"
+    },
+    {
+      "id": "project.agents.reviewer",
+      "templatePath": "CLAUDE_CODE/templates/project/agents/reviewer.md",
+      "installScope": "project",
+      "installPath": "<PROJECT>/.claude/agents/reviewer.md",
+      "sha256": "2ad4c93acf9f561946b745f16648e5781ecc88740a579c669d21ff1e54e36c26",
+      "detectRule": "absent_or_user_modified",
+      "onUserModified": "prompt",
+      "onForeign": "prompt",
+      "optional": true,
+      "skipWhen": "user opts out at Question 5"
+    }
+  ],
+  "agentsCopy": {
+    "description": "Active copy of the AGENTS kernel from playbook clone into the target project. Includes the kernel file (AGENTS.md) at project root AND the [APP]__*.md appendices in <PROJECT>/AGENTS/. The kernel file is what the project's CLAUDE.md @-imports first to bridge the AGENTS.md ↔ Claude Code gap; the appendices provide the modular methodology.",
+    "kernelFile": {
+      "source": "AGENTS.md",
+      "dest": "<PROJECT>/AGENTS.md",
+      "tokenSubstitution": { "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" },
+      "rationale": "AGENTS.md is the cross-tool kernel; project CLAUDE.md imports it via `@AGENTS.md` as the first line. Without this copy, the bridge resolves to a missing file and the kernel never loads. The kernel contains markdown cross-links to the [APP]__*.md appendices — these MUST be substituted to the user's chosen prefix so the links resolve to the renamed appendix files. Both plain `[APP]` and URL-encoded `%5BAPP%5D` forms are substituted."
+    },
+    "appendicesDir": {
+      "sourceDir": "AGENTS/",
+      "destDir": "<PROJECT>/AGENTS/",
+      "files": [
+        "[APP]__IMPLEMENTATION.md",
+        "[APP]__API_DESIGN.md",
+        "[APP]__STATIC_ANALYSIS.md",
+        "[APP]__CHECKLISTS.md",
+        "[APP]__TOOL_USAGE.md",
+        "[APP]__DEPENDENCY_UPGRADES.md",
+        "[APP]__PROJECT_SPECIFIC.md"
+      ],
+      "tokenSubstitution": { "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" }
+    }
+  },
+  "projectMemory": {
+    "description": "Per-project auto-memory directory at the encoded-cwd path Claude Code uses internally.",
+    "pathPattern": "~/.claude/projects/<encoded-cwd>/memory/",
+    "encoding": "Replace every non-alphanumeric character in the absolute project path with '-'.",
+    "files": [
+      { "name": "MEMORY.md", "header": "# Memory Index — <project-name>" },
+      { "name": "debugging.md", "header": "# Debugging Patterns — <project-name>" },
+      { "name": "conventions.md", "header": "# Project Conventions — <project-name>" }
+    ]
+  },
+  "settingsMerges": [
+    {
+      "target": "~/.claude/settings.json",
+      "strategy": "json-merge-patch",
+      "rfc": "RFC 7396",
+      "patch": {
+        "$schema": "https://json.schemastore.org/claude-code-settings.json",
+        "includeCoAuthoredBy": false
+      },
+      "addedKeys": ["$schema", "includeCoAuthoredBy"],
+      "backupBeforeWrite": true,
+      "backupDir": "~/.claude/.architect-playbook-backups/"
+    }
+  ],
+  "installReceipt": {
+    "path": "~/.architect-playbook-manifest.json",
+    "description": "Per-machine record of what this install actually wrote. Enables clean uninstall and verify."
+  }
+}

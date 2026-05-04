@@ -2,3 +2,16 @@
 
 # Local-only reference materials (source articles, drafts, research) — never commit
 ref articles/
+
+# Architect Coding Playbook install backups (per-machine, never committed)
+.architect-playbook-backups/
+**/.architect-playbook-backups/
+
+# Architect Coding Playbook install receipt (per-machine, never committed)
+.architect-playbook-manifest.json
+
+# Stale orchestration experiment artifacts
+.claude-flow/
+
+# Plan files (per-machine)
+DRAFT_PR_BODY.md

@@ -32,11 +32,7 @@ Tooling → Patches → Minor (Backend) → Minor (Frontend) → Major (Last)
 ### 3. Verify Versions Before Updating
 Always check the package registry for actual latest versions before updating. User-provided version targets may be outdated or incorrect.
 
-> **Example** (Python/npm):
-> ```bash
-> pip index versions <package>
-> npm view <package> versions --json | tail -20
-> ```
+> Use your package manager's registry-query command (e.g. `npm view <pkg> versions`, `pip index versions <pkg>`, `cargo search <pkg>`, `go list -m -versions <module>`).
 
 ---
 
@@ -143,49 +139,6 @@ Use your package manager's commands to:
 >   - Search registry / list package versions: `dotnet package search <pkg> --exact-match --source https://api.nuget.org/v3/index.json`
 >   - Update a specific package: `dotnet package update <pkg>`
 >   - Pin a specific version: `dotnet package add <pkg> --version <ver>`
----
-
-## Poetry Commands Reference (Python)
-
-### Check Versions
-```bash
-# Show installed version of a package
-poetry show <package>
-
-# Check for outdated packages
-poetry show --outdated
-
-# Check dependency tree
-poetry show --tree
-```
-
-### Update Packages
-```bash
-# Update specific package
-poetry update <package>
-
-# Update all within constraints
-poetry update
-
-# Add new package
-poetry add <package>
-
-# Add dev dependency
-poetry add --group dev <package>
-```
-
-### Lock File Management
-```bash
-# Regenerate lock file
-poetry lock
-
-# Install from lock file (CI)
-poetry install --no-root
-
-# Export to requirements.txt (for legacy tooling)
-poetry export -f requirements.txt --output requirements.txt
-```
-
 ---
 
 ## Test Coverage Strategy

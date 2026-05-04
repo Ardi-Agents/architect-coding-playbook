@@ -3,7 +3,7 @@
 > **Location:** `~/.claude/rules/consistency-checks.md`
 > **Loaded:** Every session
 > **Scope:** Cross-repo consistency checks applicable to any project
-> **Source of truth:** [`@AGENTS/[APP]__STATIC_ANALYSIS.md`](../../../AGENTS/%5BAPP%5D__STATIC_ANALYSIS.md)
+> **Source of truth:** [`AGENTS/[APP]__STATIC_ANALYSIS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__STATIC_ANALYSIS.md)
 
 ---
 
@@ -70,5 +70,5 @@ When the user requests "run consistency checks" or after substantive refactoring
 3. Distinguish **blocking** (broken imports, dead entry points) from **advisory** (stale comments).
 4. Do not auto-fix. Propose fixes; require confirmation before applying.
 
-> Detailed per-check methodology lives in [`AGENTS/[APP]__STATIC_ANALYSIS.md`](../../../AGENTS/%5BAPP%5D__STATIC_ANALYSIS.md).
+> Detailed per-check methodology lives in [`AGENTS/[APP]__STATIC_ANALYSIS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__STATIC_ANALYSIS.md).
 > Originally proposed by Brian Boyd (`@briansboyd`).

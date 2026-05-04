@@ -1,67 +1,77 @@
 {
-  "_comment": "Project-level Claude Code settings. Committed to the repo and shared with the team. For local-only overrides, use settings.local.json (gitignored). Refer to Claude Code documentation for the canonical schema.",
-
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "_comment": "Tool access permissions for this project. Tighten or expand based on project sensitivity.",
-    "allow_read": ["**/*"],
-    "allow_edit": ["**/*"],
-    "deny_edit": [
-      ".env",
-      ".env.*",
-      "**/secrets/**",
-      "**/*.pem",
-      "**/*.key"
+    "defaultMode": "default",
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run build:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(yarn test:*)",
+      "Bash(pytest:*)",
+      "Bash(ruff check:*)",
+      "Bash(mypy:*)",
+      "Bash(go test:*)",
+      "Bash(cargo test:*)",
+      "Read(./**)",
+      "Edit(./src/**)",
+      "Edit(./tests/**)",
+      "Edit(./test/**)",
+      "Edit(./docs/**)",
+      "Write(./src/**)",
+      "Write(./tests/**)",
+      "Write(./test/**)"
     ],
-    "allow_bash": [
-      "git status",
-      "git diff",
-      "git log",
-      "npm test",
-      "npm run lint",
-      "npm run typecheck",
-      "pytest",
-      "ruff check",
-      "mypy"
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(npm publish:*)",
+      "Bash(yarn publish:*)",
+      "Bash(pnpm publish:*)",
+      "Bash(kubectl apply:*)",
+      "Bash(kubectl delete:*)",
+      "Bash(terraform apply:*)",
+      "Bash(terraform destroy:*)",
+      "Bash(gcloud * deploy:*)",
+      "Bash(aws * deploy:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/secrets/**)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Edit(./**/secrets/**)",
+      "Edit(./**/*.pem)",
+      "Edit(./**/*.key)"
     ],
-    "deny_bash": [
-      "rm -rf",
-      "git push",
-      "git push --force",
-      "npm publish",
-      "kubectl apply",
-      "terraform apply",
-      "gcloud deploy"
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git rebase:*)",
+      "Bash(git merge:*)"
     ]
   },
-
-  "auto_load": {
-    "_comment": "Files that auto-load at session start. Order matters — earlier files take precedence.",
-    "files": [
-      "CLAUDE.md",
-      ".claude/CLAUDE.md"
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"[architect-coding-playbook] CLAUDE_PROJECT=${CLAUDE_PROJECT:-(unset)}\""
+          }
+        ]
+      }
     ]
   },
-
-  "rules": {
-    "_comment": "Rule files that load contextually based on the current task or path.",
-    "global": [
-      ".claude/rules/code-style.md",
-      ".claude/rules/testing.md",
-      ".claude/rules/api-design.md"
-    ],
-    "path_scoped": {
-      "frontend/**": [".claude/rules/frontend/components.md"],
-      "backend/**": [".claude/rules/backend/services.md"]
-    }
-  },
-
-  "skills": {
-    "_comment": "Slash-commands available in this project.",
-    "directory": ".claude/skills/"
-  },
-
-  "agents": {
-    "_comment": "Subagents available for delegated tasks.",
-    "directory": ".claude/agents/"
-  }
+  "includeCoAuthoredBy": false
 }

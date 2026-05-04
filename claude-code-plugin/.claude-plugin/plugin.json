@@ -1,0 +1,19 @@
+{
+  "name": "architect-coding-playbook",
+  "description": "The Architect Coding Playbook as a Claude Code plugin: ships the global skills (journal, todo, explain-code, verify-install) and the project subagents (researcher, reviewer). Source of truth for methodology lives in AGENTS.md and AGENTS/[APP]__*.md at the repo root; this plugin delivers the Claude-Code-native surfaces that complement them.",
+  "version": "0.4.0",
+  "author": {
+    "name": "Architect Coding Playbook contributors",
+    "url": "https://github.com/farshadas/architect-coding-playbook"
+  },
+  "homepage": "https://github.com/farshadas/architect-coding-playbook",
+  "license": "MIT",
+  "keywords": [
+    "agents.md",
+    "architect-coding",
+    "playbook",
+    "skills",
+    "subagents",
+    "methodology"
+  ]
+}

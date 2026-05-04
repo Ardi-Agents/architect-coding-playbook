@@ -2,7 +2,7 @@
 
 > **Location:** `.claude/rules/testing.md`
 > **Scope:** Testing conventions for this project
-> **Source of truth:** [`@AGENTS/[APP]__STATIC_ANALYSIS.md`](../../../AGENTS/%5BAPP%5D__STATIC_ANALYSIS.md) — Test Coverage Requirements
+> **Source of truth:** [`@AGENTS/[APP]__STATIC_ANALYSIS.md`](../../AGENTS/%5BAPP%5D__STATIC_ANALYSIS.md) — Test Coverage Requirements
 
 ---
 
@@ -65,7 +65,7 @@
 - **Never weaken assertions** to make tests pass — fix the code or fix the test deliberately.
 - **Never commit `.skip` or `.only`** without a tracking issue.
 
-> See [`@AGENTS.md`](../../../AGENTS.md) — P1 Testing discipline.
+> See [`@AGENTS.md`](../../AGENTS.md) — P1 Testing discipline.
 
 ---
 
