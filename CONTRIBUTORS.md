@@ -7,7 +7,7 @@
 | Farshad A. Samimi | Lead Architect / Primary Author | [@farshadas](https://github.com/farshadas) |
 | Brian Boyd | .NET/C# Ecosystem | [@briansboyd](https://github.com/briansboyd) |
 | Nirnay Patel | Claude Code Ecosystem | [@NirnayPatel](https://github.com/NirnayPatel) |
-| Gio | Correctness & Quality Engineering — install manifest, /verify-install skill, plugin variant, 23-bug audit pass | [@Zuzuna54](https://github.com/Zuzuna54) |
+| Giorgi Giorgobiani | Install Quality & Tooling | [@Zuzuna54](https://github.com/Zuzuna54) |
 
 ## Community Contributors
 
