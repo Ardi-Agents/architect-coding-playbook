@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "tool": "architect-coding-playbook",
-  "toolVersion": "0.4.0",
+  "toolVersion": "0.5.0",
   "description": "Machine-readable manifest of every file the CLAUDE_CODE/SETUP.md flow writes. SETUP.md is the human-readable narrative; this manifest is the contract. Used by /verify-install to drift-check installs and (future) /uninstall-architect to roll back cleanly.",
   "shippedFiles": [
     {
@@ -251,7 +251,10 @@
         "[APP]__CHECKLISTS.md",
         "[APP]__TOOL_USAGE.md",
         "[APP]__DEPENDENCY_UPGRADES.md",
-        "[APP]__PROJECT_SPECIFIC.md"
+        "[APP]__PROJECT_SPECIFIC.md",
+        "[APP]__DESIGN_POSTURE.md",
+        "[APP]__VERSIONING.md",
+        "[APP]__OBSERVABILITY.md"
       ],
       "tokenSubstitution": { "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" }
     }

@@ -55,7 +55,9 @@ Ask these one at a time. Wait for an answer before asking the next.
 > What's your name, role, and background? Goes into `~/.claude/CLAUDE.md` and `~/.claude/rules/preferences.md`.
 
 **Question 2 — Projects:**
-> What projects are you currently running on this machine? For each, give: (a) project name, (b) absolute path, (c) tech stack, (d) `[APP]__` prefix (short uppercase, e.g. `ARDI`, `MYAPP` — used to rename `[APP]__*.md` AGENTS files).
+> What projects are you currently running on this machine? For each, give: (a) project name, (b) absolute path, (c) tech stack — including **all language tracks active** (the playbook supports multi-track repos: `dotnet`, `python`, `typescript`, `go`, `rust`. e.g., `python + typescript` for a FastAPI backend with a React frontend; `dotnet + python` for a C# service with a Python ML pipeline), (d) `[APP]__` prefix (short uppercase, e.g. `ARDI`, `MYAPP` — used to rename `[APP]__*.md` AGENTS files).
+>
+> **Note**: After install, the canonical place to declare your project's full Stack Composition is the `Stack Composition` table at the top of `<USER_PREFIX>__PROJECT_SPECIFIC.md`. Q2(c) seeds defaults; the table is the source of truth.
 
 **Question 3 — Org Policies:**
 > Any organization-wide tooling or library policies? Examples: "only open source, commercially licensable tools", "always TypeScript strict mode". Skip if none.
@@ -81,7 +83,7 @@ Layer 1 — personal identity across all projects on this machine. All template 
   - If Q1 didn't supply `[CITY, STATE]` or `[RELEVANT INTERESTS]`: leave the bracketed placeholders in the file. They aren't load-bearing — the user can fill them in later or delete the lines. **Do not invent values to fill them.**
   - If Q1 did supply a clear free-form `Background:` paragraph, place it on the Background line; otherwise leave the bracketed placeholder.
 - If `~/.claude/CLAUDE.md` exists: backup → show diff → ask `(k) keep / (m) merge / (r) replace`. Default `keep`.
-- For `merge`: append the playbook section under a clear delimiter `<!-- architect-coding-playbook v0.4.0 -->` so a future uninstall can find and remove it.
+- For `merge`: append the playbook section under a clear delimiter `<!-- architect-coding-playbook v0.5.0 -->` so a future uninstall can find and remove it.
 
 ### 3b. `~/.claude/settings.json`
 
@@ -164,36 +166,39 @@ Install (each with detect/diff/confirm). **Token substitution: substitute BOTH `
 
 | Q2(c) keyword | Stack family |
 |---|---|
+| `dotnet`, `c#`, `csharp`, `.net`, `asp.net`, `xunit`, `blazor`, `maui` | **dotnet** |
 | `node`, `typescript`, `javascript`, `react`, `vue`, `next`, `express`, `nest` | **node-ts** |
 | `python`, `fastapi`, `django`, `flask`, `pyramid` | **python** |
 | `go`, `golang` | **go** |
 | `rust`, `cargo`, `actix`, `rocket` | **rust** |
 
+**Multi-track repos**: if Q2(c) names multiple families (e.g., `dotnet + python`), record all detected families. The agent will apply the dotnet track to `.cs` files, the python track to `.py` files, etc. The Stack Composition table in `<USER_PREFIX>__PROJECT_SPECIFIC.md` is the authoritative declaration.
+
 Stack-defaults table (apply only those matching the detected family; if multiple match, prefer the most-mentioned; if none match, leave brackets):
 
-| code-style.md placeholder | node-ts | python | go | rust |
-|---|---|---|---|---|
-| `[e.g., Python 3.11, TypeScript 5.x]` (Primary language) | `TypeScript 5.x` | `Python 3.12` | `Go 1.22` | `Rust 1.78` |
-| `[e.g., FastAPI, React 18 with Vite]` (Framework) | `<derive from Q2(c) — e.g., "React 18 + Vite" if "React" matches>` | `<derive from Q2(c)>` | `<derive>` | `<derive>` |
-| `[e.g., PEP 8 + Ruff defaults, Airbnb JS Style Guide]` (Style guide) | `ESLint + Prettier defaults` | `PEP 8 + Ruff defaults` | `gofmt + go vet` | `rustfmt + clippy` |
-| `[100]` (Line length) | `100` | `100` | `120` | `100` |
-| `[4 spaces / 2 spaces]` (Indentation) | `2 spaces` | `4 spaces` | `tabs` | `4 spaces` |
-| `[single / double]` (Quotes) | `single` | `double` | `(N/A — Go uses double for strings)` | `double` |
-| `[required / not required]` (Trailing commas) | `required` | `required` | `(N/A)` | `required` |
-| `[snake_case / camelCase]` Variables | `camelCase` | `snake_case` | `camelCase` (exported) / `lowercase` | `snake_case` |
-| `[snake_case / camelCase]` Functions | `camelCase` | `snake_case` | `camelCase` (exported) | `snake_case` |
-| `[kebab-case / snake_case]` Files | `kebab-case` | `snake_case` | `snake_case` | `snake_case` |
-| `[match source + .test / _test]` Test files | `match source + .test` | `test_<module>` | `_test.go suffix` | `tests/<module>.rs` |
+| code-style.md placeholder | dotnet | node-ts | python | go | rust |
+|---|---|---|---|---|---|
+| `[e.g., Python 3.11, TypeScript 5.x]` (Primary language) | `C# 14 / .NET 10` | `TypeScript 5.x` | `Python 3.12` | `Go 1.22` | `Rust 1.78` |
+| `[e.g., FastAPI, React 18 with Vite]` (Framework) | `<derive from Q2(c) — e.g., "ASP.NET Core 10" if "asp.net" matches>` | `<derive — e.g., "React 18 + Vite" if "React" matches>` | `<derive from Q2(c)>` | `<derive>` | `<derive>` |
+| `[e.g., PEP 8 + Ruff defaults, Airbnb JS Style Guide]` (Style guide) | `.editorconfig + Roslyn analyzers + dotnet format` | `ESLint + Prettier defaults` | `PEP 8 + Ruff defaults` | `gofmt + go vet` | `rustfmt + clippy` |
+| `[100]` (Line length) | `120` | `100` | `100` | `120` | `100` |
+| `[4 spaces / 2 spaces]` (Indentation) | `4 spaces` | `2 spaces` | `4 spaces` | `tabs` | `4 spaces` |
+| `[single / double]` (Quotes) | `double` | `single` | `double` | `(N/A — Go uses double for strings)` | `double` |
+| `[required / not required]` (Trailing commas) | `(per .editorconfig)` | `required` | `required` | `(N/A)` | `required` |
+| `[snake_case / camelCase]` Variables | `camelCase` (params/locals) / `_camelCase` (private fields) | `camelCase` | `snake_case` | `camelCase` (exported) / `lowercase` | `snake_case` |
+| `[snake_case / camelCase]` Functions | `PascalCase` (methods) | `camelCase` | `snake_case` | `camelCase` (exported) | `snake_case` |
+| `[kebab-case / snake_case]` Files | `PascalCase.cs` | `kebab-case` | `snake_case` | `snake_case` | `snake_case` |
+| `[match source + .test / _test]` Test files | `<TypeName>Tests.cs` | `match source + .test` | `test_<module>` | `_test.go suffix` | `tests/<module>.rs` |
 
-| testing.md placeholder | node-ts | python | go | rust |
-|---|---|---|---|---|
-| `[pytest / unittest / jest]` (Backend test framework) | `vitest` (or `jest`) | `pytest` | `go test` (built-in) | `cargo test` (built-in) |
-| `[vitest / jest / playwright]` (Frontend test framework) | `vitest` | `(if applicable)` | `(N/A — frontend?)` | `(N/A)` |
-| `[playwright / cypress]` (E2E) | `playwright` | `playwright` (Python bindings) | `playwright` | `playwright` |
-| `[YOUR_BACKEND_TEST_CMD]` | `npm test` | `pytest tests/` | `go test ./...` | `cargo test` |
-| `[YOUR_FRONTEND_TEST_CMD]` | `npm test` (or `vitest run`) | `(N/A or `vitest run`)` | `(N/A)` | `(N/A)` |
-| `[YOUR_E2E_TEST_CMD]` | `npx playwright test` | `pytest tests/e2e/` | `go test ./e2e/...` | `cargo test --test e2e` |
-| `[YOUR_COVERAGE_CMD]` | `vitest run --coverage` | `pytest --cov` | `go test -cover ./...` | `cargo tarpaulin` |
+| testing.md placeholder | dotnet | node-ts | python | go | rust |
+|---|---|---|---|---|---|
+| `[pytest / unittest / jest]` (Backend test framework) | `xUnit.v3` | `vitest` (or `jest`) | `pytest` | `go test` (built-in) | `cargo test` (built-in) |
+| `[vitest / jest / playwright]` (Frontend test framework) | `(N/A — Blazor uses bUnit)` | `vitest` | `(if applicable)` | `(N/A — frontend?)` | `(N/A)` |
+| `[playwright / cypress]` (E2E) | `playwright` (.NET bindings) | `playwright` | `playwright` (Python bindings) | `playwright` | `playwright` |
+| `[YOUR_BACKEND_TEST_CMD]` | `dotnet test --solution <name>.slnx` | `npm test` | `pytest tests/` | `go test ./...` | `cargo test` |
+| `[YOUR_FRONTEND_TEST_CMD]` | `(N/A or bUnit if Blazor)` | `npm test` (or `vitest run`) | `(N/A or vitest run)` | `(N/A)` | `(N/A)` |
+| `[YOUR_E2E_TEST_CMD]` | `dotnet test --filter Category=E2E` | `npx playwright test` | `pytest tests/e2e/` | `go test ./e2e/...` | `cargo test --test e2e` |
+| `[YOUR_COVERAGE_CMD]` | `dotnet test --collect:"XPlat Code Coverage"` | `vitest run --coverage` | `pytest --cov` | `go test -cover ./...` | `cargo tarpaulin` |
 
 **`api-design.md`:** the API style placeholders (`[REST / GraphQL / gRPC]`, `[JSON / Protocol Buffers]`, `[URI versioning /v1/ ...]`, `[OAuth 2.0 / JWT / Session cookies / API key]`) are architecture-decision placeholders — leave them as-is; the user fills them in based on actual project decisions.
 
@@ -272,7 +277,7 @@ Write `~/.architect-playbook-manifest.json` (at **HOME root**, NOT inside `~/.cl
 {
   "schemaVersion": 1,
   "tool": "architect-coding-playbook",
-  "toolVersion": "0.4.0",
+  "toolVersion": "0.5.0",
   "installedAt": "<ISO timestamp>",
   "scope": "user+project",
   "writes": [
