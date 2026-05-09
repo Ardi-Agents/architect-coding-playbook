@@ -119,15 +119,6 @@ These exist so the playbook works *for an agent*, not just for humans reading it
 
 ---
 
-## What got distilled OUT
-
-- **`SemanticCodeGraph` (SCG)** tool-specific guidance — SCG is a Roslyn-based query tool not shipped with the playbook. References to `scg query`, `scg investigate`, `.scg/` snapshots, the SCG catalog block in `CLAUDE.md`, and `scg sync-claude-md` are all gone. Replaced with generic per-track structural-tool pointers ("Roslyn-based language servers", "`Microsoft.CodeAnalysis` APIs for programmatic queries", etc.).
-- **NiemBouml-specific narrative** — clean-room discipline against bouml's GPL source, niem-tools as the acceptance gate, project layout, deferred-work narrative. None of this is generalizable.
-- **PowerShell-specific consistency-check commands** — Windows-flavored audit scripts.
-- **`Lifted-and-generalized from BOUML` attribution comments** — replaced with neutral framing.
-
----
-
 ## Open questions / discussion points
 
 These are the calls this branch makes that reviewers may want to revisit:
