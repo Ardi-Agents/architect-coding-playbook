@@ -53,7 +53,7 @@ This playbook installs itself. Point a coding agent at this repo and paste **one
 **Step 1.** Clone the repo:
 
 ```bash
-git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+git clone https://github.com/Ardi-Agents/architect-coding-playbook.git ~/architect-coding-playbook
 cd ~/architect-coding-playbook
 ```
 
@@ -103,7 +103,7 @@ Full safety rules live in [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md).
 If you want to install without an agent:
 
 ```bash
-git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+git clone https://github.com/Ardi-Agents/architect-coding-playbook.git ~/architect-coding-playbook
 cd <your-target-project>
 cp ~/architect-coding-playbook/AGENTS.md ./AGENTS.md
 cp -R ~/architect-coding-playbook/AGENTS ./AGENTS

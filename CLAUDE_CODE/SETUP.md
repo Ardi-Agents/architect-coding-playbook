@@ -246,7 +246,7 @@ This step actively copies — do **not** delegate to the user. It writes TWO thi
    - Substitute every `[APP]` → `<USER_PREFIX>` in **filename and content**.
 4. **After substitution**, prepend a TODO banner to `<USER_PREFIX>__PROJECT_SPECIFIC.md` (verbatim — do **not** run the banner through `[APP]` substitution; the banner contains a literal upstream-template link with `[APP]` that must remain unchanged):
    ```markdown
-   > TODO: Replace this template with project-specific content. See [`AGENTS/[APP]__PROJECT_SPECIFIC.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__PROJECT_SPECIFIC.md) for the original template.
+   > TODO: Replace this template with project-specific content. See [`AGENTS/[APP]__PROJECT_SPECIFIC.md`](https://github.com/Ardi-Agents/architect-coding-playbook/blob/main/AGENTS/%5BAPP%5D__PROJECT_SPECIFIC.md) for the original template.
    ```
 5. Confirm each write.
 
