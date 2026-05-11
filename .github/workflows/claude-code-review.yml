@@ -1,0 +1,87 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    # Optional: Only run on specific file changes
+    # paths:
+    #   - "src/**/*.ts"
+    #   - "src/**/*.tsx"
+    #   - "src/**/*.js"
+    #   - "src/**/*.jsx"
+
+jobs:
+  claude-review:
+    # Optional: Filter by PR author
+    # if: |
+    #   github.event.pull_request.user.login == 'external-contributor' ||
+    #   github.event.pull_request.user.login == 'new-developer' ||
+    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code Review
+        id: claude-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            This repository is the Architect Coding Playbook — a multi-CLI (Claude Code,
+            Codex, Cursor) and multi-track (dotnet/python/typescript/go/rust) governance
+            template. Reviews must check the PR against the playbook's own rules.
+
+            BEFORE reviewing the diff, read these source-of-truth files to load the
+            playbook's conventions:
+            - AGENTS.md (kernel: P0–P4 priorities, evidence-tier discipline, Stack
+              Composition + Track Discipline rule, build-clean, advisory 300-line cap)
+            - AGENTS/[APP]__*.md (all appendices on disk: IMPLEMENTATION, API_DESIGN,
+              STATIC_ANALYSIS, CHECKLISTS, TOOL_USAGE, DEPENDENCY_UPGRADES,
+              PROJECT_SPECIFIC, DESIGN_POSTURE, VERSIONING, OBSERVABILITY)
+            - CLAUDE_CODE/SETUP.md and CLAUDE_CODE/install.manifest.json
+              (install + upgrade contract; shippedFiles[].sha256 must match templates)
+            - claude-code-plugin/.claude-plugin/plugin.json (plugin version contract)
+            - README.md, CONCEPT.md (intent and scope)
+            - CODEX/, CURSOR/ READMEs (cross-CLI parity)
+
+            Then review the PR diff for:
+            - **Kernel discipline**: stack-specific terminology leaking into cross-track
+              sections of AGENTS.md or appendices.
+            - **Manifest integrity**: if a shipped file under
+              CLAUDE_CODE/templates/ changed, its sha256 in install.manifest.json must
+              be recomputed. toolVersion bumps appropriately for the change magnitude.
+            - **Plugin version alignment**: claude-code-plugin/.claude-plugin/plugin.json
+              `version` should match CLAUDE_CODE/install.manifest.json `toolVersion`.
+            - **Cross-CLI parity**: if a CLAUDE_CODE doc changed, the matching CODEX/ or
+              CURSOR/ doc updated, or intentional divergence noted in the PR body.
+            - **Per-track parity**: appendix changes that add a recipe for one track
+              should add it for every declared track or explicitly note "track-N/A".
+            - **Org references**: any lingering `farshadas/architect-coding-playbook`
+              should be `Ardi-Agents/architect-coding-playbook` (exception: the
+              `@farshadas` author attribution in CONTRIBUTORS.md).
+            - **300-line cap**: new appendix files >300 lines should declare a
+              clarity-wins exception or note per-track-recipe justification.
+            - **Standard review concerns**: correctness, security, broken cross-doc
+              links, missing tests, hallucinated symbols/paths.
+
+            Use the repository's AGENTS.md as the single source of truth for rules.
+            Be constructive and specific — cite `file_path:line_number` when flagging
+            issues. Use `gh pr comment` with your Bash tool to leave your review as a
+            comment on the PR.
+
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://code.claude.com/docs/en/cli-reference for available options
+          claude_args: '--allowed-tools "Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*),Read,Glob,Grep"'
