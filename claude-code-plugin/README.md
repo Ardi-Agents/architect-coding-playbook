@@ -44,8 +44,8 @@ What the plugin does **not** ship (these come from `CLAUDE_CODE/SETUP.md` instea
 If/when this repo is registered as an Anthropic-discoverable marketplace:
 
 ```
-/plugin marketplace add farshadas/architect-coding-playbook
-/plugin install architect-coding-playbook@farshadas/architect-coding-playbook
+/plugin marketplace add Ardi-Agents/architect-coding-playbook
+/plugin install architect-coding-playbook@Ardi-Agents/architect-coding-playbook
 ```
 
 ---
