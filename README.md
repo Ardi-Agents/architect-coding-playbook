@@ -1,6 +1,6 @@
 # Architect Coding Playbook
 
-This repository is a portable starting point for building a high-discipline AI coding workflow using:
+This repository is a portable starting point for building a high-discipline, agent-driven coding workflow using:
 
 - `AGENTS.md` as the global rule kernel
 - `AGENTS/` as modular appendices for implementation, API design, static analysis, tool usage, checklists, dependency upgrades, and project-specific overrides
