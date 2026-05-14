@@ -86,7 +86,7 @@ When reading this playbook:
 ### Cross-track concepts (live in this kernel; appendices carry per-track recipes)
 
 - **Build-clean posture** — zero warnings, zero errors. Operationalization in `[APP]__STATIC_ANALYSIS.md` per track.
-- **Authoritative-workspace rule** — build/test from the workspace root (`.slnx`, monorepo root, `Cargo.toml` workspace), never a single project.
+- **Authoritative-workspace rule** — build/test from the workspace root (track-specific workspace file declared in `[APP]__PROJECT_SPECIFIC.md`), never a single project.
 - **Pre-/post-edit lifecycle ritual** — orient against the track's structural tool before the first Edit; after the editing session, run build + tests + structural delta + write happy-path AND adversarial tests. Per-track structural tools in `[APP]__TOOL_USAGE.md`.
 - **Error-handling philosophy** — never swallow errors silently; wrap with context at boundaries; fail loudly. Per-track recipes in `[APP]__OBSERVABILITY.md`.
 - **Async/concurrency discipline** — propagate cancellation; bound goroutine/task lifetimes; document thread-safety. Per-track recipes in `[APP]__OBSERVABILITY.md`.
