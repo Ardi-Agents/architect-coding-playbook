@@ -5,6 +5,8 @@
 > **Owns**: TDD discipline, scope enforcement, error recovery, technical-debt management, pre-/post-edit lifecycle ritual, per-track test framework + database conventions, conditional auth protection.
 >
 > **Fires when**: writing new code, fixing bugs, reviewing test coverage, refactoring, "before I edit" / "after I edit", "what's the test pattern here?", "how do migrations work?".
+>
+> **Length note**: 427 lines — exceeds the advisory 300-line cap defined in `AGENTS.md` § File-Length Guideline. Justification: per-track-recipe coverage (5 tracks × TDD / DB migrations / pre-/post-edit lifecycle / conditional auth exemplars) plus cross-track scope / error-recovery / tech-debt sections. Clarity-wins exception per kernel rule.
 
 ---
 

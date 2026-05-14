@@ -89,7 +89,7 @@ When reading this playbook:
 - **Authoritative-workspace rule** — build/test from the workspace root (track-specific workspace file declared in `[APP]__PROJECT_SPECIFIC.md`), never a single project.
 - **Pre-/post-edit lifecycle ritual** — orient against the track's structural tool before the first Edit; after the editing session, run build + tests + structural delta + write happy-path AND adversarial tests. Per-track structural tools in `[APP]__TOOL_USAGE.md`.
 - **Error-handling philosophy** — never swallow errors silently; wrap with context at boundaries; fail loudly. Per-track recipes in `[APP]__OBSERVABILITY.md`.
-- **Async/concurrency discipline** — propagate cancellation; bound goroutine/task lifetimes; document thread-safety. Per-track recipes in `[APP]__OBSERVABILITY.md`.
+- **Async/concurrency discipline** — propagate cancellation; bound concurrent task and thread lifetimes; document thread-safety. Per-track recipes in `[APP]__OBSERVABILITY.md`.
 - **Structured logging** — key-value pairs, not interpolated strings. Per-track recipes in `[APP]__OBSERVABILITY.md`.
 - **Authentication** (if present) — modify only with explicit approval. Per-track patterns in `[APP]__API_DESIGN.md` § Authentication.
 

@@ -1,7 +1,9 @@
 # Merge Review Guide — `feat/multi-track-stack-composition`
 
-> **Audience**: collaborators reviewing this branch before merging into `main`.
-> **Goal**: explain the change in plain terms, name the benefits, and answer the question "does this break anything?"
+> **📜 Archival note**: This document was the merge-review guide for the v0.5.0 multi-track release (PR #4, merged 2026-05-11). The branch is closed; this file is preserved as a historical release-notes artifact for future reference on the rationale and breakage analysis behind the v0.5.0 design. For current usage docs see [`README.md`](./README.md) and [`AGENTS.md`](./AGENTS.md).
+>
+> **Audience** *(at time of writing)*: collaborators reviewing this branch before merging into `main`.
+> **Goal** *(at time of writing)*: explain the change in plain terms, name the benefits, and answer the question "does this break anything?"
 > **Companion doc**: [`BRANCH_NOTES.md`](./BRANCH_NOTES.md) — the file-by-file change log.
 
 ---

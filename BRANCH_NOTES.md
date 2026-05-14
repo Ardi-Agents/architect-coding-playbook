@@ -1,5 +1,7 @@
 # Branch Notes — `feat/multi-track-stack-composition`
 
+> **📜 Archival note**: This document was the file-by-file change log for the v0.5.0 multi-track release (PR #4, merged 2026-05-11). The branch is closed; this file is preserved as a historical release-notes artifact. For current usage docs see [`README.md`](./README.md) and [`AGENTS.md`](./AGENTS.md). For the human-readable narrative see [`MERGE_REVIEW_GUIDE.md`](./MERGE_REVIEW_GUIDE.md).
+>
 > **TL;DR**: The playbook now supports multi-track repos (e.g. `.NET service + Python pipeline + TypeScript frontend`) without losing its language-agnostic kernel. A `Stack Composition` table declared in `[APP]__PROJECT_SPECIFIC.md` tells the agent which language tracks fire in your repo; each appendix carries parallel `#### Track:` subsections (`dotnet | python | typescript | go | rust`) for divergent guidance. Cross-track patterns stay in the kernel. Three new appendix templates were added; SCG/BOUML/NiemBouml-specific content was distilled out.
 
 ---

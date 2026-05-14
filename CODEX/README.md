@@ -21,9 +21,20 @@ cd AGENTS
 for f in '[APP]__'*.md; do mv "$f" "${f//\[APP\]/MYAPP}"; done
 
 # Edit MYAPP__PROJECT_SPECIFIC.md to describe your stack, commands, conventions
+#
+# REQUIRED for v0.5.0+: declare the Stack Composition table at the top of
+# MYAPP__PROJECT_SPECIFIC.md. It lists which language tracks (dotnet | python
+# | typescript | go | rust) are active in the repo; the agent uses it to
+# decide which per-track recipes fire on which files.
 ```
 
 That's it. Run `codex` and Codex will load `AGENTS.md` from the repo root.
+
+> **Note on v0.5.0 appendices**: the `AGENTS/` directory now ships 10 appendices —
+> seven existing (IMPLEMENTATION, API_DESIGN, STATIC_ANALYSIS, CHECKLISTS, TOOL_USAGE,
+> DEPENDENCY_UPGRADES, PROJECT_SPECIFIC) plus three new cross-track templates
+> (DESIGN_POSTURE, VERSIONING, OBSERVABILITY). All ten land via the `cp -R` above;
+> no per-CLI changes needed.
 
 ---
 
