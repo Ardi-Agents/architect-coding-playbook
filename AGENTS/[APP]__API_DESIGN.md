@@ -5,8 +5,6 @@
 > **Owns**: REST API design rules (HTTP semantics, naming, status codes), error-format conventions per track, frontend-backend contract validation, optional authentication patterns per track.
 >
 > **Fires when**: designing an endpoint, "how should the API respond?", "what status code?", reviewing error formats, "how is auth wired here?".
->
-> **Length note**: 304 lines — marginally over the advisory 300-line cap defined in `AGENTS.md` § File-Length Guideline. Justification: per-track error-format recipes (5 tracks × error envelope + status-code conventions) plus an optional cross-track Authentication section. Clarity-wins exception per kernel rule.
 
 ---
 

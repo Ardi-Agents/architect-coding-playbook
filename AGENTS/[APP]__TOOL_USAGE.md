@@ -5,8 +5,6 @@
 > **Owns**: Structural-tool priority per track, file exploration, search strategy, lint commands per track, test execution per track, command safety, git operations, docker operations, process hygiene.
 >
 > **Fires when**: "find usages of", "who calls X", "search the codebase", "run lint", "run tests", "is this safe to delete?", before any shell command.
->
-> **Length note**: 329 lines — slightly over the advisory 300-line cap defined in `AGENTS.md` § File-Length Guideline. Justification: per-track-recipe coverage (5 tracks × structural-tool priority + lint commands + test commands) plus cross-track process-hygiene rules. Clarity-wins exception per kernel rule.
 
 ---
 
