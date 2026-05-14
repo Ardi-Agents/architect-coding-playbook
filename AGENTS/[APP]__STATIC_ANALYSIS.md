@@ -5,8 +5,6 @@
 > **Owns**: Linting, formatting, type-checking, dead-code detection, coverage targets, build-clean operationalization per track, security scanning, doc & artifact integrity, project-file consistency.
 >
 > **Fires when**: pre-commit, "is this clean?", "what should I run before I push?", auditing for dead code, checking coverage gaps, reviewing documentation drift.
->
-> **Length note**: 459 lines — exceeds the advisory 300-line cap defined in `AGENTS.md` § File-Length Guideline. Justification: per-track-recipe coverage (5 tracks × build-clean / coverage / lint / project-file consistency / entry-point integrity) plus the cross-track tool-reference table. Clarity-wins exception per kernel rule.
 
 ---
 

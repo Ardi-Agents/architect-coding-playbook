@@ -5,8 +5,6 @@
 > **Owns**: Phased dependency-upgrade methodology, conflict resolution, license compatibility, central package management per track, version verification commands per track, rollback strategy.
 >
 > **Fires when**: "upgrade dependencies", "bump <package>", "is this version still safe?", "what's the upgrade plan?", license-compatibility questions, package vulnerability findings.
->
-> **Length note**: 383 lines — exceeds the advisory 300-line cap defined in `AGENTS.md` § File-Length Guideline. Justification: per-track-recipe coverage (5 tracks × upgrade / vulnerability-scan / rollback sections) plus a cross-track License Compatibility section. Clarity-wins exception per kernel rule.
 
 ---
 
