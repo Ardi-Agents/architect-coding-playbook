@@ -46,6 +46,6 @@ If I'm blocked for >30 minutes despite trying alternatives:
 2. Re-read the relevant docs or source.
 3. Propose a radically different approach before retrying.
 
-> See [`AGENTS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS.md) — Error Loop Prevention (P2).
+> See [`AGENTS.md`](https://github.com/Ardi-Agents/architect-coding-playbook/blob/main/AGENTS.md) — Error Loop Prevention (P2).
 
 > Adjust to match your actual workflow.

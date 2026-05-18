@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "tool": "architect-coding-playbook",
-  "toolVersion": "0.4.0",
+  "toolVersion": "0.5.0",
   "description": "Machine-readable manifest of every file the CLAUDE_CODE/SETUP.md flow writes. SETUP.md is the human-readable narrative; this manifest is the contract. Used by /verify-install to drift-check installs and (future) /uninstall-architect to roll back cleanly.",
   "shippedFiles": [
     {
@@ -9,7 +9,7 @@
       "templatePath": "CLAUDE_CODE/templates/global/CLAUDE.md",
       "installScope": "user",
       "installPath": "~/.claude/CLAUDE.md",
-      "sha256": "ecfdf1b383042882a7e46510f49e3ba10bc7f2cd9bd95585514d867287c74e34",
+      "sha256": "a6be09dbbe387f78fb80841181038903501f5d520d288469e479d2760796a263",
       "tokenSubstitution": true,
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
@@ -31,7 +31,7 @@
       "templatePath": "CLAUDE_CODE/templates/global/rules/workflows.md",
       "installScope": "user",
       "installPath": "~/.claude/rules/workflows.md",
-      "sha256": "71cf3a0e5357e455676707db0990a6ed220dd8e16cd3b6a2e8f8a298896a5bdd",
+      "sha256": "452d59fb0b06634ebe00ce71bfb2398ad4614f0acc7a45a418cd7cfa92058f4c",
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt"
@@ -41,7 +41,7 @@
       "templatePath": "CLAUDE_CODE/templates/global/rules/org-policies.md",
       "installScope": "user",
       "installPath": "~/.claude/rules/org-policies.md",
-      "sha256": "e379a6dee101ab6ab79c2b31bd24d45c4af4de4f49bd105194733a656150956f",
+      "sha256": "9054706e2e40a38665d98d82dc9c51692449b9a4927aa3c3a5609aa63e18a181",
       "tokenSubstitution": true,
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
@@ -58,7 +58,7 @@
       "templatePath": "CLAUDE_CODE/templates/global/rules/consistency-checks.md",
       "installScope": "user",
       "installPath": "~/.claude/rules/consistency-checks.md",
-      "sha256": "96ad69756d946643b51106fae1ec87226faa77c3f10b74588f8d2ec93ecdb836",
+      "sha256": "bc2c63dc6f2b234d30229d5b6dd97a4a32a5f9ceced8109e28f8bad0ff42e615",
       "detectRule": "absent_or_user_modified",
       "onUserModified": "prompt",
       "onForeign": "prompt"
@@ -251,7 +251,10 @@
         "[APP]__CHECKLISTS.md",
         "[APP]__TOOL_USAGE.md",
         "[APP]__DEPENDENCY_UPGRADES.md",
-        "[APP]__PROJECT_SPECIFIC.md"
+        "[APP]__PROJECT_SPECIFIC.md",
+        "[APP]__DESIGN_POSTURE.md",
+        "[APP]__VERSIONING.md",
+        "[APP]__OBSERVABILITY.md"
       ],
       "tokenSubstitution": { "[APP]": "<USER_PREFIX>", "%5BAPP%5D": "<USER_PREFIX>" }
     }

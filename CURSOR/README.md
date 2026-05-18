@@ -16,6 +16,17 @@ From inside your target project:
 
 2. **Replace `[APP]__PROJECT_SPECIFIC.md` content with your project's specifics** — stack commands, test/build scripts, environment conventions.
 
+   > **REQUIRED for v0.5.0+**: declare the **Stack Composition** table at the top
+   > of `[APP]__PROJECT_SPECIFIC.md`. It lists which language tracks
+   > (`dotnet | python | typescript | go | rust`) are active in this repo;
+   > the agent uses it to decide which per-track recipes fire on which files.
+
+   > **Note**: the `AGENTS/` directory now ships **10 appendices** — seven existing
+   > (IMPLEMENTATION, API_DESIGN, STATIC_ANALYSIS, CHECKLISTS, TOOL_USAGE,
+   > DEPENDENCY_UPGRADES, PROJECT_SPECIFIC) plus three new cross-track templates
+   > (DESIGN_POSTURE, VERSIONING, OBSERVABILITY). All ten land via the `cp -R`
+   > above; no Cursor-specific changes needed.
+
 3. **(Optional) Add path-scoped rules in `.cursor/rules/`.** Cursor uses MDC files with frontmatter for path scoping:
 
    ```markdown

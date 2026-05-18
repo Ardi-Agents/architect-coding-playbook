@@ -65,7 +65,7 @@ These accumulate across sessions and survive context resets.
 ## Source of Truth
 
 The **Architect Coding Playbook** governs all coding work on this machine.
-See [`@AGENTS.md`](https://github.com/farshadas/architect-coding-playbook/blob/main/AGENTS.md)
+See [`@AGENTS.md`](https://github.com/Ardi-Agents/architect-coding-playbook/blob/main/AGENTS.md)
 for the full P0–P4 priority matrix. The rules above supplement, not replace, AGENTS.md.
 
 > Replace bracketed placeholders. Adjust sections to match your actual workflow.

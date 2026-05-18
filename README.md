@@ -1,6 +1,6 @@
 # Architect Coding Playbook
 
-This repository is a portable starting point for building a high-discipline AI coding workflow using:
+This repository is a portable starting point for building a high-discipline, agent-driven coding workflow using:
 
 - `AGENTS.md` as the global rule kernel
 - `AGENTS/` as modular appendices for implementation, API design, static analysis, tool usage, checklists, dependency upgrades, and project-specific overrides
@@ -28,16 +28,21 @@ autonomy.
 - `AGENTS.md`
   - The core policy layer
   - P0-P4 priority matrix and conflict resolution
+  - **Stack Composition + Track Discipline** — multi-track support (`dotnet`, `python`, `typescript`, `go`, `rust`); per-track guidance fires based on the file being edited
+  - **Agent-native working rules** — evidence-tier discipline (VERIFIED/READ/INFERRED/GUESSED), no-prose-without-verification, deferral hygiene, adversarial-review checkpoint, acceptance-tests-over-touch-points
   - Design-first protocol
   - Tool/file discipline and context-preservation protocol
 - `AGENTS/`
-  - `[APP]__IMPLEMENTATION.md`
-  - `[APP]__API_DESIGN.md`
-  - `[APP]__STATIC_ANALYSIS.md`
-  - `[APP]__TOOL_USAGE.md`
-  - `[APP]__CHECKLISTS.md`
-  - `[APP]__DEPENDENCY_UPGRADES.md`
-  - `[APP]__PROJECT_SPECIFIC.md` (template override; replace for your project)
+  - `[APP]__PROJECT_SPECIFIC.md` (template override; replace for your project — declares Stack Composition)
+  - `[APP]__IMPLEMENTATION.md` — TDD, scope enforcement, pre-/post-edit lifecycle ritual, per-track database tooling
+  - `[APP]__API_DESIGN.md` — REST API rules, error formats per track, optional auth per track
+  - `[APP]__STATIC_ANALYSIS.md` — linting, dead code, build-clean per track, project-file consistency per track
+  - `[APP]__TOOL_USAGE.md` — structural-tool priority per track, command safety, process hygiene
+  - `[APP]__CHECKLISTS.md` — pre-completion + claim-heavy output checklists, decision/blocker templates
+  - `[APP]__DEPENDENCY_UPGRADES.md` — phased upgrade methodology, per-track package management, license compatibility
+  - `[APP]__DESIGN_POSTURE.md` — locked architectural decisions with explicit backout triggers
+  - `[APP]__VERSIONING.md` — SemVer + optional host-runtime pin pattern, per-track release tagging
+  - `[APP]__OBSERVABILITY.md` — production diagnostics per track, structured logging, error-handling philosophy, async/concurrency discipline
 
 ## Install
 
@@ -48,7 +53,7 @@ This playbook installs itself. Point a coding agent at this repo and paste **one
 **Step 1.** Clone the repo:
 
 ```bash
-git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+git clone https://github.com/Ardi-Agents/architect-coding-playbook.git ~/architect-coding-playbook
 cd ~/architect-coding-playbook
 ```
 
@@ -98,7 +103,7 @@ Full safety rules live in [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md).
 If you want to install without an agent:
 
 ```bash
-git clone https://github.com/farshadas/architect-coding-playbook.git ~/architect-coding-playbook
+git clone https://github.com/Ardi-Agents/architect-coding-playbook.git ~/architect-coding-playbook
 cd <your-target-project>
 cp ~/architect-coding-playbook/AGENTS.md ./AGENTS.md
 cp -R ~/architect-coding-playbook/AGENTS ./AGENTS
@@ -112,7 +117,7 @@ echo '@AGENTS.md' > CLAUDE.md
 # ln -s AGENTS.md CLAUDE.md
 ```
 
-Then edit `AGENTS/MYAPP__PROJECT_SPECIFIC.md` with your project's specifics.
+Then edit `AGENTS/MYAPP__PROJECT_SPECIFIC.md` with your project's specifics — at minimum, declare the **Stack Composition** table at the top so the agent knows which language tracks fire in your repo.
 
 For the full Claude Code setup (skills, subagents, memory, per-project `.claude/`), follow [`CLAUDE_CODE/SETUP.md`](./CLAUDE_CODE/SETUP.md) step by step.
 
